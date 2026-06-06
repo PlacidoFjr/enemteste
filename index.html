@@ -1,0 +1,1886 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plano de Aprovação - UFBA + UNEB</title>
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --paper: #fffaf2;
+      --ink: #1f1a17;
+      --muted: #6d6259;
+      --line: #ddcfbe;
+      --accent: #a9472d;
+      --accent-2: #1e6a63;
+      --accent-3: #d9a441;
+      --ok: #2d6b3d;
+      --warn: #9a5c09;
+      --soft: #efe3d1;
+      --shadow: 0 18px 40px rgba(63, 38, 18, 0.10);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(217, 164, 65, 0.18), transparent 30%),
+        radial-gradient(circle at top right, rgba(30, 106, 99, 0.16), transparent 22%),
+        linear-gradient(180deg, #f8f3eb 0%, var(--bg) 100%);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 56px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(169, 71, 45, 0.95), rgba(117, 42, 24, 0.98)),
+        #7a321f;
+      color: #fff8f0;
+      border-radius: 28px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -80px auto;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.10);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255, 248, 240, 0.12);
+      font-size: 0.88rem;
+      letter-spacing: 0.02em;
+    }
+
+    h1, h2, h3 {
+      font-family: "IBM Plex Serif", Georgia, serif;
+      line-height: 1.15;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      margin-top: 16px;
+      max-width: 12ch;
+    }
+
+    .hero p {
+      max-width: 70ch;
+      margin: 14px 0 0;
+      color: rgba(255, 248, 240, 0.92);
+      font-size: 1.02rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 18px;
+      margin-top: 26px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-card {
+      background: rgba(255, 250, 242, 0.10);
+      border: 1px solid rgba(255, 250, 242, 0.18);
+      border-radius: 18px;
+      padding: 18px;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-card strong {
+      display: block;
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+      color: #ffe9cf;
+    }
+
+    .toc,
+    .panel,
+    .table-wrap,
+    .routine-card,
+    .source-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .toc {
+      padding: 22px;
+      margin-bottom: 22px;
+    }
+
+    .toc h2 {
+      font-size: 1.35rem;
+      margin-bottom: 16px;
+    }
+
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .toc a {
+      text-decoration: none;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+    }
+
+    .toc a:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+      background: #fff7ef;
+    }
+
+    section {
+      margin-bottom: 22px;
+      scroll-margin-top: 20px;
+    }
+
+    .section-title {
+      margin-bottom: 12px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+    }
+
+    .section-title p {
+      color: var(--muted);
+      margin: 8px 0 0;
+    }
+
+    .panel {
+      padding: 22px;
+    }
+
+    .callout-row,
+    .metric-row,
+    .routine-grid,
+    .sources-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .callout-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .metric-row {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .mini {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .mini strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.92rem;
+    }
+
+    .mini .big {
+      font-size: 1.55rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      margin-bottom: 10px;
+    }
+
+    .official { background: rgba(45, 107, 61, 0.12); color: var(--ok); }
+    .history { background: rgba(30, 106, 99, 0.12); color: var(--accent-2); }
+    .inference { background: rgba(154, 92, 9, 0.14); color: var(--warn); }
+
+    ul {
+      margin: 10px 0 0 20px;
+      padding: 0;
+    }
+
+    li + li {
+      margin-top: 6px;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      padding: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+      background: var(--paper);
+    }
+
+    th,
+    td {
+      padding: 14px 14px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      background: #f6ecde;
+      font-size: 0.92rem;
+      color: #4d4037;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .priority-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .priority-box {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fff;
+    }
+
+    .priority-box h3 {
+      font-size: 1.08rem;
+      margin-bottom: 10px;
+    }
+
+    .priority-box.alt-high { border-left: 6px solid var(--accent); }
+    .priority-box.high { border-left: 6px solid var(--accent-3); }
+    .priority-box.medium { border-left: 6px solid var(--accent-2); }
+    .priority-box.low { border-left: 6px solid #9f9589; }
+
+    .routine-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .routine-card {
+      padding: 18px;
+    }
+
+    .routine-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .sources-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .source-card {
+      padding: 18px;
+    }
+
+    .source-card h3 {
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .source-card a {
+      word-break: break-word;
+    }
+
+    .footer-note {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .execution-grid,
+    .check-grid,
+    .timeline-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .execution-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .check-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 14px;
+    }
+
+    .timeline-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 14px;
+    }
+
+    .check-card,
+    .week-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .check-card h3,
+    .week-card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #fffaf5;
+      border: 1px solid #eadbc9;
+    }
+
+    .check-item input {
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-2);
+      flex: 0 0 auto;
+    }
+
+    .check-item span {
+      display: block;
+      font-size: 0.96rem;
+    }
+
+    .week-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .week-badge,
+    .focus-badge {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .week-badge {
+      background: #f6ecde;
+      color: #6c4c1f;
+    }
+
+    .focus-badge {
+      background: rgba(30, 106, 99, 0.12);
+      color: var(--accent-2);
+      margin-bottom: 8px;
+    }
+
+    .study-note {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 8px;
+    }
+
+    .mini-plan {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .reset-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .reset-btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .reset-btn:hover {
+      background: #fff7ef;
+      border-color: var(--accent);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .callout-row,
+      .metric-row,
+      .priority-grid,
+      .routine-grid,
+      .execution-grid,
+      .check-grid,
+      .timeline-grid,
+      .mini-plan,
+      .sources-grid,
+      .toc-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(100% - 18px, 1180px);
+        padding-top: 12px;
+      }
+
+      .hero,
+      .panel,
+      .toc {
+        padding: 18px;
+      }
+
+      h1 {
+        max-width: none;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .shell {
+        width: 100%;
+        padding: 0;
+      }
+
+      .hero,
+      .toc,
+      .panel,
+      .table-wrap,
+      .routine-card,
+      .source-card {
+        box-shadow: none;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <span class="eyebrow">Plano estratégico de aprovação • ENEM UFBA + Vestibular UNEB • Pesquisa em 06/06/2026</span>
+      <h1>UFBA no ENEM e UNEB no vestibular: estratégia integrada</h1>
+      <p>
+        Este relatório transforma a pesquisa sobre UFBA, UNEB, ENEM, SISU e vestibular próprio em um plano prático de reta final.
+        O foco aqui é separar o que é oficial, o que é histórico e o que é inferência estratégica, para você estudar com urgência sem dividir sua energia em dois estudos desconectados.
+      </p>
+
+      <div class="hero-grid">
+        <div class="hero-card">
+          <strong>Diagnóstico principal</strong>
+          Nos documentos oficiais mais recentes, <b>Nutrição da UNEB aparece no vestibular próprio</b>, enquanto a <b>UFBA usa ENEM/SISU para a maior parte dos cursos</b>. O melhor caminho agora é uma preparação híbrida com base única.
+        </div>
+        <div class="hero-card">
+          <strong>Prioridade imediata</strong>
+          Redação, Biologia, Química, Matemática aplicada e interpretação. Essa combinação entrega retorno alto tanto para a UFBA via ENEM quanto para a UNEB no vestibular.
+        </div>
+      </div>
+    </header>
+
+    <nav class="toc">
+      <h2>Navegação rápida</h2>
+      <div class="toc-grid">
+        <a href="#resumo">1. Resumo executivo</a>
+        <a href="#ingresso">2. Como entrar na UFBA e na UNEB</a>
+        <a href="#nota">3. Nota de corte e meta de pontuação</a>
+        <a href="#analise-enem">4. Análise das últimas 10 provas do ENEM</a>
+        <a href="#assuntos">5. Assuntos que mais caem por disciplina</a>
+        <a href="#uneb-6-provas">Sessão extra: assuntos que mais caem na UNEB</a>
+        <a href="#prioritarios">6. Conteúdos prioritários para UFBA + UNEB</a>
+        <a href="#trilha">7. Trilha intensiva de estudos até a prova</a>
+        <a href="#plano">8. Plano diário/semanal</a>
+        <a href="#cronograma-checklist">Sessão extra: cronograma com checklist</a>
+        <a href="#redacao">9. Estratégia de redação</a>
+        <a href="#erros">10. Erros que devo evitar</a>
+        <a href="#fontes">11. Fontes e links oficiais</a>
+      </div>
+    </nav>
+
+    <section id="resumo">
+      <div class="section-title">
+        <h2>1. Resumo executivo</h2>
+        <p>Leitura rápida para decidir como distribuir seu estudo entre ENEM/UFBA e Vestibular UNEB.</p>
+      </div>
+      <div class="panel">
+        <div class="callout-row">
+          <div class="mini">
+            <span class="tag official">Dado oficial</span>
+            <strong>UNEB - forma de ingresso mais recente</strong>
+            <div class="big">Vestibular UNEB</div>
+            Nutrição aparece no vestibular próprio da UNEB em 2025 e 2026.
+          </div>
+          <div class="mini">
+            <span class="tag official">Dado oficial</span>
+            <strong>UFBA - forma principal de ingresso</strong>
+            <div class="big">ENEM/SISU</div>
+            A UFBA informa oficialmente seleção via ENEM/SISU para os cursos de graduação, com exceções de habilidades específicas.
+          </div>
+          <div class="mini">
+            <span class="tag inference">Inferência estratégica</span>
+            <strong>Foco de estudo ideal</strong>
+            <div class="big">Base única</div>
+            O estudo principal deve ser no padrão ENEM, com blocos semanais dedicados a adaptar essa base para a prova da UNEB.
+          </div>
+        </div>
+
+        <div class="metric-row">
+          <div class="mini">
+            <strong>Plano macro</strong>
+            70% ENEM/UFBA
+          </div>
+          <div class="mini">
+            <strong>Plano complementar</strong>
+            30% UNEB
+          </div>
+          <div class="mini">
+            <strong>Prioridade alta</strong>
+            Redação + Natureza
+          </div>
+          <div class="mini">
+            <strong>Prioridade de sustentação</strong>
+            Linguagens + Matemática
+          </div>
+        </div>
+
+        <ul>
+          <li>Seu estudo não deve ser dividido em duas preparações separadas. O ideal é uma <b>base central ENEM</b> com ajuste tático para a <b>UNEB</b>.</li>
+          <li>Para a <b>UFBA</b>, seu desempenho em TRI, interpretação, regularidade e redação pesa mais do que tentar fechar conteúdos raros.</li>
+          <li>Para a <b>UNEB</b>, vale acrescentar revisões mais diretas de conteúdo, provas anteriores e treino de cobrança mais objetiva.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="ingresso">
+      <div class="section-title">
+        <h2>2. Como entrar na UFBA e na UNEB</h2>
+        <p>O ponto-chave agora é alinhar o estudo com a porta de entrada certa de cada universidade.</p>
+      </div>
+
+      <div class="table-wrap" style="margin-bottom: 14px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Universidade</th>
+              <th>Forma principal de ingresso encontrada</th>
+              <th>Leitura estratégica</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>UFBA</td>
+              <td>ENEM/SISU para a maior parte dos cursos, com exceções de habilidades específicas</td>
+              <td>Seu estudo principal precisa estar no formato ENEM: TRI, regularidade, leitura e redação.</td>
+            </tr>
+            <tr>
+              <td>UNEB</td>
+              <td>Vestibular próprio para Nutrição nos documentos mais recentes localizados</td>
+              <td>Use a base do ENEM, mas reserve blocos para adaptação ao estilo de prova e ao edital da UNEB.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel" style="margin-bottom: 14px;">
+        <span class="tag official">Dado oficial</span>
+        <p>
+          Nos quadros demonstrativos de vagas mais recentes da UNEB, <b>Nutrição (Bacharelado), Campus I - Salvador, Diurno</b> aparece no
+          <b>Vestibular UNEB</b>. No quadro 2026 localizado, Nutrição consta com <b>0 vaga SISU</b> e vagas ofertadas pelo vestibular próprio.
+        </p>
+      </div>
+
+      <div class="table-wrap" style="margin-bottom: 14px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Situação encontrada</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Curso</td>
+              <td>Nutrição (Bacharelado)</td>
+            </tr>
+            <tr>
+              <td>Campus</td>
+              <td>Campus I - Salvador</td>
+            </tr>
+            <tr>
+              <td>Turno</td>
+              <td>Diurno</td>
+            </tr>
+            <tr>
+              <td>Forma principal de ingresso atual</td>
+              <td>Vestibular UNEB</td>
+            </tr>
+            <tr>
+              <td>Uso histórico do SISU</td>
+              <td>Sim, encontrei registros oficiais anteriores</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap" style="margin-bottom: 14px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Semestre</th>
+              <th>Vagas-base</th>
+              <th>Ampla concorrência</th>
+              <th>Cotas para negros(as)</th>
+              <th>Sobrevagas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2026.1</td>
+              <td>30</td>
+              <td>18</td>
+              <td>12</td>
+              <td>2 indígenas, 2 quilombolas, 2 ciganos(as), 2 PcD/TEA/AHSD, 2 trans/NB</td>
+            </tr>
+            <tr>
+              <td>2026.2</td>
+              <td>30</td>
+              <td>18</td>
+              <td>12</td>
+              <td>2 indígenas, 2 quilombolas, 2 ciganos(as), 2 PcD/TEA/AHSD, 2 trans/NB</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Oferta</th>
+              <th>Candidato/vaga</th>
+              <th>Total de inscritos</th>
+              <th>Leitura estratégica</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Nutrição 2026.1</td>
+              <td>11,0</td>
+              <td>330</td>
+              <td>Entrada de 1º semestre foi significativamente mais disputada.</td>
+            </tr>
+            <tr>
+              <td>Nutrição 2026.2</td>
+              <td>3,27</td>
+              <td>98</td>
+              <td>2º semestre ficou bem menos concorrido no vestibular 2026.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="nota">
+      <div class="section-title">
+        <h2>3. Nota de corte e meta de pontuação</h2>
+        <p>Como a oferta atual é vestibular próprio, as notas abaixo servem como referência histórica de competitividade do curso no SISU/UNEB.</p>
+      </div>
+
+      <div class="panel" style="margin-bottom: 14px;">
+        <span class="tag history">Dado histórico</span>
+        <p>
+          Não encontrei nota de corte oficial pública para o <b>Vestibular UNEB 2025/2026</b> em Nutrição. Para o <b>SISU/UNEB</b>, encontrei
+          notas oficiais de 2024 e 2023.2 para o curso em Salvador.
+        </p>
+      </div>
+
+      <div class="panel" style="margin-bottom: 14px;">
+        <span class="tag inference">Inferência estratégica</span>
+        <p>
+          Como você vai fazer <b>ENEM para UFBA</b> e <b>vestibular da UNEB</b>, estas notas históricas de Nutrição servem como referência
+          de competitividade e ajudam a calibrar o nível de exigência do seu estudo, principalmente em Redação e Ciências da Natureza.
+        </p>
+      </div>
+
+      <div class="table-wrap" style="margin-bottom: 14px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Edição</th>
+              <th>Campus</th>
+              <th>Turno</th>
+              <th>AC</th>
+              <th>Negros(as)</th>
+              <th>Indígena</th>
+              <th>Quilombola</th>
+              <th>Cigano(a)</th>
+              <th>PcD/TEA/AHSD</th>
+              <th>Trans/NB</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2024</td>
+              <td>Salvador</td>
+              <td>Diurno</td>
+              <td>698,95</td>
+              <td>624,06</td>
+              <td>577,11</td>
+              <td>549,14</td>
+              <td>568,48</td>
+              <td>488,63</td>
+              <td>529,08</td>
+            </tr>
+            <tr>
+              <td>2023.2</td>
+              <td>Salvador</td>
+              <td>Diurno</td>
+              <td>692,75</td>
+              <td>611,51</td>
+              <td>587,99</td>
+              <td>582,24</td>
+              <td>595,69</td>
+              <td>575,46</td>
+              <td>581,14</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Modalidade</th>
+              <th>Nota mínima de risco</th>
+              <th>Nota competitiva</th>
+              <th>Nota segura</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ampla concorrência</td>
+              <td>690</td>
+              <td>698 a 704</td>
+              <td>705+</td>
+            </tr>
+            <tr>
+              <td>Negros(as)</td>
+              <td>605</td>
+              <td>615 a 629</td>
+              <td>630+</td>
+            </tr>
+            <tr>
+              <td>Sobrevagas</td>
+              <td>Muito variável</td>
+              <td>Tente superar o histórico do grupo</td>
+              <td>Quanto mais perto de 620+, melhor</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="analise-enem">
+      <div class="section-title">
+        <h2>4. Análise das últimas 10 provas do ENEM</h2>
+        <p>Base oficial do Inep para as provas de 2016 a 2025, com apoio de levantamentos educacionais para classificar recorrência temática.</p>
+      </div>
+      <div class="panel">
+        <div class="callout-row">
+          <div class="mini">
+            <strong>Linguagens</strong>
+            Interpretação, gênero textual, leitura de textos verbais e não verbais, inferência e análise de sentido.
+          </div>
+          <div class="mini">
+            <strong>Humanas</strong>
+            Contextualização histórica e social, leitura crítica, imagens, textos-base, gráficos e temas de cidadania.
+          </div>
+          <div class="mini">
+            <strong>Natureza + Matemática</strong>
+            Situação-problema, leitura de dados, aplicações do cotidiano, fenômenos e operações numéricas contextualizadas.
+          </div>
+        </div>
+
+        <ul>
+          <li>O Inep disponibiliza oficialmente as provas e gabaritos das edições anteriores, mas <b>não encontrei classificação oficial por assunto</b>.</li>
+          <li>Nos levantamentos usados como apoio, Linguagens e Humanas são as áreas em que interpretação mais domina a prova.</li>
+          <li>Em Natureza, os temas aparecem muito integrados a gráficos, experimentos, tabelas e leitura de fenômenos.</li>
+          <li>Em Matemática, o maior erro de quem está com pouco tempo é estudar fórmula demais e interpretação de menos.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="assuntos">
+      <div class="section-title">
+        <h2>5. Assuntos que mais caem por disciplina</h2>
+        <p>Ranking prático para priorização, organizado por retorno esperado na reta final.</p>
+      </div>
+
+      <div class="priority-grid">
+        <div class="priority-box alt-high">
+          <h3>Linguagens</h3>
+          <ul>
+            <li><b>Altíssima prioridade:</b> gêneros textuais, interpretação, língua e comunicação, leitura de imagem, efeito de sentido.</li>
+            <li><b>Alta prioridade:</b> sociolinguística, recursos linguísticos, artes e literatura em contexto.</li>
+            <li><b>Média prioridade:</b> escolas literárias mais recorrentes.</li>
+            <li><b>Baixa prioridade:</b> teoria muito decorativa e isolada.</li>
+          </ul>
+        </div>
+
+        <div class="priority-box alt-high">
+          <h3>Ciências Humanas</h3>
+          <ul>
+            <li><b>Altíssima prioridade:</b> História do Brasil, população, urbanização, globalização, política, ética e cidadania.</li>
+            <li><b>Alta prioridade:</b> geografia agrária, meio ambiente, cultura, conflitos sociais.</li>
+            <li><b>Média prioridade:</b> cartografia, clima, filosofia antiga e moderna.</li>
+            <li><b>Baixa prioridade:</b> recortes raros e muito específicos.</li>
+          </ul>
+        </div>
+
+        <div class="priority-box high">
+          <h3>Biologia</h3>
+          <ul>
+            <li><b>Altíssima prioridade:</b> ecologia, fisiologia humana, citologia, doenças humanas.</li>
+            <li><b>Alta prioridade:</b> evolução, biotecnologia, genética, bioquímica.</li>
+            <li><b>Média prioridade:</b> botânica, zoologia, histologia.</li>
+            <li><b>Baixa prioridade:</b> detalhes puramente classificatórios.</li>
+          </ul>
+        </div>
+
+        <div class="priority-box high">
+          <h3>Química e Física</h3>
+          <ul>
+            <li><b>Química:</b> química geral, físico-química, orgânica, ambiental, soluções, estequiometria, pH.</li>
+            <li><b>Física:</b> mecânica, eletricidade, ondulatória, termologia, óptica.</li>
+            <li><b>Média prioridade:</b> eletromagnetismo e física moderna.</li>
+            <li><b>Baixa prioridade:</b> tópicos raros e muito específicos.</li>
+          </ul>
+        </div>
+
+        <div class="priority-box medium">
+          <h3>Matemática</h3>
+          <ul>
+            <li><b>Altíssima prioridade:</b> razão e proporção, porcentagem, estatística, funções e equações.</li>
+            <li><b>Alta prioridade:</b> geometria plana, espacial, probabilidade.</li>
+            <li><b>Média prioridade:</b> progressões, análise combinatória, matemática financeira.</li>
+            <li><b>Baixa prioridade:</b> matrizes, polinômios e temas raros.</li>
+          </ul>
+        </div>
+
+        <div class="priority-box low">
+          <h3>Como o ENEM costuma cobrar</h3>
+          <ul>
+            <li>Texto + contexto social</li>
+            <li>Gráfico + leitura de tendência</li>
+            <li>Tabela + comparação de dados</li>
+            <li>Fenômeno do cotidiano + decisão prática</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="uneb-6-provas">
+      <div class="section-title">
+        <h2>Sessão extra: assuntos que mais caem na UNEB</h2>
+        <p>Análise qualitativa das 6 provas oficiais mais acessíveis no acervo e nos espelhos da UNEB, com foco no que mais se repete por disciplina.</p>
+      </div>
+
+      <div class="panel" style="margin-bottom: 14px;">
+        <div class="callout-row">
+          <div class="mini">
+            <span class="tag official">Base oficial</span>
+            <strong>Provas usadas</strong>
+            Espelhos e cadernos oficiais da UNEB de <b>2026</b>, <b>2024</b>, <b>2023</b>, <b>2022.2</b> e acervo oficial de provas anteriores com edições de <b>2018</b> e <b>2017</b>.
+          </div>
+          <div class="mini">
+            <span class="tag history">Limitação real</span>
+            <strong>Lacuna encontrada</strong>
+            <b>Não encontrei, de forma aberta e simples pelo buscador, o caderno completo de 2025</b>. Para fechar 6 provas oficiais acessíveis, completei a análise com o acervo anterior da própria UNEB.
+          </div>
+          <div class="mini">
+            <span class="tag inference">Leitura estratégica</span>
+            <strong>Como a UNEB cobra</strong>
+            A UNEB costuma cobrar os conteúdos de forma <b>mais direta e conteudista</b> que o ENEM, mas mantém forte presença de interpretação, contextualização e literatura indicada.
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-bottom: 14px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Base analisada</th>
+              <th>Situação encontrada</th>
+              <th>Observação estratégica</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Vestibular UNEB 2026</td>
+              <td>Espelhos pós-recursos do 1º e 2º dias</td>
+              <td>Base mais atual para estilo de cobrança.</td>
+            </tr>
+            <tr>
+              <td>Vestibular UNEB 2024</td>
+              <td>Espelhos pós-recursos e manual do candidato</td>
+              <td>Bom para ver repetição de gramática, literatura e Natureza.</td>
+            </tr>
+            <tr>
+              <td>Vestibular UNEB 2023</td>
+              <td>Cadernos e espelhos do 1º e 2º dias</td>
+              <td>Ajuda a confirmar padrão direto da prova.</td>
+            </tr>
+            <tr>
+              <td>Vestibular UNEB 2022.2</td>
+              <td>Cadernos/espelhos e gabaritos oficiais</td>
+              <td>Mostra a mesma divisão de disciplinas dos anos recentes.</td>
+            </tr>
+            <tr>
+              <td>Acervo UNEB 2018</td>
+              <td>Provas anteriores oficiais</td>
+              <td>Usado para completar recorrência histórica.</td>
+            </tr>
+            <tr>
+              <td>Acervo UNEB 2017</td>
+              <td>Provas anteriores oficiais</td>
+              <td>Usado para fechar 6 provas oficiais acessíveis.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="priority-grid">
+        <div class="priority-box alt-high">
+          <h3>Língua Portuguesa</h3>
+          <ul>
+            <li><b>Mais recorrentes:</b> interpretação de texto, reescrita de trechos, pontuação, concordância, regência, funções sintáticas e figuras de linguagem.</li>
+            <li><b>Recorrência forte:</b> variação linguística, norma-padrão em contexto e análise de efeito de sentido.</li>
+            <li><b>Como a UNEB cobra:</b> menos “viajar no texto” que o ENEM e mais identificar regra aplicada no fragmento.</li>
+          </ul>
+        </div>
+
+        <div class="priority-box alt-high">
+          <h3>Literatura Brasileira</h3>
+          <ul>
+            <li><b>Mais recorrentes:</b> modernismo, romance de 30, regionalismo, tendências contemporâneas e análise das obras indicadas no vestibular.</li>
+            <li><b>Recorrência forte:</b> Jorge Amado aparece como referência central em materiais e questões acessíveis.</li>
+            <li><b>Como a UNEB cobra:</b> escola literária + obra obrigatória + leitura crítica de tema social e cultural.</li>
+          </ul>
+        </div>
+
+        <div class="priority-box high">
+          <h3>Língua Estrangeira</h3>
+          <ul>
+            <li><b>Mais recorrentes:</b> interpretação textual, vocabulário contextual, conectores, ideia principal e inferência.</li>
+            <li><b>Recorrência forte:</b> leitura de textos jornalísticos, divulgação científica e cultura contemporânea.</li>
+            <li><b>Como a UNEB cobra:</b> a prova é muito centrada em compreensão de texto, com pouca gramática isolada.</li>
+          </ul>
+        </div>
+
+        <div class="priority-box high">
+          <h3>História + Atualidades</h3>
+          <ul>
+            <li><b>Mais recorrentes:</b> História do Brasil, escravidão, República, ditadura, movimentos sociais, cidadania e temas contemporâneos.</li>
+            <li><b>Recorrência forte:</b> relações raciais, desigualdade, cultura brasileira e debates sociais atuais.</li>
+            <li><b>Como a UNEB cobra:</b> mistura fato histórico com leitura política e social do presente.</li>
+          </ul>
+        </div>
+
+        <div class="priority-box high">
+          <h3>Geografia</h3>
+          <ul>
+            <li><b>Mais recorrentes:</b> urbanização, população, clima, relevo, globalização, geopolítica e meio ambiente.</li>
+            <li><b>Recorrência forte:</b> interpretação de mapas, climogramas, gráficos e impactos ambientais.</li>
+            <li><b>Como a UNEB cobra:</b> bastante aplicação em situações reais, especialmente em atualidades e território.</li>
+          </ul>
+        </div>
+
+        <div class="priority-box high">
+          <h3>Matemática</h3>
+          <ul>
+            <li><b>Mais recorrentes:</b> geometria plana e espacial, probabilidade, análise combinatória, porcentagem, razão e proporção.</li>
+            <li><b>Recorrência forte:</b> funções, equações, leitura de tabelas e problemas práticos.</li>
+            <li><b>Como a UNEB cobra:</b> enunciado direto, conta mais objetiva e menos modelo TRI do que o ENEM.</li>
+          </ul>
+        </div>
+
+        <div class="priority-box high">
+          <h3>Física</h3>
+          <ul>
+            <li><b>Mais recorrentes:</b> mecânica, energia, eletricidade, ondulatória, acústica, óptica e termologia.</li>
+            <li><b>Recorrência forte:</b> aplicações do cotidiano e interpretação de fenômenos físicos.</li>
+            <li><b>Como a UNEB cobra:</b> questão mais conceitual e calculada, com menos “texto de apoio” que o ENEM.</li>
+          </ul>
+        </div>
+
+        <div class="priority-box high">
+          <h3>Química</h3>
+          <ul>
+            <li><b>Mais recorrentes:</b> química orgânica, classificação de cadeias carbônicas, ligações químicas, soluções, pH e estequiometria.</li>
+            <li><b>Recorrência forte:</b> tabela periódica, funções inorgânicas e química ambiental.</li>
+            <li><b>Como a UNEB cobra:</b> identificação mais direta de conceito e nomenclatura do que o ENEM.</li>
+          </ul>
+        </div>
+
+        <div class="priority-box high">
+          <h3>Biologia</h3>
+          <ul>
+            <li><b>Mais recorrentes:</b> fisiologia humana, citologia, ecologia, genética, evolução, bioquímica e saúde.</li>
+            <li><b>Recorrência forte:</b> membrana plasmática, metabolismo, espécies bioindicadoras e relação entre organismo e ambiente.</li>
+            <li><b>Como a UNEB cobra:</b> conceito biológico + aplicação prática, muitas vezes em linguagem mais direta.</li>
+          </ul>
+        </div>
+
+        <div class="priority-box medium">
+          <h3>Redação</h3>
+          <ul>
+            <li><b>Mais recorrentes:</b> temas sociais, culturais e cidadania, com exigência de clareza, coesão e conclusão coerente.</li>
+            <li><b>Critérios oficiais encontrados:</b> domínio da escrita formal, entendimento do tema, organização dos argumentos e capacidade de conclusão.</li>
+            <li><b>Como a UNEB cobra:</b> proposta mais direta do que a redação do ENEM, mas ainda exige repertório e encadeamento lógico.</li>
+          </ul>
+        </div>
+
+        <div class="priority-box low">
+          <h3>O que fazer com isso</h3>
+          <ul>
+            <li><b>Para UNEB:</b> treine gramática, literatura indicada, matemática direta e Natureza com conceito bem fechado.</li>
+            <li><b>Para UFBA/ENEM:</b> mantenha interpretação, TRI, gráficos, redação e regularidade.</li>
+            <li><b>Ponte ideal:</b> a base do ENEM te sustenta, mas a UNEB pede revisão mais objetiva e literal.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="prioritarios">
+      <div class="section-title">
+        <h2>6. Conteúdos prioritários para UFBA + UNEB</h2>
+        <p>O foco aqui é o que mais entrega resultado ao mesmo tempo para ENEM/UFBA e para o vestibular da UNEB.</p>
+      </div>
+      <div class="panel">
+        <div class="callout-row">
+          <div class="mini">
+            <span class="tag history">Dado histórico</span>
+            <strong>Pesos da UNEB para Nutrição no SISU</strong>
+            Redação 4, Natureza 4, Linguagens 4, Humanas 2, Matemática 2.
+          </div>
+          <div class="mini">
+            <span class="tag official">Situação atual</span>
+            <strong>Aplicação em 2026</strong>
+            Não encontrei peso oficial atual aplicável a Nutrição na UNEB 2026, porque o curso aparece no vestibular próprio. Para a UFBA, a lógica oficial encontrada é ingresso via ENEM/SISU.
+          </div>
+          <div class="mini">
+            <span class="tag inference">Leitura estratégica</span>
+            <strong>Ordem de prioridade</strong>
+            Redação → Biologia → Química → Interpretação/Linguagens → Matemática aplicada → Humanas.
+          </div>
+        </div>
+
+        <ul>
+          <li><b>Biologia:</b> fisiologia humana, bioquímica celular, ecologia, doenças humanas, genética, microbiologia.</li>
+          <li><b>Química:</b> soluções, concentração, funções orgânicas, pH, estequiometria, ligações químicas, química dos alimentos.</li>
+          <li><b>Matemática:</b> porcentagem, regra de três, média, estatística, leitura de gráficos e tabelas.</li>
+          <li><b>Redação:</b> saúde pública, segurança alimentar, desigualdade, cidadania, políticas públicas, vulnerabilidade social.</li>
+          <li><b>Adaptação UNEB:</b> inclua provas anteriores, revisão mais direta de conteúdo, gramática e cobrança objetiva de itens.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="trilha">
+      <div class="section-title">
+        <h2>7. Trilha intensiva de estudos até a prova</h2>
+        <p>Modelo de estudo pensado para pouco tempo e máximo retorno nas duas frentes.</p>
+      </div>
+      <div class="panel">
+        <div class="priority-grid">
+          <div class="priority-box alt-high">
+            <h3>Fase 1: choque de prioridade</h3>
+            <ul>
+              <li>Fechar Redação, Fisiologia, Ecologia, Química geral, Soluções, Porcentagem e Estatística.</li>
+              <li>Questões fáceis e médias para ganhar tração no padrão ENEM.</li>
+            </ul>
+          </div>
+          <div class="priority-box high">
+            <h3>Fase 2: consolidação</h3>
+            <ul>
+              <li>Blocos mistos por área.</li>
+              <li>Revisão em 24h, 7 dias e 21 dias.</li>
+              <li>Caderno de erros obrigatório.</li>
+            </ul>
+          </div>
+          <div class="priority-box medium">
+            <h3>Fase 3: modo prova</h3>
+            <ul>
+              <li>Simulados completos de ENEM e blocos específicos da UNEB.</li>
+              <li>Correção por competência e por tipo de erro.</li>
+              <li>Reforço só no que mais cai e no que mais erra.</li>
+            </ul>
+          </div>
+          <div class="priority-box low">
+            <h3>Distribuição da energia</h3>
+            <ul>
+              <li><b>Principal:</b> 70% ENEM/UFBA.</li>
+              <li><b>Complementar:</b> 30% vestibular UNEB.</li>
+              <li><b>Por último:</b> temas raros.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="plano">
+      <div class="section-title">
+        <h2>8. Plano diário/semanal</h2>
+        <p>Três versões para encaixar na sua rotina real e sustentar as duas frentes sem dispersão.</p>
+      </div>
+
+      <div class="routine-grid">
+        <article class="routine-card">
+          <h3>Rotina 2h por dia</h3>
+          <ul>
+            <li>40 min conteúdo-chave ENEM</li>
+            <li>40 min questões</li>
+            <li>20 min revisão</li>
+            <li>20 min redação ou repertório</li>
+          </ul>
+        </article>
+
+        <article class="routine-card">
+          <h3>Rotina 4h por dia</h3>
+          <ul>
+            <li>2 blocos de 1h de conteúdo</li>
+            <li>1h de questões</li>
+            <li>30 min revisão</li>
+            <li>30 min redação</li>
+          </ul>
+        </article>
+
+        <article class="routine-card">
+          <h3>Rotina 6h por dia</h3>
+          <ul>
+            <li>3 blocos de conteúdo</li>
+            <li>2 blocos de questões</li>
+            <li>1 bloco de revisão ou redação</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="panel" style="margin-top: 14px;">
+        <h3 style="margin-bottom: 10px;">Semana mínima inteligente</h3>
+        <ul>
+          <li>2 blocos de Ciências da Natureza</li>
+          <li>2 blocos de Matemática</li>
+          <li>2 blocos de Linguagens/Redação</li>
+          <li>1 bloco de Humanas</li>
+          <li>1 mini-simulado ENEM ou simulado parcial</li>
+          <li>1 bloco exclusivo de vestibular UNEB</li>
+          <li>1 redação completa por semana</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="cronograma-checklist">
+      <div class="section-title">
+        <h2>Sessão extra: cronograma básico com checklist</h2>
+        <p>Planejado de segunda-feira, 08/06/2026, até o 1º dia do Enem em 08/11/2026, com revisão final até 15/11/2026.</p>
+      </div>
+
+      <div class="panel">
+        <div class="execution-grid">
+          <div class="mini">
+            <span class="tag official">Dado oficial</span>
+            <strong>Data do Enem 2026</strong>
+            <div class="big">08 e 15/11</div>
+            Informação confirmada no Inep em notícia publicada em <b>05/06/2026</b>.
+          </div>
+          <div class="mini">
+            <span class="tag inference">Ampla concorrência</span>
+            <strong>Meta prática</strong>
+            <div class="big">constância</div>
+            Para ampla, o foco precisa ser regularidade alta, não estudo perfeito. O ideal é acertar o básico, o médio e a redação toda semana.
+          </div>
+          <div class="mini">
+            <span class="tag inference">Baixa concentração</span>
+            <strong>Ritmo ideal</strong>
+            <div class="big">25-5</div>
+            Use blocos curtos: 25 min de foco, 5 min de pausa. Em dias bons, faça 4 a 6 blocos. Em dias ruins, faça 3 e mantenha a sequência.
+          </div>
+        </div>
+
+        <div class="mini-plan">
+          <div class="mini">
+            <strong>Modelo de dia de 2 horas</strong>
+            <ul>
+              <li>Bloco 1: teoria curta de assunto principal</li>
+              <li>Bloco 2: 8 a 12 questões</li>
+              <li>Bloco 3: correção e caderno de erros</li>
+              <li>Bloco 4: redação, leitura ou revisão leve</li>
+            </ul>
+          </div>
+          <div class="mini">
+            <strong>Modelo de dia de 4 horas</strong>
+            <ul>
+              <li>2 blocos de teoria curta</li>
+              <li>2 blocos de questões</li>
+              <li>1 bloco de correção</li>
+              <li>1 bloco de redação ou revisão UNEB</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="table-wrap" style="margin-top: 16px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Verificação oficial do Inep para 2026</th>
+                <th>O que encontrei</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>PDF oficial com "assuntos novos do Enem 2026"</td>
+                <td><b>Não encontrei</b> PDF oficial do Inep publicado em 2026 com lista nova de assuntos. O documento oficial de conteúdo continua sendo a <b>Matriz de Referência do Enem</b>, listada na página "Outros Documentos" do Inep, atualizada em <b>03/10/2025</b>.</td>
+              </tr>
+              <tr>
+                <td>Mudança oficial identificada em 2026</td>
+                <td>Encontrei como mudança oficial a <b>inscrição automática para concluintes da rede pública</b>, informada pelo Inep em notícia publicada em <b>22/05/2026</b>.</td>
+              </tr>
+              <tr>
+                <td>Cartilha oficial da redação 2026</td>
+                <td><b>Não encontrei cartilha 2026</b> publicada até a minha pesquisa. Na página oficial do Inep, a cartilha mais recente listada é a <b>Cartilha do Participante – Redação do Enem 2025</b>.</td>
+              </tr>
+              <tr>
+                <td>Datas da prova</td>
+                <td>O Inep confirmou em notícia publicada em <b>05/06/2026</b> que a prorrogação das inscrições <b>não alterou</b> as datas das provas, mantidas em <b>08/11/2026</b> e <b>15/11/2026</b>.</td>
+              </tr>
+              <tr>
+                <td>Ampliação de aplicação</td>
+                <td>Encontrei notícia oficial publicada em <b>28/05/2026</b> informando aplicação do Enem 2026 em <b>95 novos municípios</b>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-wrap" style="margin-top: 14px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Parte oficial da prova</th>
+                <th>Estrutura confirmada</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Total de questões</td>
+                <td><b>180 questões objetivas</b> no total, divididas em <b>4 provas com 45 questões cada</b>, além da redação.</td>
+              </tr>
+              <tr>
+                <td>1º dia - 08/11/2026</td>
+                <td>Linguagens, Códigos e suas Tecnologias + Ciências Humanas e suas Tecnologias + Redação. Duração oficial: <b>5h30</b>.</td>
+              </tr>
+              <tr>
+                <td>Língua estrangeira</td>
+                <td>Você responde apenas à prova de <b>inglês ou espanhol</b> escolhida na inscrição.</td>
+              </tr>
+              <tr>
+                <td>2º dia - 15/11/2026</td>
+                <td>Ciências da Natureza e suas Tecnologias + Matemática e suas Tecnologias. Duração oficial: <b>5h</b>.</td>
+              </tr>
+              <tr>
+                <td>Horário de aplicação</td>
+                <td>Portões abrem às <b>12h</b>, fecham às <b>13h</b>, a prova começa às <b>13h30</b>. Término: <b>19h</b> no 1º dia e <b>18h30</b> no 2º dia, no horário de Brasília.</td>
+              </tr>
+              <tr>
+                <td>Correção das objetivas</td>
+                <td>A nota das objetivas usa a <b>TRI</b>. Ou seja: coerência de acertos importa, não apenas o número bruto de questões.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="study-note">
+          Regra simples para marcar um item como estudado: só marque depois de fazer pelo menos <b>uma revisão curta + questões do tema</b>.
+        </p>
+
+        <div class="reset-row">
+          <button class="reset-btn" type="button" data-reset-checklist>Limpar marcações desta sessão</button>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top: 14px;">
+        <h3 style="margin-bottom: 8px;">Cronograma semanal até o Enem</h3>
+        <p class="study-note">Cada semana tem um foco central. Se sobrar tempo, mantenha 1 bloco de redação e 1 bloco de revisão de erros.</p>
+
+        <div class="timeline-grid">
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 1 • 08/06 a 14/06</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-01"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Organização + diagnóstico</span>
+            <p>Monte rotina, teste blocos curtos e faça um mini-simulado para descobrir onde você mais perde ponto.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 2 • 15/06 a 21/06</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-02"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Biologia base + redação</span>
+            <p>Citologia, fisiologia básica, interpretação de texto e 1 redação completa.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 3 • 22/06 a 28/06</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-03"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Química base + matemática básica</span>
+            <p>Ligações, funções inorgânicas, razão, proporção, porcentagem e gráficos.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 4 • 29/06 a 05/07</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-04"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Linguagens + Humanas</span>
+            <p>Gêneros textuais, interpretação, História do Brasil, urbanização e cidadania.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 5 • 06/07 a 12/07</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-05"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Fisiologia humana</span>
+            <p>Sistemas digestório, circulatório, respiratório e endócrino. Tema muito útil para saúde.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 6 • 13/07 a 19/07</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-06"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Ecologia + estatística</span>
+            <p>Cadeias alimentares, impactos ambientais, média, moda, mediana e leitura de tabelas.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 7 • 20/07 a 26/07</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-07"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Química orgânica + funções</span>
+            <p>Funções orgânicas, propriedades e noções de função afim, função quadrática e equações.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 8 • 27/07 a 02/08</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-08"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Física mecânica + revisão UNEB</span>
+            <p>Velocidade, força, energia e um bloco da semana voltado a gramática e cobrança mais direta da UNEB.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 9 • 03/08 a 09/08</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-09"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Genética + evolução</span>
+            <p>Herança, DNA, mutações, seleção natural e biotecnologia.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 10 • 10/08 a 16/08</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-10"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Soluções + probabilidade</span>
+            <p>Concentração, diluição, pH e probabilidade básica do ENEM.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 11 • 17/08 a 23/08</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-11"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Eletricidade + interpretação</span>
+            <p>Circuitos simples, consumo de energia e treino pesado de leitura em Linguagens.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 12 • 24/08 a 30/08</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-12"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Humanas de alta incidência</span>
+            <p>República, ditadura, redemocratização, geopolítica, globalização e questões sociais.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 13 • 31/08 a 06/09</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-13"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Doenças humanas + bioquímica</span>
+            <p>Imunologia, vacinas, doenças infecciosas, enzimas e metabolismo.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 14 • 07/09 a 13/09</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-14"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Estequiometria + geometria</span>
+            <p>Cálculos químicos, regra de três, áreas, volumes e interpretação espacial.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 15 • 14/09 a 20/09</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-15"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Óptica + termologia</span>
+            <p>Calor, temperatura, lentes, espelhos e aplicações no cotidiano.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 16 • 21/09 a 27/09</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-16"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Revisão forte de Natureza</span>
+            <p>Refaça erros de Biologia, Química e Física. Priorize temas em que você errou mais nas questões.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 17 • 28/09 a 04/10</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-17"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Revisão forte de Matemática + Linguagens</span>
+            <p>Porcentagem, estatística, funções, interpretação e leitura de imagem.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 18 • 05/10 a 11/10</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-18"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Simulado 1</span>
+            <p>Faça um simulado completo no estilo ENEM e gaste a semana corrigindo com calma.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 19 • 12/10 a 18/10</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-19"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Simulado 2 + redação</span>
+            <p>Repita o processo e compare os erros com o simulado anterior.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 20 • 19/10 a 25/10</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-20"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Simulado 3 + bloco UNEB</span>
+            <p>Mais um simulado e um bloco específico da UNEB com gramática, leitura e conteúdo objetivo.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 21 • 26/10 a 01/11</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-21"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Revisão de erros</span>
+            <p>Nada de abrir matéria nova. Revise apenas os pontos que ainda te derrubam.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 22 • 02/11 a 08/11</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-22"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Reta final do 1º dia</span>
+            <p>Foco em Redação, Linguagens e Humanas. Revisão leve, sono e controle de ansiedade.</p>
+          </article>
+
+          <article class="week-card">
+            <div class="week-top">
+              <span class="week-badge">Semana 23 • 09/11 a 15/11</span>
+              <label class="check-item"><input type="checkbox" data-check-id="week-23"><span>Semana concluída</span></label>
+            </div>
+            <span class="focus-badge">Intervalo até o 2º dia</span>
+            <p>Foco total em Natureza e Matemática. Refaça erros, fórmulas básicas, gráficos e questões médias.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top: 14px;">
+        <h3 style="margin-bottom: 8px;">Checklist de assuntos para marcar</h3>
+        <p class="study-note">Você não precisa fechar tudo de uma vez. Vá marcando por avanço real, sem pressão de perfeição.</p>
+
+        <div class="check-grid">
+          <article class="check-card">
+            <h3>Linguagens</h3>
+            <div class="checklist">
+              <label class="check-item"><input type="checkbox" data-check-id="ling-01"><span>Interpretação de texto</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="ling-02"><span>Gêneros textuais</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="ling-03"><span>Variação linguística</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="ling-04"><span>Funções da linguagem</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="ling-05"><span>Leitura de imagem, tirinha e propaganda</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="ling-06"><span>Literatura brasileira em contexto</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="ling-07"><span>Artes e movimentos artísticos</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="ling-08"><span>Gramática contextualizada</span></label>
+            </div>
+          </article>
+
+          <article class="check-card">
+            <h3>Ciências Humanas</h3>
+            <div class="checklist">
+              <label class="check-item"><input type="checkbox" data-check-id="hum-01"><span>Brasil Colônia, Império e República</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="hum-02"><span>Ditadura e redemocratização</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="hum-03"><span>Globalização e geopolítica</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="hum-04"><span>Urbanização e população</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="hum-05"><span>Geografia agrária</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="hum-06"><span>Meio ambiente e sustentabilidade</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="hum-07"><span>Filosofia política e ética</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="hum-08"><span>Sociologia, cidadania e trabalho</span></label>
+            </div>
+          </article>
+
+          <article class="check-card">
+            <h3>Biologia</h3>
+            <div class="checklist">
+              <label class="check-item"><input type="checkbox" data-check-id="bio-01"><span>Citologia</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="bio-02"><span>Fisiologia humana</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="bio-03"><span>Ecologia</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="bio-04"><span>Genética</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="bio-05"><span>Evolução</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="bio-06"><span>Biotecnologia</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="bio-07"><span>Doenças humanas e imunologia</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="bio-08"><span>Bioquímica celular</span></label>
+            </div>
+          </article>
+
+          <article class="check-card">
+            <h3>Química</h3>
+            <div class="checklist">
+              <label class="check-item"><input type="checkbox" data-check-id="qui-01"><span>Estrutura atômica e ligações</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="qui-02"><span>Funções inorgânicas</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="qui-03"><span>Estequiometria</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="qui-04"><span>Soluções e concentração</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="qui-05"><span>pH e neutralização</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="qui-06"><span>Química orgânica</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="qui-07"><span>Eletroquímica</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="qui-08"><span>Química ambiental</span></label>
+            </div>
+          </article>
+
+          <article class="check-card">
+            <h3>Física</h3>
+            <div class="checklist">
+              <label class="check-item"><input type="checkbox" data-check-id="fis-01"><span>Cinemática e dinâmica</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="fis-02"><span>Trabalho e energia</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="fis-03"><span>Termologia</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="fis-04"><span>Ondulatória</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="fis-05"><span>Óptica</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="fis-06"><span>Eletricidade</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="fis-07"><span>Hidrostática</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="fis-08"><span>Leitura de experimentos e gráficos</span></label>
+            </div>
+          </article>
+
+          <article class="check-card">
+            <h3>Matemática</h3>
+            <div class="checklist">
+              <label class="check-item"><input type="checkbox" data-check-id="mat-01"><span>Razão e proporção</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="mat-02"><span>Porcentagem</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="mat-03"><span>Funções</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="mat-04"><span>Equações e sistemas</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="mat-05"><span>Estatística</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="mat-06"><span>Probabilidade</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="mat-07"><span>Geometria plana e espacial</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="mat-08"><span>Matemática financeira</span></label>
+            </div>
+          </article>
+
+          <article class="check-card">
+            <h3>Redação</h3>
+            <div class="checklist">
+              <label class="check-item"><input type="checkbox" data-check-id="red-01"><span>Estrutura da introdução</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="red-02"><span>Desenvolvimento 1 com argumento claro</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="red-03"><span>Desenvolvimento 2 com repertório útil</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="red-04"><span>Proposta de intervenção completa</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="red-05"><span>Coesão e conectivos</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="red-06"><span>Correção gramatical</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="red-07"><span>1 redação completa na semana</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="red-08"><span>Reescrita de uma redação corrigida</span></label>
+            </div>
+          </article>
+
+          <article class="check-card">
+            <h3>Ajuste para a UNEB</h3>
+            <div class="checklist">
+              <label class="check-item"><input type="checkbox" data-check-id="uneb-01"><span>1 bloco semanal com prova anterior</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="uneb-02"><span>Gramática objetiva</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="uneb-03"><span>Leitura literal e inferencial</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="uneb-04"><span>Literatura e artes cobradas de forma direta</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="uneb-05"><span>Revisão curta de conteúdos factuais</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="uneb-06"><span>Correção dos erros da prova UNEB</span></label>
+            </div>
+          </article>
+
+          <article class="check-card">
+            <h3>Checklist semanal mínimo</h3>
+            <div class="checklist">
+              <label class="check-item"><input type="checkbox" data-check-id="rot-01"><span>Estudei pelo menos 5 dias na semana</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="rot-02"><span>Fiz 1 bloco de redação</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="rot-03"><span>Fiz 1 revisão de erros</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="rot-04"><span>Resolvi questões de Natureza</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="rot-05"><span>Resolvi questões de Matemática</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="rot-06"><span>Li e interpretei textos de Linguagens/Humanas</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="rot-07"><span>Fiz um bloco específico para a UNEB</span></label>
+              <label class="check-item"><input type="checkbox" data-check-id="rot-08"><span>Dormi bem antes do dia de maior carga</span></label>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="redacao">
+      <div class="section-title">
+        <h2>9. Estratégia de redação</h2>
+        <p>Como transformar redação em sua maior alavanca de pontuação.</p>
+      </div>
+      <div class="panel">
+        <div class="callout-row">
+          <div class="mini">
+            <strong>Temas prováveis</strong>
+            Envelhecimento, segurança alimentar, saúde mental, desinformação em saúde, desigualdade, tecnologia e cidadania.
+          </div>
+          <div class="mini">
+            <strong>Estrutura segura</strong>
+            Introdução com tese clara, 2 desenvolvimentos com repertório + análise e conclusão com proposta completa.
+          </div>
+          <div class="mini">
+            <strong>Treino semanal</strong>
+            1 redação completa, 1 treino de introdução e 1 treino de repertório/conclusão.
+          </div>
+        </div>
+
+        <ul>
+          <li><b>Introdução:</b> apresente o problema e sua tese em linguagem direta.</li>
+          <li><b>Desenvolvimento 1:</b> causa estrutural ou social do problema.</li>
+          <li><b>Desenvolvimento 2:</b> consequência e aprofundamento argumentativo.</li>
+          <li><b>Conclusão:</b> agente, ação, meio, finalidade e detalhamento.</li>
+          <li><b>Regra prática:</b> repertório sem análise não sustenta nota alta.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="erros">
+      <div class="section-title">
+        <h2>10. Erros que devo evitar</h2>
+        <p>O objetivo aqui é cortar desperdício de tempo na reta final.</p>
+      </div>
+      <div class="panel">
+        <ul>
+          <li>Estudar tudo com o mesmo peso.</li>
+          <li>Fazer resumo demais e questão de menos.</li>
+          <li>Negligenciar redação.</li>
+          <li>Ignorar interpretação de gráficos, tabelas e comandos.</li>
+          <li>Trocar de material toda semana.</li>
+          <li>Estudar matemática avançada demais e esquecer base aplicada.</li>
+          <li>Corrigir questão sem registrar erro e motivo do erro.</li>
+          <li>Estudar UFBA e UNEB como se fossem duas preparações isoladas.</li>
+          <li>Achar que Nutrição na UNEB está hoje no SISU e não acompanhar o vestibular próprio.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="fontes">
+      <div class="section-title">
+        <h2>11. Fontes e links oficiais</h2>
+        <p>Links usados na pesquisa e em toda a montagem do plano. Sempre confira a data do documento ao abrir.</p>
+      </div>
+
+      <div class="sources-grid">
+        <article class="source-card">
+          <h3>UNEB - ingresso e vagas</h3>
+          <ul>
+            <li><a href="https://www.sisu.uneb.br/" target="_blank" rel="noopener noreferrer">Portal SISU UNEB</a></li>
+            <li><a href="https://www.sisu.uneb.br/index.php/perguntas-frequentes/" target="_blank" rel="noopener noreferrer">Perguntas frequentes SISU UNEB</a></li>
+            <li><a href="https://www.sisu.uneb.br/index.php/resolucoes-da-uneb/" target="_blank" rel="noopener noreferrer">Resoluções e regulamentação</a></li>
+            <li><a href="https://conselhos.uneb.br/wp-content/uploads/2025/08/2294-consepe-Res.-Quadro-de-Vagas-vestibular-2026.pdf" target="_blank" rel="noopener noreferrer">Resolução CONSEPE 2.294/2025</a></li>
+            <li><a href="https://www.sisu.uneb.br/wp-content/uploads/2025/01/2255-consepe-Res.-do-Quadro-de-Vagas-2025.pdf" target="_blank" rel="noopener noreferrer">Resolução CONSEPE 2.255/2024</a></li>
+          </ul>
+        </article>
+
+        <article class="source-card">
+          <h3>Vestibular UNEB</h3>
+          <ul>
+            <li><a href="https://vestibular2026.uneb.br/" target="_blank" rel="noopener noreferrer">Portal do Vestibular UNEB 2026</a></li>
+            <li><a href="https://www.vestibular.uneb.br/" target="_blank" rel="noopener noreferrer">Portal central do Vestibular UNEB</a></li>
+            <li><a href="https://vestibular2026.uneb.br/wp-content/uploads/2025/10/Edital-PRORROGACAO-inscricoes-Processo-Seletivo-Vestibular-2026.pdf" target="_blank" rel="noopener noreferrer">Edital com vagas 2026</a></li>
+            <li><a href="https://vestibular2026.uneb.br/?p=608" target="_blank" rel="noopener noreferrer">Espelhos das provas 2026</a></li>
+            <li><a href="https://vestibular2024.uneb.br/2024/01/16/espelhos-das-provas-do-1o-e-2o-dias-pos-recursos/" target="_blank" rel="noopener noreferrer">Espelhos das provas 2024</a></li>
+            <li><a href="https://vestibular2023.uneb.br/2023/01/13/espelhos-das-provas-do-1o-e-2o-dias/" target="_blank" rel="noopener noreferrer">Espelhos das provas 2023</a></li>
+            <li><a href="https://vestibular2022.uneb.br/2022/08/01/gabaritos-e-espelhos-das-provas-do-1o-e-2o-dias/" target="_blank" rel="noopener noreferrer">Espelhos das provas 2022.2</a></li>
+            <li><a href="https://vestibular2023.uneb.br/provas-de-vestibulares-anteriores/" target="_blank" rel="noopener noreferrer">Acervo de provas anteriores da UNEB</a></li>
+            <li><a href="https://www.vestibular2024.uneb.br/wp-content/uploads/2023/09/manual_do_candidato_2024.pdf" target="_blank" rel="noopener noreferrer">Manual do Candidato 2024</a></li>
+            <li><a href="https://vestibular2026.uneb.br/wp-content/uploads/2026/03/Concorrencia-Vestibular-2026-UNEB-VEST-1-1.pdf" target="_blank" rel="noopener noreferrer">Mapa candidato/vaga 2026</a></li>
+            <li><a href="https://vestibular2026.uneb.br/wp-content/uploads/2026/02/ResultadoUneb2026-S1O1.pdf" target="_blank" rel="noopener noreferrer">Resultado 2026.1</a></li>
+            <li><a href="https://vestibular2026.uneb.br/wp-content/uploads/2026/05/ResultadoUneb2026-segundo-semestre-1a-opcao-presencial.pdf" target="_blank" rel="noopener noreferrer">Resultado 2026.2</a></li>
+          </ul>
+        </article>
+
+        <article class="source-card">
+          <h3>Notas de corte e pesos</h3>
+          <ul>
+            <li><a href="https://www.sisu.uneb.br/index.php/notas-de-corte/" target="_blank" rel="noopener noreferrer">Página de notas de corte UNEB</a></li>
+            <li><a href="https://www.sisu.uneb.br/wp-content/uploads/2026/02/Nota-de-Corte-SISU-2026.pdf" target="_blank" rel="noopener noreferrer">Nota de corte SISU 2026</a></li>
+            <li><a href="https://sisu.uneb.br/wp-content/uploads/2025/01/Nota-de-Corte-do-Sisu-2024.pdf" target="_blank" rel="noopener noreferrer">Nota de corte SISU 2024</a></li>
+            <li><a href="https://sisu.uneb.br/wp-content/uploads/2024/01/Nota-de-Corte-do-Sisu-2023.2.pdf" target="_blank" rel="noopener noreferrer">Nota de corte SISU 2023.2</a></li>
+            <li><a href="https://sisu.uneb.br/wp-content/uploads/2023/02/Tabela-de-Pesos-atualizada-Sisu.pdf" target="_blank" rel="noopener noreferrer">Tabela histórica de pesos da UNEB</a></li>
+          </ul>
+        </article>
+
+        <article class="source-card">
+          <h3>UFBA - ingresso</h3>
+          <ul>
+            <li><a href="https://ingresso.ufba.br/sisu-2026" target="_blank" rel="noopener noreferrer">Ingresso UFBA - SISU 2026</a></li>
+            <li><a href="https://supac.ufba.br/ingresso-graduacao-sisu" target="_blank" rel="noopener noreferrer">SUPAC UFBA - ingresso graduação SISU</a></li>
+            <li><a href="https://ingresso.ufba.br/sites/ingresso.ufba.br/files/edital_005_2026-_sisu_ufba_2026_assinado.pdf" target="_blank" rel="noopener noreferrer">Edital SISU UFBA 2026</a></li>
+            <li><a href="https://ingresso.ufba.br/inicio" target="_blank" rel="noopener noreferrer">Portal de ingresso UFBA</a></li>
+          </ul>
+        </article>
+
+        <article class="source-card">
+          <h3>INEP e apoio analítico</h3>
+          <ul>
+            <li><a href="https://www.gov.br/inep/pt-br/centrais-de-conteudo/noticias/enem/enem-2026-prazo-de-inscricao-e-ampliado-ate-12-6" target="_blank" rel="noopener noreferrer">Inep - cronograma e datas do Enem 2026 (publicado em 05/06/2026)</a></li>
+            <li><a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos" target="_blank" rel="noopener noreferrer">Inep - Provas e gabaritos</a></li>
+            <li><a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos/2025" target="_blank" rel="noopener noreferrer">Enem 2025</a></li>
+            <li><a href="https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/microdados/enem" target="_blank" rel="noopener noreferrer">Microdados do Enem</a></li>
+            <li><a href="https://www.gov.br/inep/pt-br/centrais-de-conteudo/acervo-linha-editorial/publicacoes-institucionais/avaliacoes-e-exames-da-educacao-basica/redacao-do-enem-2025-cartilha-do-a-participante" target="_blank" rel="noopener noreferrer">Cartilha da redação 2025</a></li>
+            <li><a href="https://vestibulares.estrategia.com/portal/enem-e-vestibulares/enem/assuntos-que-mais-caem-no-enem/" target="_blank" rel="noopener noreferrer">Estratégia Vestibulares - incidência de temas</a></li>
+            <li><a href="https://blog.evolucional.com.br/o-que-mais-cai-no-enem/" target="_blank" rel="noopener noreferrer">Evolucional - análise 2015-2024</a></li>
+          </ul>
+        </article>
+      </div>
+
+      <p class="footer-note">
+        Observação: onde não havia publicação oficial acessível com dado final, isso foi sinalizado na página como “não encontrei dado oficial”.
+        As inferências estratégicas servem para orientar estudo, não substituem edital, cronograma ou publicação institucional.
+      </p>
+    </section>
+  </main>
+  <script>
+    (function () {
+      const inputs = document.querySelectorAll("[data-check-id]");
+      const resetButton = document.querySelector("[data-reset-checklist]");
+      const prefix = "enem-study-check-";
+
+      inputs.forEach((input) => {
+        const key = prefix + input.dataset.checkId;
+        input.checked = localStorage.getItem(key) === "1";
+        input.addEventListener("change", () => {
+          localStorage.setItem(key, input.checked ? "1" : "0");
+        });
+      });
+
+      if (resetButton) {
+        resetButton.addEventListener("click", () => {
+          const confirmed = window.confirm("Limpar todas as marcações desta sessão?");
+          if (!confirmed) return;
+
+          inputs.forEach((input) => {
+            const key = prefix + input.dataset.checkId;
+            input.checked = false;
+            localStorage.removeItem(key);
+          });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
