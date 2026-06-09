@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "firebase": "firebase",
+    "firebase:login": "firebase login",
+    "firebase:deploy": "firebase deploy"
+  },
+  "devDependencies": {
+    "firebase-tools": "^15.19.1"
+  }
+}
