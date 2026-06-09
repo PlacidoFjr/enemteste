@@ -262,7 +262,9 @@
 
     .week-actions,
     .week-summary,
-    .plan-grid {
+    .plan-grid,
+    .adaptive-grid,
+    .adaptive-summary {
       display: grid;
       gap: 12px;
     }
@@ -273,12 +275,22 @@
     }
 
     .week-summary {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       margin-bottom: 16px;
     }
 
     .plan-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .adaptive-grid {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      margin-bottom: 18px;
+    }
+
+    .adaptive-summary {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 14px;
     }
 
     .plan-card {
@@ -392,6 +404,89 @@
       font-size: 0.95rem;
     }
 
+    .plan-link {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .priority-stack,
+    .insight-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .priority-item,
+    .insight-item {
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid #ead9c8;
+      background: #fff7ef;
+    }
+
+    .priority-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .priority-rank {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      flex: 0 0 auto;
+    }
+
+    .priority-title {
+      margin: 0;
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+
+    .priority-meta,
+    .priority-note,
+    .insight-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .insight-item strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .priority-meta {
+      margin-top: 4px;
+    }
+
+    .priority-note {
+      margin-top: 8px;
+      color: var(--accent-2);
+      font-weight: 700;
+    }
+
+    .priority-score {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: #eaf6f3;
+      color: var(--accent-2);
+      padding: 6px 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
     .section-card {
       padding: 22px;
       margin-bottom: 18px;
@@ -451,14 +546,25 @@
     }
 
     .lesson-item {
-      display: flex;
+      display: grid;
+      grid-template-columns: 20px minmax(0, 1fr);
       align-items: flex-start;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 12px;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 14px;
       background: #fff7ef;
       border: 1px solid #ecd9c2;
       margin-top: 8px;
+    }
+
+    .lesson-item.complete {
+      background: #fbf7f1;
+      border-color: #dfd4c7;
+    }
+
+    .lesson-body {
+      display: grid;
+      gap: 10px;
     }
 
     .lesson-item input {
@@ -469,13 +575,124 @@
       margin-top: 2px;
     }
 
-    .lesson-item a {
+    .lesson-title {
+      color: var(--ink);
       text-decoration: none;
+      font-weight: 700;
     }
 
-    .lesson-item input:checked + a {
+    .lesson-item.complete .lesson-title {
       text-decoration: line-through;
       opacity: 0.68;
+    }
+
+    .lesson-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      background: #f3e6d7;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .status-badge.is-dominado {
+      background: #e8f5ef;
+      color: var(--accent-2);
+    }
+
+    .status-badge.is-revisando {
+      background: #edf2fb;
+      color: #385b90;
+    }
+
+    .status-badge.is-progresso {
+      background: #fff1de;
+      color: #9a5a0b;
+    }
+
+    .topic-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .topic-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      border: 1px solid #e2d4c4;
+      background: #fff;
+      padding: 6px 10px;
+    }
+
+    .lesson-controls {
+      display: grid;
+      gap: 8px;
+    }
+
+    .control-row,
+    .review-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .control-select {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px 10px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.88rem;
+    }
+
+    .quick-btn {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 11px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .quick-btn[data-result="bad"] {
+      color: #9c3c27;
+      border-color: #e2b8ad;
+      background: #fff0ec;
+    }
+
+    .quick-btn[data-result="ok"] {
+      color: #8b5b08;
+      border-color: #e8cf9d;
+      background: #fff7e8;
+    }
+
+    .quick-btn[data-result="good"] {
+      color: var(--accent-2);
+      border-color: #b9ddd6;
+      background: #eef8f6;
+    }
+
+    .topic-note {
+      color: var(--muted);
+      font-size: 0.84rem;
     }
 
     .lesson-list {
@@ -509,6 +726,8 @@
       .timer-actions,
       .stats-grid,
       .goal-grid,
+      .adaptive-grid,
+      .adaptive-summary,
       .week-summary,
       .links-grid {
         grid-template-columns: 1fr;
@@ -641,6 +860,47 @@
           <p>Você escolhe quantas horas consegue estudar em cada dia e a página monta blocos curtos, com pausas e ordem estratégica para ENEM + UNEB. O foco aqui é funcionar mesmo com baixa concentração.</p>
         </div>
 
+        <div class="adaptive-grid">
+          <article class="plan-card">
+            <div class="plan-head">
+              <h3>Fila inteligente de prioridade</h3>
+              <span class="day-chip">Adapta sozinho</span>
+            </div>
+            <div class="priority-stack" data-priority-list></div>
+          </article>
+
+          <article class="plan-card">
+            <div class="plan-head">
+              <h3>Leitura da sua semana</h3>
+              <span class="day-chip">Mastery</span>
+            </div>
+            <div class="insight-stack">
+              <div class="insight-item">
+                <strong data-insight-focus>Tudo equilibrado</strong>
+                <p data-insight-text>Assim que você começar a marcar dificuldade, revisão e progresso, esta área passa a explicar para onde sua energia deve ir.</p>
+              </div>
+            </div>
+            <div class="adaptive-summary">
+              <div class="stat-box">
+                <strong>Pendentes fortes</strong>
+                <span data-summary-pending>0</span>
+              </div>
+              <div class="stat-box">
+                <strong>Difíceis</strong>
+                <span data-summary-hard>0</span>
+              </div>
+              <div class="stat-box">
+                <strong>Revisão urgente</strong>
+                <span data-summary-due>0</span>
+              </div>
+              <div class="stat-box">
+                <strong>Dominados</strong>
+                <span data-summary-mastered>0</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
         <div class="week-actions">
           <button class="timer-btn" type="button" data-week-preset="leve">Preencher 2h por dia</button>
           <button class="timer-btn" type="button" data-week-preset="equilibrado">Seg a sex 3h + fim de semana 4h</button>
@@ -654,6 +914,10 @@
           <div class="stat-box">
             <strong>Blocos previstos</strong>
             <span data-week-blocks>0</span>
+          </div>
+          <div class="stat-box">
+            <strong>Tópicos puxados pela IA</strong>
+            <span data-week-topics>0</span>
           </div>
           <div class="stat-box">
             <strong>Formato</strong>
@@ -818,7 +1082,15 @@
       const weekGrid = document.querySelector("[data-week-grid]");
       const weekTotal = document.querySelector("[data-week-total]");
       const weekBlocks = document.querySelector("[data-week-blocks]");
+      const weekTopics = document.querySelector("[data-week-topics]");
       const weekPresetBtns = document.querySelectorAll("[data-week-preset]");
+      const priorityList = document.querySelector("[data-priority-list]");
+      const insightFocus = document.querySelector("[data-insight-focus]");
+      const insightText = document.querySelector("[data-insight-text]");
+      const summaryPending = document.querySelector("[data-summary-pending]");
+      const summaryHard = document.querySelector("[data-summary-hard]");
+      const summaryDue = document.querySelector("[data-summary-due]");
+      const summaryMastered = document.querySelector("[data-summary-mastered]");
 
       const currentKey = "placido-study-current-seconds";
       const runningKey = "placido-study-running";
@@ -826,6 +1098,7 @@
       const totalKey = "placido-study-total-seconds";
       const goalKey = "placido-study-goal-hours";
       const weekHoursKey = "placido-week-hours";
+      const topicStatePrefix = "placido-topic-state-";
 
       let currentSeconds = Number(localStorage.getItem(currentKey) || 0);
       let totalSeconds = Number(localStorage.getItem(totalKey) || 0);
@@ -833,7 +1106,7 @@
       let startedAt = Number(localStorage.getItem(startedAtKey) || 0);
       let intervalId = null;
 
-      const todayKey = "placido-study-today-" + new Date().toISOString().slice(0, 10);
+      const todayKey = "placido-study-today-" + getLocalDateString();
       const checkPrefix = "placido-topic-check-";
       const weekdayKeys = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
       const todayWeekKey = weekdayKeys[new Date().getDay()];
@@ -846,92 +1119,38 @@
         sabado: 4,
         domingo: 2
       };
-      const weeklyTemplates = [
-        {
-          key: "segunda",
-          label: "Segunda",
-          chip: "Base forte",
-          blocks: [
-            { tag: "Biologia", text: "Fisiologia humana + bioquímica celular" },
-            { tag: "Matemática", text: "Porcentagem + razão e proporção" },
-            { tag: "Linguagens", text: "Interpretação de texto + leitura de imagem" },
-            { tag: "Química", text: "Soluções + pH e neutralização" },
-            { tag: "Revisão", text: "10 a 15 questões e correção dos erros" }
-          ]
-        },
-        {
-          key: "terca",
-          label: "Terça",
-          chip: "Natureza + humanas",
-          blocks: [
-            { tag: "Química", text: "Estequiometria + concentração de soluções" },
-            { tag: "Humanas", text: "Brasil República + ditadura e redemocratização" },
-            { tag: "Redação", text: "Introdução + repertório pronto" },
-            { tag: "Biologia", text: "Genética + biotecnologia" },
-            { tag: "UNEB", text: "Leitura inferencial e gramática objetiva" }
-          ]
-        },
-        {
-          key: "quarta",
-          label: "Quarta",
-          chip: "Cálculo e leitura",
-          blocks: [
-            { tag: "Matemática", text: "Estatística + probabilidade" },
-            { tag: "Biologia", text: "Citologia + doenças humanas" },
-            { tag: "Física", text: "Trabalho, energia e gráficos" },
-            { tag: "Linguagens", text: "Gêneros textuais + variação linguística" },
-            { tag: "Revisão", text: "Questões erradas acumuladas da semana" }
-          ]
-        },
-        {
-          key: "quinta",
-          label: "Quinta",
-          chip: "Redação forte",
-          blocks: [
-            { tag: "Química", text: "Química orgânica + eletroquímica" },
-            { tag: "Redação", text: "Desenvolvimento 1 e 2 com argumento claro" },
-            { tag: "Humanas", text: "Globalização + meio ambiente e sustentabilidade" },
-            { tag: "Matemática", text: "Funções + equações e sistemas" },
-            { tag: "UNEB", text: "Conteúdo factual de história e geografia" }
-          ]
-        },
-        {
-          key: "sexta",
-          label: "Sexta",
-          chip: "Fechamento da base",
-          blocks: [
-            { tag: "Biologia", text: "Ecologia + evolução" },
-            { tag: "Química", text: "Funções inorgânicas + estrutura atômica" },
-            { tag: "Linguagens", text: "Gramática contextualizada + artes" },
-            { tag: "Física", text: "Termologia + eletricidade" },
-            { tag: "Revisão", text: "Caderno de erros + 1 bloco de questões" }
-          ]
-        },
-        {
-          key: "sabado",
-          label: "Sábado",
-          chip: "Treino pesado",
-          blocks: [
-            { tag: "Questões", text: "Simulado curto ou bloco grande de questões ENEM" },
-            { tag: "Redação", text: "Redação completa e revisão da proposta" },
-            { tag: "Natureza", text: "Biologia + química nos pontos mais fracos" },
-            { tag: "UNEB", text: "Prova anterior com correção comentada" },
-            { tag: "Revisão", text: "Reescrever erros e fórmulas-chave" }
-          ]
-        },
-        {
-          key: "domingo",
-          label: "Domingo",
-          chip: "Leve e inteligente",
-          blocks: [
-            { tag: "Revisão", text: "Revisão leve do que caiu pior na semana" },
-            { tag: "Humanas", text: "Assuntos de leitura mais rápida e contextual" },
-            { tag: "Linguagens", text: "Texto, tirinha, propaganda e repertório" },
-            { tag: "UNEB", text: "Leitura objetiva + literatura e artes" },
-            { tag: "Planejamento", text: "Organizar segunda e separar assuntos fracos" }
-          ]
-        }
+      const weekDays = [
+        { key: "segunda", label: "Segunda", chip: "Base forte" },
+        { key: "terca", label: "Terça", chip: "Virada de conteúdo" },
+        { key: "quarta", label: "Quarta", chip: "Reforço técnico" },
+        { key: "quinta", label: "Quinta", chip: "Redação + natureza" },
+        { key: "sexta", label: "Sexta", chip: "Consolidação" },
+        { key: "sabado", label: "Sábado", chip: "Treino pesado" },
+        { key: "domingo", label: "Domingo", chip: "Revisão leve" }
       ];
+      const areaConfig = {
+        ling: { area: "Linguagens", baseWeight: 18, article: "linguagens" },
+        hum: { area: "Humanas", baseWeight: 16, article: "humanas" },
+        bio: { area: "Biologia", baseWeight: 30, article: "biologia" },
+        qui: { area: "Química", baseWeight: 28, article: "quimica" },
+        fis: { area: "Física", baseWeight: 14, article: "fisica" },
+        mat: { area: "Matemática", baseWeight: 24, article: "matematica" },
+        red: { area: "Redação", baseWeight: 27, article: "redacao" },
+        uneb: { area: "UNEB", baseWeight: 20, article: "uneb" }
+      };
+      const highPriorityIds = new Set([
+        "bio-fisiologia", "bio-bioquimica", "bio-genetica", "bio-citologia", "bio-doencas",
+        "qui-estequiometria", "qui-solucoes", "qui-ph", "qui-organica",
+        "mat-porcentagem", "mat-razao", "mat-estatistica", "mat-probabilidade", "mat-funcoes",
+        "red-introducao", "red-desenvolvimento1", "red-desenvolvimento2", "red-intervencao",
+        "ling-interpretacao", "ling-imagem", "uneb-prova", "uneb-gramatica"
+      ]);
+      const mediumPriorityIds = new Set([
+        "qui-inorganica", "qui-eletroquimica", "bio-ecologia", "bio-biotecnologia",
+        "mat-equacoes", "mat-financeira", "ling-generos", "ling-variacao", "hum-brasil",
+        "hum-globalizacao", "hum-meioambiente", "fis-energia", "fis-graficos", "red-coesao"
+      ]);
+      let topicModels = [];
       let weekHours = readWeekHours();
 
       function readWeekHours() {
@@ -945,6 +1164,73 @@
 
       function saveWeekHours() {
         localStorage.setItem(weekHoursKey, JSON.stringify(weekHours));
+      }
+
+      function getLocalDateString(date) {
+        const base = date || new Date();
+        const year = base.getFullYear();
+        const month = String(base.getMonth() + 1).padStart(2, "0");
+        const day = String(base.getDate()).padStart(2, "0");
+        return year + "-" + month + "-" + day;
+      }
+
+      function getTopicMeta(id, title, articleId) {
+        const prefix = id.split("-")[0];
+        const areaInfo = areaConfig[prefix] || { area: "Geral", baseWeight: 12, article: articleId || "" };
+        let incidence = areaInfo.baseWeight;
+
+        if (highPriorityIds.has(id)) incidence += 18;
+        else if (mediumPriorityIds.has(id)) incidence += 10;
+
+        return {
+          id: id,
+          title: title,
+          area: areaInfo.area,
+          incidence: incidence,
+          articleId: articleId || areaInfo.article
+        };
+      }
+
+      function getTopicState(id, checked) {
+        let saved = {};
+
+        try {
+          saved = JSON.parse(localStorage.getItem(topicStatePrefix + id) || "{}");
+        } catch (error) {
+          saved = {};
+        }
+
+        return {
+          status: saved.status || (checked ? "dominado" : "nao_visto"),
+          difficulty: saved.difficulty || "medio",
+          lastReviewed: saved.lastReviewed || "",
+          lastResult: saved.lastResult || ""
+        };
+      }
+
+      function saveTopicState(id, state) {
+        localStorage.setItem(topicStatePrefix + id, JSON.stringify(state));
+      }
+
+      function formatStatusLabel(value) {
+        if (value === "dominado") return "Dominado";
+        if (value === "revisando") return "Revisando";
+        if (value === "em_progresso") return "Em progresso";
+        return "Nao visto";
+      }
+
+      function formatDifficultyLabel(value) {
+        if (value === "dificil") return "Dificil";
+        if (value === "facil") return "Facil";
+        return "Medio";
+      }
+
+      function daysSince(dateString) {
+        if (!dateString) return 99;
+        const parts = dateString.split("-").map(Number);
+        const compared = new Date(parts[0], (parts[1] || 1) - 1, parts[2] || 1);
+        const diff = Date.now() - compared.getTime();
+        return Math.max(0, Math.floor(diff / 86400000));
       }
 
       function formatClock(seconds) {
@@ -1066,9 +1352,14 @@
         let totalTopics = 0;
         let doneTopics = 0;
 
+        topicModels.forEach((topic) => {
+          renderTopicCard(topic);
+        });
+
         linkCards.forEach((card) => {
+          const items = Array.from(card.querySelectorAll(".lesson-item"));
+          const done = items.filter((item) => item.classList.contains("complete")).length;
           const inputs = Array.from(card.querySelectorAll("[data-study-check]"));
-          const done = inputs.filter((input) => input.checked).length;
           totalTopics += inputs.length;
           doneTopics += done;
 
@@ -1093,6 +1384,261 @@
         topicPercent.textContent = percent + "%";
       }
 
+      function renderTopicCard(topic) {
+        const item = topic.item;
+        const state = topic.state;
+        item.classList.toggle("complete", state.status === "dominado");
+        topic.input.checked = state.status === "dominado";
+
+        topic.statusBadge.textContent = formatStatusLabel(state.status);
+        topic.statusBadge.className = "status-badge";
+        if (state.status === "dominado") topic.statusBadge.classList.add("is-dominado");
+        else if (state.status === "revisando") topic.statusBadge.classList.add("is-revisando");
+        else if (state.status === "em_progresso") topic.statusBadge.classList.add("is-progresso");
+
+        const reviewText = state.lastReviewed ? state.lastReviewed : "nunca";
+        topic.meta.innerHTML =
+          '<span class="topic-chip">Dificuldade: ' + formatDifficultyLabel(state.difficulty) + '</span>' +
+          '<span class="topic-chip">Ultima revisao: ' + reviewText + '</span>' +
+          '<span class="topic-chip">Peso: ' + topic.metaInfo.incidence + '</span>';
+
+        if (state.lastResult === "bad") topic.note.textContent = "Ultimo treino: foi mal. Este assunto sobe na fila.";
+        else if (state.lastResult === "ok") topic.note.textContent = "Ultimo treino: medio. Vale revisar ainda nesta semana.";
+        else if (state.lastResult === "good") topic.note.textContent = "Ultimo treino: foi bem. Agora ele desce um pouco na fila.";
+        else topic.note.textContent = "Marque dificuldade e desempenho para a fila inteligente se ajustar.";
+
+        topic.statusSelect.value = state.status;
+        topic.difficultySelect.value = state.difficulty;
+      }
+
+      function scoreTopic(topic) {
+        const state = topic.state;
+        const statusWeight = {
+          nao_visto: 40,
+          em_progresso: 28,
+          revisando: 18,
+          dominado: 4
+        }[state.status] || 0;
+        const difficultyWeight = {
+          facil: 4,
+          medio: 12,
+          dificil: 24
+        }[state.difficulty] || 0;
+        const resultWeight = {
+          bad: 18,
+          ok: 9,
+          good: 2
+        }[state.lastResult] || 10;
+        const elapsedDays = daysSince(state.lastReviewed);
+        const dueWeight = state.status === "dominado"
+          ? Math.min(18, elapsedDays * 2)
+          : Math.min(26, 8 + elapsedDays * 2);
+
+        return statusWeight + difficultyWeight + resultWeight + dueWeight + topic.metaInfo.incidence;
+      }
+
+      function getTopicReason(topic) {
+        const parts = [];
+        if (topic.state.difficulty === "dificil") parts.push("dificuldade alta");
+        if (topic.state.status === "nao_visto") parts.push("ainda nao visto");
+        if (topic.state.status === "em_progresso") parts.push("ainda instavel");
+        if (daysSince(topic.state.lastReviewed) >= 5) parts.push("revisao atrasada");
+        if (topic.state.lastResult === "bad") parts.push("ultimo treino ruim");
+        return parts.length ? parts.join(" + ") : "bom para manutencao";
+      }
+
+      function getRankedTopics() {
+        return topicModels
+          .map((topic) => ({
+            topic: topic,
+            score: scoreTopic(topic),
+            reason: getTopicReason(topic),
+            days: daysSince(topic.state.lastReviewed)
+          }))
+          .sort((a, b) => b.score - a.score);
+      }
+
+      function renderAdaptiveDashboard() {
+        const ranked = getRankedTopics();
+        const topItems = ranked.slice(0, 6);
+        const pending = ranked.filter((item) => item.topic.state.status !== "dominado").length;
+        const hard = ranked.filter((item) => item.topic.state.difficulty === "dificil").length;
+        const due = ranked.filter((item) => item.days >= 5).length;
+        const mastered = ranked.filter((item) => item.topic.state.status === "dominado").length;
+
+        summaryPending.textContent = String(pending);
+        summaryHard.textContent = String(hard);
+        summaryDue.textContent = String(due);
+        summaryMastered.textContent = String(mastered);
+
+        if (!topItems.length) {
+          priorityList.innerHTML = '<div class="priority-item"><p class="priority-meta">Sem assuntos carregados ainda.</p></div>';
+          insightFocus.textContent = "Comece a alimentar o sistema";
+          insightText.textContent = "Marque dificuldade, revisao e desempenho nos assuntos para o plano ficar realmente inteligente.";
+          return;
+        }
+
+        priorityList.innerHTML = topItems.map((entry, index) => (
+          '<div class="priority-item">' +
+            '<div class="priority-top">' +
+              '<div style="display:flex; gap:10px;">' +
+                '<span class="priority-rank">' + (index + 1) + '</span>' +
+                '<div>' +
+                  '<p class="priority-title">' + entry.topic.metaInfo.title + '</p>' +
+                  '<p class="priority-meta">' + entry.topic.metaInfo.area + ' • ' + entry.reason + '</p>' +
+                '</div>' +
+              '</div>' +
+              '<span class="priority-score">Score ' + entry.score + '</span>' +
+            '</div>' +
+            '<p class="priority-note">Sugestao: teoria curta + 8 a 12 questoes + revisao do erro.</p>' +
+          '</div>'
+        )).join("");
+
+        insightFocus.textContent = topItems[0].topic.metaInfo.area + " esta puxando sua semana";
+        insightText.textContent = "Hoje a fila esta sendo liderada por " + topItems[0].topic.metaInfo.title.toLowerCase() + ", porque ele combina incidencia alta com " + topItems[0].reason + ".";
+      }
+
+      function initializeTopicModels() {
+        topicModels = Array.from(studyChecks).map((input) => {
+          const item = input.closest(".lesson-item");
+          const link = item.querySelector("a");
+          const article = item.closest(".link-card");
+          const metaInfo = getTopicMeta(input.dataset.studyCheck, link.textContent.trim(), article ? article.id : "");
+          const state = getTopicState(input.dataset.studyCheck, localStorage.getItem(checkPrefix + input.dataset.studyCheck) === "1");
+
+          const body = document.createElement("div");
+          body.className = "lesson-body";
+
+          const header = document.createElement("div");
+          header.className = "lesson-header";
+
+          const title = document.createElement("a");
+          title.className = "lesson-title";
+          title.href = link.href;
+          title.target = "_blank";
+          title.rel = "noopener noreferrer";
+          title.textContent = metaInfo.title;
+
+          const statusBadge = document.createElement("span");
+          statusBadge.className = "status-badge";
+
+          header.appendChild(title);
+          header.appendChild(statusBadge);
+
+          const meta = document.createElement("div");
+          meta.className = "topic-meta";
+
+          const controls = document.createElement("div");
+          controls.className = "lesson-controls";
+          controls.innerHTML =
+            '<div class="control-row">' +
+              '<select class="control-select" data-role="status">' +
+                '<option value="nao_visto">Nao visto</option>' +
+                '<option value="em_progresso">Em progresso</option>' +
+                '<option value="revisando">Revisando</option>' +
+                '<option value="dominado">Dominado</option>' +
+              '</select>' +
+              '<select class="control-select" data-role="difficulty">' +
+                '<option value="facil">Facil</option>' +
+                '<option value="medio">Medio</option>' +
+                '<option value="dificil">Dificil</option>' +
+              '</select>' +
+            '</div>' +
+            '<div class="review-row">' +
+              '<button class="quick-btn" type="button" data-result="bad">Fui mal</button>' +
+              '<button class="quick-btn" type="button" data-result="ok">Mais ou menos</button>' +
+              '<button class="quick-btn" type="button" data-result="good">Fui bem</button>' +
+            '</div>';
+
+          const note = document.createElement("div");
+          note.className = "topic-note";
+
+          body.appendChild(header);
+          body.appendChild(meta);
+          body.appendChild(controls);
+          body.appendChild(note);
+
+          link.remove();
+          item.appendChild(body);
+
+          const topic = {
+            id: input.dataset.studyCheck,
+            input: input,
+            item: item,
+            body: body,
+            metaInfo: metaInfo,
+            statusBadge: statusBadge,
+            meta: meta,
+            note: note,
+            statusSelect: controls.querySelector('[data-role="status"]'),
+            difficultySelect: controls.querySelector('[data-role="difficulty"]'),
+            reviewButtons: Array.from(controls.querySelectorAll("[data-result]")),
+            state: state
+          };
+
+          input.addEventListener("change", () => {
+            topic.state.status = input.checked ? "dominado" : "em_progresso";
+            if (input.checked) {
+              topic.state.lastReviewed = getLocalDateString();
+              topic.state.lastResult = "good";
+            }
+            saveTopicState(topic.id, topic.state);
+            localStorage.setItem(checkPrefix + topic.id, input.checked ? "1" : "0");
+            renderTopicProgress();
+            renderAdaptiveDashboard();
+            renderWeekPlan();
+          });
+
+          topic.statusSelect.addEventListener("change", () => {
+            topic.state.status = topic.statusSelect.value;
+            if (topic.state.status === "dominado") {
+              topic.state.lastReviewed = getLocalDateString();
+              topic.state.lastResult = topic.state.lastResult || "good";
+              localStorage.setItem(checkPrefix + topic.id, "1");
+            } else {
+              localStorage.setItem(checkPrefix + topic.id, "0");
+            }
+            saveTopicState(topic.id, topic.state);
+            renderTopicProgress();
+            renderAdaptiveDashboard();
+            renderWeekPlan();
+          });
+
+          topic.difficultySelect.addEventListener("change", () => {
+            topic.state.difficulty = topic.difficultySelect.value;
+            saveTopicState(topic.id, topic.state);
+            renderTopicProgress();
+            renderAdaptiveDashboard();
+            renderWeekPlan();
+          });
+
+          topic.reviewButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+              topic.state.lastReviewed = getLocalDateString();
+              topic.state.lastResult = button.dataset.result;
+
+              if (button.dataset.result === "bad") {
+                topic.state.status = "revisando";
+                topic.state.difficulty = "dificil";
+                localStorage.setItem(checkPrefix + topic.id, "0");
+              } else if (button.dataset.result === "ok") {
+                topic.state.status = topic.state.status === "nao_visto" ? "em_progresso" : "revisando";
+              } else {
+                topic.state.status = "dominado";
+                localStorage.setItem(checkPrefix + topic.id, "1");
+              }
+
+              saveTopicState(topic.id, topic.state);
+              renderTopicProgress();
+              renderAdaptiveDashboard();
+              renderWeekPlan();
+            });
+          });
+
+          return topic;
+        });
+      }
+
       function getBlockMinutes(hours) {
         if (hours <= 2) return 30;
         if (hours <= 3.5) return 35;
@@ -1103,7 +1649,7 @@
         return hours <= 2 ? 8 : 10;
       }
 
-      function buildDayPlan(day, hours) {
+      function buildDayPlan(day, hours, queue, recentIds) {
         const safeHours = Math.max(0, Number(hours || 0));
         const totalMinutes = Math.round(safeHours * 60);
 
@@ -1123,15 +1669,36 @@
 
         const blockMinutes = getBlockMinutes(safeHours);
         const pauseMinutes = getPauseMinutes(safeHours);
-        const rawCount = Math.floor((totalMinutes + pauseMinutes) / (blockMinutes + pauseMinutes));
-        const blockCount = Math.max(1, Math.min(day.blocks.length, rawCount || 1));
+        const rawCount = Math.max(1, Math.floor((totalMinutes + pauseMinutes) / (blockMinutes + pauseMinutes)) || 1);
+        const blockCount = rawCount;
         const usedMinutes = (blockCount * blockMinutes) + ((blockCount - 1) * pauseMinutes);
         const remainingMinutes = Math.max(0, totalMinutes - usedMinutes);
-        const blocks = day.blocks.slice(0, blockCount).map((item) => ({
-          time: blockMinutes + " min",
-          tag: item.tag,
-          text: item.text
-        }));
+        const usedAreas = {};
+        const blocks = [];
+
+        for (let index = 0; index < blockCount; index += 1) {
+          const pick = queue.find((entry) => !recentIds.has(entry.topic.id) && !usedAreas[entry.topic.metaInfo.area]) ||
+            queue.find((entry) => !recentIds.has(entry.topic.id)) ||
+            queue[index % Math.max(1, queue.length)];
+
+          if (!pick) {
+            blocks.push({
+              time: blockMinutes + " min",
+              tag: "Revisao",
+              text: "Refazer erros, rever anotacoes e marcar o que ficou fraco."
+            });
+            continue;
+          }
+
+          usedAreas[pick.topic.metaInfo.area] = true;
+          recentIds.add(pick.topic.id);
+          blocks.push({
+            time: blockMinutes + " min",
+            tag: pick.topic.metaInfo.area,
+            text: pick.topic.metaInfo.title,
+            href: "#" + pick.topic.metaInfo.articleId
+          });
+        }
 
         if (remainingMinutes >= 12) {
           blocks.push({
@@ -1151,12 +1718,16 @@
       function renderWeekPlan() {
         let totalWeekMinutes = 0;
         let totalBlocks = 0;
+        let totalTopicsUsed = 0;
+        const ranked = getRankedTopics();
+        const recentIds = new Set();
 
-        weekGrid.innerHTML = weeklyTemplates.map((day) => {
+        weekGrid.innerHTML = weekDays.map((day) => {
           const hours = Math.max(0, Number(weekHours[day.key] || 0));
-          const plan = buildDayPlan(day, hours);
+          const plan = buildDayPlan(day, hours, ranked, recentIds);
           totalWeekMinutes += Math.round(hours * 60);
           totalBlocks += plan.blockCount;
+          totalTopicsUsed += plan.blocks.filter((block) => block.href).length;
 
           const badgeLabel = day.key === todayWeekKey ? "Hoje" : day.chip;
           const items = plan.blocks.map((block) => (
@@ -1165,7 +1736,9 @@
                 '<span class="block-time">' + block.time + '</span>' +
                 '<span class="block-tag">' + block.tag + '</span>' +
               '</div>' +
-              '<p class="plan-text">' + block.text + '</p>' +
+              (block.href
+                ? '<p class="plan-text"><a class="plan-link" href="' + block.href + '">' + block.text + '</a></p>'
+                : '<p class="plan-text">' + block.text + '</p>') +
             '</li>'
           )).join("");
 
@@ -1186,6 +1759,7 @@
 
         weekTotal.textContent = formatHours(totalWeekMinutes * 60);
         weekBlocks.textContent = String(totalBlocks);
+        weekTopics.textContent = String(totalTopicsUsed);
 
         weekGrid.querySelectorAll("[data-week-input]").forEach((input) => {
           input.addEventListener("change", () => {
@@ -1216,11 +1790,9 @@
       studyChecks.forEach((input) => {
         const key = checkPrefix + input.dataset.studyCheck;
         input.checked = localStorage.getItem(key) === "1";
-        input.addEventListener("change", () => {
-          localStorage.setItem(key, input.checked ? "1" : "0");
-          renderTopicProgress();
-        });
       });
+
+      initializeTopicModels();
 
       weekPresetBtns.forEach((button) => {
         button.addEventListener("click", () => {
@@ -1258,8 +1830,9 @@
         localStorage.setItem(goalKey, String(weekHours[todayWeekKey] || 4));
       }
 
-      renderWeekPlan();
       renderTopicProgress();
+      renderAdaptiveDashboard();
+      renderWeekPlan();
 
       goalInput.value = localStorage.getItem(goalKey) || String(weekHours[todayWeekKey] || 4);
       goalInput.addEventListener("change", () => {
@@ -1268,6 +1841,7 @@
         goalInput.value = String(value);
         weekHours[todayWeekKey] = value;
         saveWeekHours();
+        renderAdaptiveDashboard();
         renderWeekPlan();
         render();
       });
