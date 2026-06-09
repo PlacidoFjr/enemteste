@@ -79,6 +79,152 @@
       color: rgba(255, 248, 240, 0.9);
     }
 
+    .account-card {
+      background: rgba(255, 248, 240, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .account-card strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+    }
+
+    .account-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .account-actions {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .account-btn {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 10px 12px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .account-btn.primary {
+      background: var(--accent-2);
+      border-color: var(--accent-2);
+      color: #fff;
+    }
+
+    .sync-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 6px 10px;
+      color: var(--accent-2);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .auth-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(28, 19, 12, 0.58);
+      backdrop-filter: blur(10px);
+    }
+
+    .auth-gate.hidden {
+      display: none;
+    }
+
+    .auth-card {
+      width: min(540px, 100%);
+      background: linear-gradient(180deg, #fffaf2 0%, #fff5ea 100%);
+      border: 1px solid #e2d2bf;
+      border-radius: 26px;
+      box-shadow: 0 24px 60px rgba(34, 21, 13, 0.22);
+      padding: 24px;
+    }
+
+    .auth-card h2 {
+      margin: 0 0 10px;
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      line-height: 1.1;
+    }
+
+    .auth-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .auth-list {
+      display: grid;
+      gap: 10px;
+      margin: 18px 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .auth-list li {
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid #ead9c8;
+      background: #fff;
+      color: var(--ink);
+      font-size: 0.94rem;
+    }
+
+    .auth-actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .auth-btn {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 13px 16px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .auth-btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .auth-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .auth-note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
     .back-link,
     .nav-link {
       display: block;
@@ -784,11 +930,38 @@
   </style>
 </head>
 <body>
+  <div class="auth-gate" data-auth-gate>
+    <div class="auth-card">
+      <h2>Entrar para salvar seu progresso</h2>
+      <p>Use o modo premium com sincronização da sua rotina, dificuldades, revisões e cronograma adaptativo.</p>
+      <ul class="auth-list">
+        <li>Seu cronograma acompanha o que ficou difícil, pendente e atrasado para revisar.</li>
+        <li>Ao entrar, seu progresso pode ficar sincronizado entre dispositivos.</li>
+        <li>Se preferir, você ainda pode continuar como visitante e usar tudo localmente.</li>
+      </ul>
+      <div class="auth-actions">
+        <button class="auth-btn primary" type="button" data-auth-google>Entrar com Google</button>
+        <button class="auth-btn" type="button" data-auth-guest>Continuar como visitante</button>
+      </div>
+      <p class="auth-note" data-auth-note>Ao publicar no Vercel e autorizar o domínio no Firebase, o login funciona como em um app completo.</p>
+    </div>
+  </div>
+
   <div class="layout">
     <aside class="sidebar">
       <div class="brand">
         <h1>Área de Estudos</h1>
         <p>Timer grande + links grátis focados por assunto para usar junto com seu cronograma.</p>
+      </div>
+
+      <div class="account-card">
+        <strong data-account-title>Modo visitante</strong>
+        <p data-account-text>Seu progresso está salvo só neste navegador.</p>
+        <span class="sync-pill" data-sync-status>Sync local</span>
+        <div class="account-actions">
+          <button class="account-btn primary" type="button" data-account-login>Entrar com Google</button>
+          <button class="account-btn" type="button" data-account-logout hidden>Sair</button>
+        </div>
       </div>
 
       <a class="back-link" href="index.html">Voltar para o plano principal</a>
@@ -1061,8 +1234,38 @@
     </main>
   </div>
 
-  <script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js"
+    import {
+      getAuth,
+      GoogleAuthProvider,
+      onAuthStateChanged,
+      signInWithPopup,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js"
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      setDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js"
+
     (function () {
+      const firebaseConfig = {
+        apiKey: "AIzaSyDHaYSYNeWkihYzn6RtXSew5__g_GKp3Cg",
+        authDomain: "estudoenem-a6ffc.firebaseapp.com",
+        projectId: "estudoenem-a6ffc",
+        storageBucket: "estudoenem-a6ffc.firebasestorage.app",
+        messagingSenderId: "477708326363",
+        appId: "1:477708326363:web:a692efa510afcfe0bf03fe"
+      }
+
+      const firebaseApp = initializeApp(firebaseConfig)
+      const auth = getAuth(firebaseApp)
+      const db = getFirestore(firebaseApp)
+      const googleProvider = new GoogleAuthProvider()
+
       const display = document.querySelector("[data-timer-display]");
       const status = document.querySelector("[data-timer-status]");
       const today = document.querySelector("[data-timer-today]");
@@ -1091,6 +1294,15 @@
       const summaryHard = document.querySelector("[data-summary-hard]");
       const summaryDue = document.querySelector("[data-summary-due]");
       const summaryMastered = document.querySelector("[data-summary-mastered]");
+      const authGate = document.querySelector("[data-auth-gate]");
+      const authGoogleBtn = document.querySelector("[data-auth-google]");
+      const authGuestBtn = document.querySelector("[data-auth-guest]");
+      const authNote = document.querySelector("[data-auth-note]");
+      const accountTitle = document.querySelector("[data-account-title]");
+      const accountText = document.querySelector("[data-account-text]");
+      const syncStatus = document.querySelector("[data-sync-status]");
+      const accountLoginBtn = document.querySelector("[data-account-login]");
+      const accountLogoutBtn = document.querySelector("[data-account-logout]");
 
       const currentKey = "placido-study-current-seconds";
       const runningKey = "placido-study-running";
@@ -1099,12 +1311,19 @@
       const goalKey = "placido-study-goal-hours";
       const weekHoursKey = "placido-week-hours";
       const topicStatePrefix = "placido-topic-state-";
+      const guestSessionKey = "study-guest-session";
+      const cloudHydratedPrefix = "study-cloud-hydrated-";
 
       let currentSeconds = Number(localStorage.getItem(currentKey) || 0);
       let totalSeconds = Number(localStorage.getItem(totalKey) || 0);
       let running = localStorage.getItem(runningKey) === "1";
       let startedAt = Number(localStorage.getItem(startedAtKey) || 0);
       let intervalId = null;
+      let activeUser = null
+      let syncTimer = null
+      let syncInFlight = false
+      let cloudEnabled = false
+      let guestMode = false
 
       const todayKey = "placido-study-today-" + getLocalDateString();
       const checkPrefix = "placido-topic-check-";
@@ -1172,6 +1391,140 @@
         const month = String(base.getMonth() + 1).padStart(2, "0");
         const day = String(base.getDate()).padStart(2, "0");
         return year + "-" + month + "-" + day;
+      }
+
+      function isPremiumReady() {
+        return window.location.protocol !== "file:"
+      }
+
+      function updateAccountCard() {
+        if (activeUser) {
+          accountTitle.textContent = activeUser.displayName || "Conta conectada"
+          accountText.textContent = activeUser.email || "Seus dados estao sincronizados com o Firebase."
+          syncStatus.textContent = syncInFlight ? "Sync enviando" : "Sync em nuvem"
+          accountLoginBtn.hidden = true
+          accountLogoutBtn.hidden = false
+        } else if (guestMode) {
+          accountTitle.textContent = "Modo visitante"
+          accountText.textContent = "Seu progresso fica salvo neste navegador. Entre para sincronizar."
+          syncStatus.textContent = "Sync local"
+          accountLoginBtn.hidden = !isPremiumReady()
+          accountLogoutBtn.hidden = true
+        } else {
+          accountTitle.textContent = "Conta nao conectada"
+          accountText.textContent = "Entre para sincronizar seu cronograma e progresso."
+          syncStatus.textContent = "Aguardando login"
+          accountLoginBtn.hidden = !isPremiumReady()
+          accountLogoutBtn.hidden = true
+        }
+      }
+
+      function hideAuthGate() {
+        authGate.classList.add("hidden")
+      }
+
+      function showAuthGate() {
+        authGate.classList.remove("hidden")
+      }
+
+      function collectPlacidoState() {
+        const state = {}
+        for (let index = 0; index < localStorage.length; index += 1) {
+          const key = localStorage.key(index)
+          if (key && key.startsWith("placido-")) {
+            state[key] = localStorage.getItem(key)
+          }
+        }
+        return state
+      }
+
+      function clearPlacidoState() {
+        const keys = []
+        for (let index = 0; index < localStorage.length; index += 1) {
+          const key = localStorage.key(index)
+          if (key && key.startsWith("placido-")) {
+            keys.push(key)
+          }
+        }
+        keys.forEach((key) => localStorage.removeItem(key))
+      }
+
+      function applyCloudState(state) {
+        if (!state || typeof state !== "object") return false
+        const keys = Object.keys(state)
+        if (!keys.length) return false
+        clearPlacidoState()
+        keys.forEach((key) => {
+          localStorage.setItem(key, state[key])
+        })
+        return true
+      }
+
+      function scheduleCloudSync() {
+        if (!activeUser || !cloudEnabled) return
+        window.clearTimeout(syncTimer)
+        syncTimer = window.setTimeout(() => {
+          syncCloudState().catch(() => {
+            syncStatus.textContent = "Sync com erro"
+          })
+        }, 900)
+      }
+
+      async function syncCloudState(force) {
+        if (!activeUser || !cloudEnabled) return
+        if (syncInFlight && !force) return
+
+        syncInFlight = true
+        updateAccountCard()
+
+        try {
+          await setDoc(doc(db, "studyProfiles", activeUser.uid), {
+            state: collectPlacidoState(),
+            clientUpdatedAt: Date.now(),
+            updatedAt: serverTimestamp(),
+            profile: {
+              name: activeUser.displayName || "",
+              email: activeUser.email || ""
+            }
+          }, { merge: true })
+          syncStatus.textContent = "Sync em nuvem"
+        } finally {
+          syncInFlight = false
+          updateAccountCard()
+        }
+      }
+
+      async function hydrateFromCloud(user) {
+        const sessionKey = cloudHydratedPrefix + user.uid
+        const snap = await getDoc(doc(db, "studyProfiles", user.uid))
+        if (!snap.exists()) return false
+
+        const data = snap.data() || {}
+        const cloudState = data.state || {}
+        const fingerprint = String(data.clientUpdatedAt || "1")
+
+        if (sessionStorage.getItem(sessionKey) === fingerprint) return false
+
+        const changed = applyCloudState(cloudState)
+        sessionStorage.setItem(sessionKey, fingerprint)
+        return changed
+      }
+
+      const nativeSetItem = Storage.prototype.setItem
+      const nativeRemoveItem = Storage.prototype.removeItem
+
+      Storage.prototype.setItem = function (key, value) {
+        nativeSetItem.call(this, key, value)
+        if (String(key).startsWith("placido-")) {
+          scheduleCloudSync()
+        }
+      }
+
+      Storage.prototype.removeItem = function (key) {
+        nativeRemoveItem.call(this, key)
+        if (String(key).startsWith("placido-")) {
+          scheduleCloudSync()
+        }
       }
 
       function getTopicMeta(id, title, articleId) {
@@ -1793,6 +2146,97 @@
       });
 
       initializeTopicModels();
+      updateAccountCard();
+
+      async function startGoogleLogin() {
+        if (!isPremiumReady()) {
+          authNote.textContent = "No arquivo local o Firebase login nao abre como deveria. Publique no Vercel e adicione o dominio autorizado no Firebase para ativar o Google."
+          return
+        }
+
+        authGoogleBtn.disabled = true
+        accountLoginBtn.disabled = true
+        authNote.textContent = "Abrindo login do Google..."
+
+        try {
+          await signInWithPopup(auth, googleProvider)
+        } catch (error) {
+          authNote.textContent = "Nao consegui entrar com Google agora. Se estiver em producao, confirme o dominio autorizado no Firebase."
+        } finally {
+          authGoogleBtn.disabled = false
+          accountLoginBtn.disabled = false
+        }
+      }
+
+      if (!isPremiumReady()) {
+        authGoogleBtn.disabled = true
+        accountLoginBtn.disabled = true
+        authNote.textContent = "Como esta aberto em arquivo local, deixe o modo visitante aqui e use o login Google na versao publicada."
+      }
+
+      authGoogleBtn.addEventListener("click", startGoogleLogin)
+      accountLoginBtn.addEventListener("click", startGoogleLogin)
+      authGuestBtn.addEventListener("click", () => {
+        guestMode = true
+        sessionStorage.setItem(guestSessionKey, "1")
+        hideAuthGate()
+        updateAccountCard()
+      })
+      accountLogoutBtn.addEventListener("click", async () => {
+        try {
+          await syncCloudState(true)
+        } catch (error) {
+          // segue mesmo se a sincronizacao final falhar
+        }
+        await signOut(auth)
+        sessionStorage.removeItem(guestSessionKey)
+        guestMode = false
+        activeUser = null
+        cloudEnabled = false
+        showAuthGate()
+        updateAccountCard()
+      })
+
+      onAuthStateChanged(auth, async (user) => {
+        activeUser = user || null
+        guestMode = !activeUser && sessionStorage.getItem(guestSessionKey) === "1"
+        cloudEnabled = Boolean(activeUser && isPremiumReady())
+
+        if (activeUser && cloudEnabled) {
+          try {
+            const changed = await hydrateFromCloud(activeUser)
+            if (changed) {
+              window.location.reload()
+              return
+            }
+          } catch (error) {
+            authNote.textContent = "Entrou, mas nao consegui puxar a nuvem agora. Vou manter a versao local nesta sessao."
+          }
+        }
+
+        if (activeUser) {
+          hideAuthGate()
+          authNote.textContent = "Conta conectada com sucesso."
+          syncStatus.textContent = "Sync em nuvem"
+        } else if (guestMode) {
+          hideAuthGate()
+          syncStatus.textContent = "Sync local"
+        } else {
+          showAuthGate()
+        }
+
+        updateAccountCard()
+      })
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "hidden") {
+          syncCloudState(true).catch(() => {})
+        }
+      })
+
+      window.addEventListener("beforeunload", () => {
+        syncCloudState(true).catch(() => {})
+      })
 
       weekPresetBtns.forEach((button) => {
         button.addEventListener("click", () => {
