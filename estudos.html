@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Área de Estudos - Placido Jr</title>
+  <style>
+    :root {
+      --bg: #f3ede3;
+      --paper: #fffaf2;
+      --ink: #1f1a17;
+      --muted: #6d6259;
+      --line: #dbcdbd;
+      --accent: #a9472d;
+      --accent-2: #1e6a63;
+      --soft: #f6ecde;
+      --shadow: 0 18px 40px rgba(63, 38, 18, 0.10);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(217, 164, 65, 0.18), transparent 30%),
+        linear-gradient(180deg, #f9f4ec 0%, var(--bg) 100%);
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+      padding: 24px 18px;
+      background: rgba(255, 250, 242, 0.86);
+      border-right: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+
+    .brand {
+      background: linear-gradient(135deg, rgba(169, 71, 45, 0.95), rgba(117, 42, 24, 0.98));
+      color: #fff8f0;
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .brand h1 {
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-size: 1.5rem;
+      line-height: 1.1;
+      margin: 0 0 8px;
+    }
+
+    .brand p {
+      margin: 0;
+      font-size: 0.94rem;
+      color: rgba(255, 248, 240, 0.9);
+    }
+
+    .back-link,
+    .nav-link {
+      display: block;
+      text-decoration: none;
+      border-radius: 14px;
+      padding: 11px 12px;
+      border: 1px solid transparent;
+    }
+
+    .back-link {
+      background: #fff;
+      border-color: var(--line);
+      color: var(--ink);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .nav {
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav-link {
+      color: var(--ink);
+      background: transparent;
+    }
+
+    .nav-link:hover,
+    .back-link:hover {
+      background: #fff7ef;
+      border-color: var(--accent);
+    }
+
+    .content {
+      padding: 24px;
+    }
+
+    .hero,
+    .section-card,
+    .timer-card,
+    .link-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+
+    .hero h2,
+    .section-title h2,
+    .link-card h3 {
+      font-family: "IBM Plex Serif", Georgia, serif;
+      margin: 0;
+      line-height: 1.15;
+    }
+
+    .hero h2 {
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      margin-bottom: 10px;
+    }
+
+    .hero p,
+    .section-title p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .timer-card {
+      padding: 24px;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, #fff8ee, #fff);
+    }
+
+    .timer-display {
+      font-family: "IBM Plex Mono", "Consolas", monospace;
+      font-size: clamp(2.4rem, 8vw, 5.4rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--accent);
+      margin: 12px 0 18px;
+      letter-spacing: 0.04em;
+    }
+
+    .timer-actions,
+    .stats-grid,
+    .links-grid,
+    .goal-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .timer-actions {
+      grid-template-columns: repeat(5, minmax(0, max-content));
+      justify-content: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .timer-btn {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 11px 16px;
+      background: #fff;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .timer-btn.primary {
+      background: var(--accent-2);
+      color: #fff;
+      border-color: var(--accent-2);
+    }
+
+    .timer-btn.warn {
+      background: #fff5eb;
+      color: #8c4e08;
+      border-color: #e8c59a;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .goal-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin: 14px 0;
+    }
+
+    .stat-box {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .stat-box span {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .goal-box {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .goal-box strong {
+      display: block;
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .goal-input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font: inherit;
+      background: #fffdf9;
+    }
+
+    .goal-progress {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent-2);
+    }
+
+    .section-card {
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      margin-bottom: 14px;
+    }
+
+    .links-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .link-card {
+      padding: 18px;
+    }
+
+    .link-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .link-card p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .topic-check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #fff7ef;
+      border: 1px solid #ecd9c2;
+    }
+
+    .topic-check input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-2);
+      flex: 0 0 auto;
+    }
+
+    .lesson-list {
+      margin: 0 0 0 18px;
+      padding: 0;
+    }
+
+    .lesson-list li + li {
+      margin-top: 8px;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 980px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .timer-actions,
+      .stats-grid,
+      .goal-grid,
+      .links-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <h1>Área de Estudos</h1>
+        <p>Timer grande + links grátis focados por assunto para usar junto com seu cronograma.</p>
+      </div>
+
+      <a class="back-link" href="index.html" target="_blank" rel="noopener noreferrer">Abrir plano principal</a>
+
+      <nav class="nav">
+        <a class="nav-link" href="#dashboard">Dashboard</a>
+        <a class="nav-link" href="#linguagens">Linguagens</a>
+        <a class="nav-link" href="#humanas">Ciências Humanas</a>
+        <a class="nav-link" href="#biologia">Biologia</a>
+        <a class="nav-link" href="#quimica">Química</a>
+        <a class="nav-link" href="#fisica">Física</a>
+        <a class="nav-link" href="#matematica">Matemática</a>
+        <a class="nav-link" href="#redacao">Redação</a>
+        <a class="nav-link" href="#uneb">Ajuste para UNEB</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <section class="hero">
+        <h2>Estudo prático em uma aba separada</h2>
+        <p>Esta página foi feita para execução: controlar tempo, abrir aulas grátis e revisar um assunto por vez sem ficar perdido em uma landing page muito longa.</p>
+      </section>
+
+      <section id="dashboard" class="timer-card">
+        <h2>Timer de estudo</h2>
+        <p>Use este timer para contabilizar seu tempo. Quando terminar, clique em <b>Salvar sessão</b> para guardar suas horas no navegador.</p>
+        <div class="timer-display" data-timer-display>00:00:00</div>
+        <div class="timer-actions">
+          <button class="timer-btn primary" type="button" data-timer-start>Iniciar</button>
+          <button class="timer-btn" type="button" data-timer-pause>Pausar</button>
+          <button class="timer-btn" type="button" data-timer-save>Salvar sessão</button>
+          <button class="timer-btn warn" type="button" data-timer-reset-session>Zerar sessão</button>
+          <button class="timer-btn warn" type="button" data-timer-reset-total>Zerar total</button>
+        </div>
+        <div class="goal-grid">
+          <div class="goal-box">
+            <strong>Meta do dia em horas</strong>
+            <input class="goal-input" type="number" min="1" max="12" step="0.5" value="4" data-goal-input>
+          </div>
+          <div class="goal-box">
+            <strong>Quanto já bateu da meta</strong>
+            <div class="goal-progress" data-goal-progress>0%</div>
+          </div>
+          <div class="goal-box">
+            <strong>Horas que faltam hoje</strong>
+            <div class="goal-progress" data-goal-remaining>4h 00min</div>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <strong>Status</strong>
+            <span data-timer-status>Parado</span>
+          </div>
+          <div class="stat-box">
+            <strong>Total salvo hoje</strong>
+            <span data-timer-today>0h 00min</span>
+          </div>
+          <div class="stat-box">
+            <strong>Total acumulado</strong>
+            <span data-timer-total>0h 00min</span>
+          </div>
+        </div>
+        <p class="note">Se você fechar a aba sem salvar, o cronômetro da sessão continua guardado. O total contado entra mesmo quando você clicar em salvar.</p>
+      </section>
+
+      <section class="section-card">
+        <div class="section-title">
+          <h2>Aulas grátis por assunto</h2>
+          <p>Busca focada em <b>09/06/2026</b>. Cada link abre uma pesquisa específica no YouTube para você achar aula completa, revisão e resolução sem perder tempo.</p>
+        </div>
+
+        <div class="links-grid">
+          <article id="linguagens" class="link-card">
+            <h3>Linguagens</h3>
+            <p>Foco em interpretação, texto e linguagem em contexto.</p>
+            <label class="topic-check"><input type="checkbox" data-study-check="linguagens"><span>Marcar Linguagens como estudado hoje</span></label>
+            <ul class="lesson-list">
+              <li><a href="https://www.youtube.com/results?search_query=interpretacao+de+texto+enem+aula+completa" target="_blank" rel="noopener noreferrer">Interpretação de texto</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=generos+textuais+enem+aula+completa" target="_blank" rel="noopener noreferrer">Gêneros textuais</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=variacao+linguistica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Variação linguística</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=funcoes+da+linguagem+enem+aula+completa" target="_blank" rel="noopener noreferrer">Funções da linguagem</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=leitura+de+imagem+tirinha+propaganda+enem+aula" target="_blank" rel="noopener noreferrer">Leitura de imagem, tirinha e propaganda</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=literatura+brasileira+enem+aula+completa" target="_blank" rel="noopener noreferrer">Literatura brasileira em contexto</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=artes+movimentos+artisticos+enem+aula" target="_blank" rel="noopener noreferrer">Artes e movimentos artísticos</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=gramatica+contextualizada+enem+aula" target="_blank" rel="noopener noreferrer">Gramática contextualizada</a></li>
+            </ul>
+          </article>
+
+          <article id="humanas" class="link-card">
+            <h3>Ciências Humanas</h3>
+            <p>Foco em história do Brasil, geografia humana e leitura social.</p>
+            <label class="topic-check"><input type="checkbox" data-study-check="humanas"><span>Marcar Humanas como estudado hoje</span></label>
+            <ul class="lesson-list">
+              <li><a href="https://www.youtube.com/results?search_query=brasil+colonia+imperio+republica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Brasil Colônia, Império e República</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=ditadura+e+redemocratizacao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Ditadura e redemocratização</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=globalizacao+e+geopolitica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Globalização e geopolítica</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=urbanizacao+e+populacao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Urbanização e população</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=geografia+agraria+enem+aula+completa" target="_blank" rel="noopener noreferrer">Geografia agrária</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=meio+ambiente+e+sustentabilidade+enem+aula+completa" target="_blank" rel="noopener noreferrer">Meio ambiente e sustentabilidade</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=filosofia+politica+e+etica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Filosofia política e ética</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=sociologia+cidadania+e+trabalho+enem+aula+completa" target="_blank" rel="noopener noreferrer">Sociologia, cidadania e trabalho</a></li>
+            </ul>
+          </article>
+
+          <article id="biologia" class="link-card">
+            <h3>Biologia</h3>
+            <p>Foco total na área da saúde e em temas fortes para Nutrição.</p>
+            <label class="topic-check"><input type="checkbox" data-study-check="biologia"><span>Marcar Biologia como estudado hoje</span></label>
+            <ul class="lesson-list">
+              <li><a href="https://www.youtube.com/results?search_query=citologia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Citologia</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=fisiologia+humana+enem+aula+completa" target="_blank" rel="noopener noreferrer">Fisiologia humana</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=ecologia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Ecologia</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=genetica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Genética</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=evolucao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Evolução</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=biotecnologia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Biotecnologia</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=doencas+humanas+imunologia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Doenças humanas e imunologia</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=bioquimica+celular+enem+aula+completa" target="_blank" rel="noopener noreferrer">Bioquímica celular</a></li>
+            </ul>
+          </article>
+
+          <article id="quimica" class="link-card">
+            <h3>Química</h3>
+            <p>Foco em base, cálculo químico e química dos alimentos.</p>
+            <label class="topic-check"><input type="checkbox" data-study-check="quimica"><span>Marcar Química como estudado hoje</span></label>
+            <ul class="lesson-list">
+              <li><a href="https://www.youtube.com/results?search_query=estrutura+atomica+e+ligacoes+enem+aula+completa" target="_blank" rel="noopener noreferrer">Estrutura atômica e ligações</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=funcoes+inorganicas+enem+aula+completa" target="_blank" rel="noopener noreferrer">Funções inorgânicas</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=estequiometria+enem+aula+completa" target="_blank" rel="noopener noreferrer">Estequiometria</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=solucoes+e+concentracao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Soluções e concentração</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=ph+e+neutralizacao+enem+aula+completa" target="_blank" rel="noopener noreferrer">pH e neutralização</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=quimica+organica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Química orgânica</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=eletroquimica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Eletroquímica</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=quimica+ambiental+enem+aula+completa" target="_blank" rel="noopener noreferrer">Química ambiental</a></li>
+            </ul>
+          </article>
+
+          <article id="fisica" class="link-card">
+            <h3>Física</h3>
+            <p>Foco em temas de maior retorno para reta final.</p>
+            <label class="topic-check"><input type="checkbox" data-study-check="fisica"><span>Marcar Física como estudado hoje</span></label>
+            <ul class="lesson-list">
+              <li><a href="https://www.youtube.com/results?search_query=cinematica+e+dinamica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Cinemática e dinâmica</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=trabalho+e+energia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Trabalho e energia</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=termologia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Termologia</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=ondulatoria+enem+aula+completa" target="_blank" rel="noopener noreferrer">Ondulatória</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=optica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Óptica</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=eletricidade+enem+aula+completa" target="_blank" rel="noopener noreferrer">Eletricidade</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=hidrostatica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Hidrostática</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=leitura+de+experimentos+e+graficos+fisica+enem+aula" target="_blank" rel="noopener noreferrer">Leitura de experimentos e gráficos</a></li>
+            </ul>
+          </article>
+
+          <article id="matematica" class="link-card">
+            <h3>Matemática</h3>
+            <p>Foco em base numérica, leitura de dados e questões que mais pontuam.</p>
+            <label class="topic-check"><input type="checkbox" data-study-check="matematica"><span>Marcar Matemática como estudado hoje</span></label>
+            <ul class="lesson-list">
+              <li><a href="https://www.youtube.com/results?search_query=razao+e+proporcao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Razão e proporção</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=porcentagem+enem+aula+completa" target="_blank" rel="noopener noreferrer">Porcentagem</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=funcoes+enem+aula+completa+matematica" target="_blank" rel="noopener noreferrer">Funções</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=equacoes+e+sistemas+enem+aula+completa" target="_blank" rel="noopener noreferrer">Equações e sistemas</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=estatistica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Estatística</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=probabilidade+enem+aula+completa" target="_blank" rel="noopener noreferrer">Probabilidade</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=geometria+plana+e+espacial+enem+aula+completa" target="_blank" rel="noopener noreferrer">Geometria plana e espacial</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=matematica+financeira+enem+aula+completa" target="_blank" rel="noopener noreferrer">Matemática financeira</a></li>
+            </ul>
+          </article>
+
+          <article id="redacao" class="link-card">
+            <h3>Redação</h3>
+            <p>Foco em nota alta com estrutura, repertório e reescrita.</p>
+            <label class="topic-check"><input type="checkbox" data-study-check="redacao"><span>Marcar Redação como estudado hoje</span></label>
+            <ul class="lesson-list">
+              <li><a href="https://www.youtube.com/results?search_query=estrutura+da+introducao+redacao+enem+aula" target="_blank" rel="noopener noreferrer">Estrutura da introdução</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=desenvolvimento+1+redacao+enem+argumentacao+aula" target="_blank" rel="noopener noreferrer">Desenvolvimento 1 com argumento claro</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=desenvolvimento+2+repertorio+redacao+enem+aula" target="_blank" rel="noopener noreferrer">Desenvolvimento 2 com repertório útil</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=proposta+de+intervencao+redacao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Proposta de intervenção completa</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=coesao+e+conectivos+redacao+enem+aula" target="_blank" rel="noopener noreferrer">Coesão e conectivos</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=correcao+gramatical+redacao+enem+aula" target="_blank" rel="noopener noreferrer">Correção gramatical</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=redacao+enem+passo+a+passo+aula+completa" target="_blank" rel="noopener noreferrer">Redação completa na semana</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=reescrita+de+redacao+enem+corrigida+aula" target="_blank" rel="noopener noreferrer">Reescrita de redação corrigida</a></li>
+            </ul>
+          </article>
+
+          <article id="uneb" class="link-card">
+            <h3>Ajuste para a UNEB</h3>
+            <p>Foco em revisão mais direta, prova objetiva e estilo próprio da UNEB.</p>
+            <label class="topic-check"><input type="checkbox" data-study-check="uneb"><span>Marcar bloco UNEB como estudado hoje</span></label>
+            <ul class="lesson-list">
+              <li><a href="https://www.youtube.com/results?search_query=provas+anteriores+uneb+vestibular+resolucao" target="_blank" rel="noopener noreferrer">Bloco com prova anterior</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=gramatica+objetiva+vestibular+aula+completa" target="_blank" rel="noopener noreferrer">Gramática objetiva</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=leitura+literal+e+inferencial+vestibular+aula" target="_blank" rel="noopener noreferrer">Leitura literal e inferencial</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=literatura+brasileira+vestibular+uneb+aula" target="_blank" rel="noopener noreferrer">Literatura e artes cobradas de forma direta</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=revisao+factual+historia+geografia+vestibular+aula" target="_blank" rel="noopener noreferrer">Revisão curta de conteúdos factuais</a></li>
+              <li><a href="https://www.youtube.com/results?search_query=correcao+prova+uneb+vestibular" target="_blank" rel="noopener noreferrer">Correção dos erros da prova UNEB</a></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const display = document.querySelector("[data-timer-display]");
+      const status = document.querySelector("[data-timer-status]");
+      const today = document.querySelector("[data-timer-today]");
+      const total = document.querySelector("[data-timer-total]");
+      const goalInput = document.querySelector("[data-goal-input]");
+      const goalProgress = document.querySelector("[data-goal-progress]");
+      const goalRemaining = document.querySelector("[data-goal-remaining]");
+      const startBtn = document.querySelector("[data-timer-start]");
+      const pauseBtn = document.querySelector("[data-timer-pause]");
+      const saveBtn = document.querySelector("[data-timer-save]");
+      const resetSessionBtn = document.querySelector("[data-timer-reset-session]");
+      const resetTotalBtn = document.querySelector("[data-timer-reset-total]");
+      const studyChecks = document.querySelectorAll("[data-study-check]");
+
+      const currentKey = "placido-study-current-seconds";
+      const runningKey = "placido-study-running";
+      const startedAtKey = "placido-study-started-at";
+      const totalKey = "placido-study-total-seconds";
+      const goalKey = "placido-study-goal-hours";
+
+      let currentSeconds = Number(localStorage.getItem(currentKey) || 0);
+      let totalSeconds = Number(localStorage.getItem(totalKey) || 0);
+      let running = localStorage.getItem(runningKey) === "1";
+      let startedAt = Number(localStorage.getItem(startedAtKey) || 0);
+      let intervalId = null;
+
+      const todayKey = "placido-study-today-" + new Date().toISOString().slice(0, 10);
+      const checkPrefix = todayKey + "-check-";
+
+      function formatClock(seconds) {
+        const hrs = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+        return String(hrs).padStart(2, "0") + ":" + String(mins).padStart(2, "0") + ":" + String(secs).padStart(2, "0");
+      }
+
+      function formatHours(seconds) {
+        const hrs = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
+        return hrs + "h " + String(mins).padStart(2, "0") + "min";
+      }
+
+      function formatRemaining(seconds) {
+        if (seconds <= 0) return "meta batida";
+        return formatHours(seconds);
+      }
+
+      function liveSeconds() {
+        if (!running || !startedAt) return currentSeconds;
+        return currentSeconds + Math.floor((Date.now() - startedAt) / 1000);
+      }
+
+      function render() {
+        const todaySeconds = Number(localStorage.getItem(todayKey) || 0);
+        const savedGoal = Number(localStorage.getItem(goalKey) || goalInput.value || 4);
+        const goalSeconds = Math.max(0, Math.round(savedGoal * 3600));
+        const progress = goalSeconds ? Math.min(100, Math.round((todaySeconds / goalSeconds) * 100)) : 0;
+
+        display.textContent = formatClock(liveSeconds());
+        status.textContent = running ? "Estudando" : "Parado";
+        today.textContent = formatHours(todaySeconds);
+        total.textContent = formatHours(totalSeconds);
+        goalInput.value = String(savedGoal);
+        goalProgress.textContent = progress + "%";
+        goalRemaining.textContent = formatRemaining(goalSeconds - todaySeconds);
+      }
+
+      function persistBase() {
+        localStorage.setItem(currentKey, String(currentSeconds));
+        localStorage.setItem(totalKey, String(totalSeconds));
+        localStorage.setItem(runningKey, running ? "1" : "0");
+        localStorage.setItem(startedAtKey, String(startedAt || 0));
+      }
+
+      function syncRunningTime() {
+        if (!running || !startedAt) return;
+        currentSeconds = liveSeconds();
+        startedAt = Date.now();
+        persistBase();
+      }
+
+      function startTimer() {
+        if (running) return;
+        running = true;
+        startedAt = Date.now();
+        persistBase();
+        tick();
+      }
+
+      function pauseTimer() {
+        if (!running) return;
+        syncRunningTime();
+        running = false;
+        startedAt = 0;
+        persistBase();
+        tick();
+      }
+
+      function saveSession() {
+        if (running) {
+          syncRunningTime();
+          running = false;
+          startedAt = 0;
+        }
+
+        if (!currentSeconds) {
+          render();
+          return;
+        }
+
+        totalSeconds += currentSeconds;
+        const todaySeconds = Number(localStorage.getItem(todayKey) || 0) + currentSeconds;
+        localStorage.setItem(todayKey, String(todaySeconds));
+        currentSeconds = 0;
+        persistBase();
+        render();
+      }
+
+      function resetSession() {
+        pauseTimer();
+        currentSeconds = 0;
+        persistBase();
+        render();
+      }
+
+      function resetTotal() {
+        pauseTimer();
+        currentSeconds = 0;
+        totalSeconds = 0;
+        localStorage.removeItem(totalKey);
+        localStorage.removeItem(currentKey);
+        localStorage.removeItem(todayKey);
+        persistBase();
+        render();
+      }
+
+      function tick() {
+        if (intervalId) clearInterval(intervalId);
+        render();
+        if (running) {
+          intervalId = setInterval(render, 1000);
+        }
+      }
+
+      if (running && startedAt) {
+        tick();
+      } else {
+        running = false;
+        startedAt = 0;
+        persistBase();
+        render();
+      }
+
+      studyChecks.forEach((input) => {
+        const key = checkPrefix + input.dataset.studyCheck;
+        input.checked = localStorage.getItem(key) === "1";
+        input.addEventListener("change", () => {
+          localStorage.setItem(key, input.checked ? "1" : "0");
+        });
+      });
+
+      goalInput.value = localStorage.getItem(goalKey) || "4";
+      goalInput.addEventListener("change", () => {
+        const value = Math.max(1, Math.min(12, Number(goalInput.value || 4)));
+        localStorage.setItem(goalKey, String(value));
+        goalInput.value = String(value);
+        render();
+      });
+
+      startBtn.addEventListener("click", startTimer);
+      pauseBtn.addEventListener("click", pauseTimer);
+      saveBtn.addEventListener("click", saveSession);
+      resetSessionBtn.addEventListener("click", resetSession);
+      resetTotalBtn.addEventListener("click", function () {
+        const confirmed = window.confirm("Zerar sessão atual e total salvo?");
+        if (!confirmed) return;
+        resetTotal();
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -103,6 +103,39 @@
       font-size: 1.02rem;
     }
 
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-link,
+    .study-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 12px 16px;
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+
+    .hero-link {
+      background: #fff8f0;
+      color: #6d2d1d;
+    }
+
+    .hero-link.secondary,
+    .study-link {
+      background: transparent;
+      color: inherit;
+      border-color: rgba(255, 248, 240, 0.35);
+    }
+
     .hero-grid {
       display: grid;
       grid-template-columns: 1.5fr 1fr;
@@ -470,6 +503,86 @@
       border-color: var(--accent);
     }
 
+    .timer-card {
+      background: linear-gradient(135deg, #fff8ee, #fff);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+      margin-top: 18px;
+    }
+
+    .timer-display {
+      font-family: "IBM Plex Mono", "Consolas", monospace;
+      font-size: clamp(2.2rem, 8vw, 5rem);
+      line-height: 1;
+      letter-spacing: 0.04em;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 10px 0 16px;
+    }
+
+    .timer-actions,
+    .timer-stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .timer-stats {
+      margin: 14px 0 0;
+    }
+
+    .timer-btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 11px 16px;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 600;
+    }
+
+    .timer-btn.primary {
+      background: var(--accent-2);
+      color: #fff;
+      border-color: var(--accent-2);
+    }
+
+    .timer-btn.warn {
+      background: #fff8ef;
+      color: #8d5107;
+      border-color: #e7c99d;
+    }
+
+    .timer-btn:hover {
+      filter: brightness(0.98);
+    }
+
+    .timer-pill {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 12px;
+      min-width: 180px;
+    }
+
+    .timer-pill strong {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .lesson-list {
+      margin: 12px 0 0 18px;
+    }
+
+    .lesson-list li {
+      margin-top: 8px;
+    }
+
     @media (max-width: 980px) {
       .hero-grid,
       .callout-row,
@@ -539,6 +652,11 @@
         O foco aqui é separar o que é oficial, o que é histórico e o que é inferência estratégica, para você estudar com urgência sem dividir sua energia em dois estudos desconectados.
       </p>
 
+      <div class="hero-actions">
+        <a class="hero-link" href="estudos.html" target="_blank" rel="noopener noreferrer">Abrir área de estudos</a>
+        <a class="hero-link secondary" href="#cronograma-checklist">Ir para o cronograma</a>
+      </div>
+
       <div class="hero-grid">
         <div class="hero-card">
           <strong>Diagnóstico principal</strong>
@@ -564,6 +682,7 @@
         <a href="#trilha">7. Trilha intensiva de estudos até a prova</a>
         <a href="#plano">8. Plano diário/semanal</a>
         <a href="#cronograma-checklist">Sessão extra: cronograma com checklist</a>
+        <a href="#aulas-gratis">Sessão extra: aulas grátis por assunto</a>
         <a href="#redacao">9. Estratégia de redação</a>
         <a href="#erros">10. Erros que devo evitar</a>
         <a href="#fontes">11. Fontes e links oficiais</a>
@@ -1723,6 +1842,34 @@
             </div>
           </article>
         </div>
+      </div>
+    </section>
+
+    <section id="aulas-gratis">
+      <div class="section-title">
+        <h2>Sessão extra: aulas grátis por assunto</h2>
+        <p>Criei uma área separada para estudo prático, com barra lateral, timer grande e links focados de revisão no YouTube por assunto.</p>
+      </div>
+      <div class="panel">
+        <div class="callout-row">
+          <div class="mini">
+            <strong>O que tem lá</strong>
+            Timer grande, total salvo de horas, foco por disciplina e links gratuitos por tema.
+          </div>
+          <div class="mini">
+            <strong>Formato</strong>
+            Página separada para abrir em nova aba, sem deixar este relatório principal pesado demais.
+          </div>
+          <div class="mini">
+            <strong>Melhor uso</strong>
+            Deixe a área de estudos aberta enquanto você estuda e use o timer para contabilizar seu tempo.
+          </div>
+        </div>
+
+        <p class="study-note">Os links abrem buscas específicas no YouTube para facilitar aula completa, revisão e resolução do tema.</p>
+        <p style="margin-top: 16px;">
+          <a class="study-link" href="estudos.html" target="_blank" rel="noopener noreferrer">Abrir área de estudos em nova aba</a>
+        </p>
       </div>
     </section>
 
