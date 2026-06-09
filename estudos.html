@@ -288,31 +288,72 @@
       font-size: 0.95rem;
     }
 
-    .topic-check {
+    .progress-strip {
       display: flex;
-      align-items: center;
+      flex-wrap: wrap;
       gap: 10px;
-      margin: 0 0 12px;
+      margin-top: 14px;
+    }
+
+    .progress-pill,
+    .progress-mini {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--accent-2);
+      font-weight: 700;
+    }
+
+    .progress-pill {
+      padding: 8px 12px;
+      font-size: 0.95rem;
+    }
+
+    .progress-mini {
+      padding: 7px 11px;
+      font-size: 0.84rem;
+      margin-bottom: 12px;
+    }
+
+    .lesson-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
       padding: 10px 12px;
       border-radius: 12px;
       background: #fff7ef;
       border: 1px solid #ecd9c2;
+      margin-top: 8px;
     }
 
-    .topic-check input {
+    .lesson-item input {
       width: 18px;
       height: 18px;
       accent-color: var(--accent-2);
       flex: 0 0 auto;
+      margin-top: 2px;
+    }
+
+    .lesson-item a {
+      text-decoration: none;
+    }
+
+    .lesson-item input:checked + a {
+      text-decoration: line-through;
+      opacity: 0.68;
     }
 
     .lesson-list {
-      margin: 0 0 0 18px;
+      margin: 0;
       padding: 0;
+      list-style: none;
     }
 
     .lesson-list li + li {
-      margin-top: 8px;
+      margin-top: 0;
     }
 
     .note {
@@ -339,6 +380,40 @@
       .links-grid {
         grid-template-columns: 1fr;
       }
+    }
+
+    @media (max-width: 640px) {
+      .sidebar {
+        padding: 14px;
+      }
+
+      .content {
+        padding: 14px;
+      }
+
+      .brand,
+      .hero,
+      .section-card,
+      .timer-card,
+      .link-card {
+        padding: 16px;
+      }
+
+      .nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .nav-link,
+      .back-link,
+      .timer-btn {
+        text-align: center;
+      }
+
+      .timer-display {
+        font-size: clamp(2.2rem, 16vw, 4rem);
+        letter-spacing: 0.02em;
+      }
+
     }
   </style>
 </head>
@@ -416,133 +491,129 @@
       <section class="section-card">
         <div class="section-title">
           <h2>Aulas grátis por assunto</h2>
-          <p>Busca focada em <b>09/06/2026</b>. Cada link abre uma pesquisa específica no YouTube para você achar aula completa, revisão e resolução sem perder tempo.</p>
+          <p>Busca focada em <b>09/06/2026</b>. Cada link abre uma pesquisa específica no YouTube para você achar aula completa, revisão e resolução sem perder tempo. Agora você também pode marcar <b>assunto por assunto</b>.</p>
+          <div class="progress-strip">
+            <span class="progress-pill" data-topic-progress>0 de 0 assuntos marcados</span>
+            <span class="progress-pill" data-topic-percent>0%</span>
+          </div>
         </div>
 
         <div class="links-grid">
           <article id="linguagens" class="link-card">
             <h3>Linguagens</h3>
             <p>Foco em interpretação, texto e linguagem em contexto.</p>
-            <label class="topic-check"><input type="checkbox" data-study-check="linguagens"><span>Marcar Linguagens como estudado hoje</span></label>
             <ul class="lesson-list">
-              <li><a href="https://www.youtube.com/results?search_query=interpretacao+de+texto+enem+aula+completa" target="_blank" rel="noopener noreferrer">Interpretação de texto</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=generos+textuais+enem+aula+completa" target="_blank" rel="noopener noreferrer">Gêneros textuais</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=variacao+linguistica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Variação linguística</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=funcoes+da+linguagem+enem+aula+completa" target="_blank" rel="noopener noreferrer">Funções da linguagem</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=leitura+de+imagem+tirinha+propaganda+enem+aula" target="_blank" rel="noopener noreferrer">Leitura de imagem, tirinha e propaganda</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=literatura+brasileira+enem+aula+completa" target="_blank" rel="noopener noreferrer">Literatura brasileira em contexto</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=artes+movimentos+artisticos+enem+aula" target="_blank" rel="noopener noreferrer">Artes e movimentos artísticos</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=gramatica+contextualizada+enem+aula" target="_blank" rel="noopener noreferrer">Gramática contextualizada</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="ling-interpretacao"><a href="https://www.youtube.com/results?search_query=interpretacao+de+texto+enem+aula+completa" target="_blank" rel="noopener noreferrer">Interpretação de texto</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="ling-generos"><a href="https://www.youtube.com/results?search_query=generos+textuais+enem+aula+completa" target="_blank" rel="noopener noreferrer">Gêneros textuais</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="ling-variacao"><a href="https://www.youtube.com/results?search_query=variacao+linguistica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Variação linguística</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="ling-funcoes"><a href="https://www.youtube.com/results?search_query=funcoes+da+linguagem+enem+aula+completa" target="_blank" rel="noopener noreferrer">Funções da linguagem</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="ling-imagem"><a href="https://www.youtube.com/results?search_query=leitura+de+imagem+tirinha+propaganda+enem+aula" target="_blank" rel="noopener noreferrer">Leitura de imagem, tirinha e propaganda</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="ling-literatura"><a href="https://www.youtube.com/results?search_query=literatura+brasileira+enem+aula+completa" target="_blank" rel="noopener noreferrer">Literatura brasileira em contexto</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="ling-artes"><a href="https://www.youtube.com/results?search_query=artes+movimentos+artisticos+enem+aula" target="_blank" rel="noopener noreferrer">Artes e movimentos artísticos</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="ling-gramatica"><a href="https://www.youtube.com/results?search_query=gramatica+contextualizada+enem+aula" target="_blank" rel="noopener noreferrer">Gramática contextualizada</a></li>
             </ul>
           </article>
 
           <article id="humanas" class="link-card">
             <h3>Ciências Humanas</h3>
             <p>Foco em história do Brasil, geografia humana e leitura social.</p>
-            <label class="topic-check"><input type="checkbox" data-study-check="humanas"><span>Marcar Humanas como estudado hoje</span></label>
             <ul class="lesson-list">
-              <li><a href="https://www.youtube.com/results?search_query=brasil+colonia+imperio+republica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Brasil Colônia, Império e República</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=ditadura+e+redemocratizacao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Ditadura e redemocratização</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=globalizacao+e+geopolitica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Globalização e geopolítica</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=urbanizacao+e+populacao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Urbanização e população</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=geografia+agraria+enem+aula+completa" target="_blank" rel="noopener noreferrer">Geografia agrária</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=meio+ambiente+e+sustentabilidade+enem+aula+completa" target="_blank" rel="noopener noreferrer">Meio ambiente e sustentabilidade</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=filosofia+politica+e+etica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Filosofia política e ética</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=sociologia+cidadania+e+trabalho+enem+aula+completa" target="_blank" rel="noopener noreferrer">Sociologia, cidadania e trabalho</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="hum-brasil"><a href="https://www.youtube.com/results?search_query=brasil+colonia+imperio+republica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Brasil Colônia, Império e República</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="hum-ditadura"><a href="https://www.youtube.com/results?search_query=ditadura+e+redemocratizacao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Ditadura e redemocratização</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="hum-globalizacao"><a href="https://www.youtube.com/results?search_query=globalizacao+e+geopolitica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Globalização e geopolítica</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="hum-urbanizacao"><a href="https://www.youtube.com/results?search_query=urbanizacao+e+populacao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Urbanização e população</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="hum-agraria"><a href="https://www.youtube.com/results?search_query=geografia+agraria+enem+aula+completa" target="_blank" rel="noopener noreferrer">Geografia agrária</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="hum-meioambiente"><a href="https://www.youtube.com/results?search_query=meio+ambiente+e+sustentabilidade+enem+aula+completa" target="_blank" rel="noopener noreferrer">Meio ambiente e sustentabilidade</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="hum-filosofia"><a href="https://www.youtube.com/results?search_query=filosofia+politica+e+etica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Filosofia política e ética</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="hum-sociologia"><a href="https://www.youtube.com/results?search_query=sociologia+cidadania+e+trabalho+enem+aula+completa" target="_blank" rel="noopener noreferrer">Sociologia, cidadania e trabalho</a></li>
             </ul>
           </article>
 
           <article id="biologia" class="link-card">
             <h3>Biologia</h3>
             <p>Foco total na área da saúde e em temas fortes para Nutrição.</p>
-            <label class="topic-check"><input type="checkbox" data-study-check="biologia"><span>Marcar Biologia como estudado hoje</span></label>
             <ul class="lesson-list">
-              <li><a href="https://www.youtube.com/results?search_query=citologia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Citologia</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=fisiologia+humana+enem+aula+completa" target="_blank" rel="noopener noreferrer">Fisiologia humana</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=ecologia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Ecologia</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=genetica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Genética</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=evolucao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Evolução</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=biotecnologia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Biotecnologia</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=doencas+humanas+imunologia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Doenças humanas e imunologia</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=bioquimica+celular+enem+aula+completa" target="_blank" rel="noopener noreferrer">Bioquímica celular</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="bio-citologia"><a href="https://www.youtube.com/results?search_query=citologia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Citologia</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="bio-fisiologia"><a href="https://www.youtube.com/results?search_query=fisiologia+humana+enem+aula+completa" target="_blank" rel="noopener noreferrer">Fisiologia humana</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="bio-ecologia"><a href="https://www.youtube.com/results?search_query=ecologia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Ecologia</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="bio-genetica"><a href="https://www.youtube.com/results?search_query=genetica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Genética</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="bio-evolucao"><a href="https://www.youtube.com/results?search_query=evolucao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Evolução</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="bio-biotecnologia"><a href="https://www.youtube.com/results?search_query=biotecnologia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Biotecnologia</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="bio-doencas"><a href="https://www.youtube.com/results?search_query=doencas+humanas+imunologia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Doenças humanas e imunologia</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="bio-bioquimica"><a href="https://www.youtube.com/results?search_query=bioquimica+celular+enem+aula+completa" target="_blank" rel="noopener noreferrer">Bioquímica celular</a></li>
             </ul>
           </article>
 
           <article id="quimica" class="link-card">
             <h3>Química</h3>
             <p>Foco em base, cálculo químico e química dos alimentos.</p>
-            <label class="topic-check"><input type="checkbox" data-study-check="quimica"><span>Marcar Química como estudado hoje</span></label>
             <ul class="lesson-list">
-              <li><a href="https://www.youtube.com/results?search_query=estrutura+atomica+e+ligacoes+enem+aula+completa" target="_blank" rel="noopener noreferrer">Estrutura atômica e ligações</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=funcoes+inorganicas+enem+aula+completa" target="_blank" rel="noopener noreferrer">Funções inorgânicas</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=estequiometria+enem+aula+completa" target="_blank" rel="noopener noreferrer">Estequiometria</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=solucoes+e+concentracao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Soluções e concentração</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=ph+e+neutralizacao+enem+aula+completa" target="_blank" rel="noopener noreferrer">pH e neutralização</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=quimica+organica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Química orgânica</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=eletroquimica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Eletroquímica</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=quimica+ambiental+enem+aula+completa" target="_blank" rel="noopener noreferrer">Química ambiental</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="qui-estrutura"><a href="https://www.youtube.com/results?search_query=estrutura+atomica+e+ligacoes+enem+aula+completa" target="_blank" rel="noopener noreferrer">Estrutura atômica e ligações</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="qui-inorganica"><a href="https://www.youtube.com/results?search_query=funcoes+inorganicas+enem+aula+completa" target="_blank" rel="noopener noreferrer">Funções inorgânicas</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="qui-estequiometria"><a href="https://www.youtube.com/results?search_query=estequiometria+enem+aula+completa" target="_blank" rel="noopener noreferrer">Estequiometria</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="qui-solucoes"><a href="https://www.youtube.com/results?search_query=solucoes+e+concentracao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Soluções e concentração</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="qui-ph"><a href="https://www.youtube.com/results?search_query=ph+e+neutralizacao+enem+aula+completa" target="_blank" rel="noopener noreferrer">pH e neutralização</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="qui-organica"><a href="https://www.youtube.com/results?search_query=quimica+organica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Química orgânica</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="qui-eletroquimica"><a href="https://www.youtube.com/results?search_query=eletroquimica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Eletroquímica</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="qui-ambiental"><a href="https://www.youtube.com/results?search_query=quimica+ambiental+enem+aula+completa" target="_blank" rel="noopener noreferrer">Química ambiental</a></li>
             </ul>
           </article>
 
           <article id="fisica" class="link-card">
             <h3>Física</h3>
             <p>Foco em temas de maior retorno para reta final.</p>
-            <label class="topic-check"><input type="checkbox" data-study-check="fisica"><span>Marcar Física como estudado hoje</span></label>
             <ul class="lesson-list">
-              <li><a href="https://www.youtube.com/results?search_query=cinematica+e+dinamica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Cinemática e dinâmica</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=trabalho+e+energia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Trabalho e energia</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=termologia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Termologia</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=ondulatoria+enem+aula+completa" target="_blank" rel="noopener noreferrer">Ondulatória</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=optica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Óptica</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=eletricidade+enem+aula+completa" target="_blank" rel="noopener noreferrer">Eletricidade</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=hidrostatica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Hidrostática</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=leitura+de+experimentos+e+graficos+fisica+enem+aula" target="_blank" rel="noopener noreferrer">Leitura de experimentos e gráficos</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="fis-cinematica"><a href="https://www.youtube.com/results?search_query=cinematica+e+dinamica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Cinemática e dinâmica</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="fis-energia"><a href="https://www.youtube.com/results?search_query=trabalho+e+energia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Trabalho e energia</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="fis-termologia"><a href="https://www.youtube.com/results?search_query=termologia+enem+aula+completa" target="_blank" rel="noopener noreferrer">Termologia</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="fis-ondulatoria"><a href="https://www.youtube.com/results?search_query=ondulatoria+enem+aula+completa" target="_blank" rel="noopener noreferrer">Ondulatória</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="fis-optica"><a href="https://www.youtube.com/results?search_query=optica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Óptica</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="fis-eletricidade"><a href="https://www.youtube.com/results?search_query=eletricidade+enem+aula+completa" target="_blank" rel="noopener noreferrer">Eletricidade</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="fis-hidrostatica"><a href="https://www.youtube.com/results?search_query=hidrostatica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Hidrostática</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="fis-graficos"><a href="https://www.youtube.com/results?search_query=leitura+de+experimentos+e+graficos+fisica+enem+aula" target="_blank" rel="noopener noreferrer">Leitura de experimentos e gráficos</a></li>
             </ul>
           </article>
 
           <article id="matematica" class="link-card">
             <h3>Matemática</h3>
             <p>Foco em base numérica, leitura de dados e questões que mais pontuam.</p>
-            <label class="topic-check"><input type="checkbox" data-study-check="matematica"><span>Marcar Matemática como estudado hoje</span></label>
             <ul class="lesson-list">
-              <li><a href="https://www.youtube.com/results?search_query=razao+e+proporcao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Razão e proporção</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=porcentagem+enem+aula+completa" target="_blank" rel="noopener noreferrer">Porcentagem</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=funcoes+enem+aula+completa+matematica" target="_blank" rel="noopener noreferrer">Funções</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=equacoes+e+sistemas+enem+aula+completa" target="_blank" rel="noopener noreferrer">Equações e sistemas</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=estatistica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Estatística</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=probabilidade+enem+aula+completa" target="_blank" rel="noopener noreferrer">Probabilidade</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=geometria+plana+e+espacial+enem+aula+completa" target="_blank" rel="noopener noreferrer">Geometria plana e espacial</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=matematica+financeira+enem+aula+completa" target="_blank" rel="noopener noreferrer">Matemática financeira</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="mat-razao"><a href="https://www.youtube.com/results?search_query=razao+e+proporcao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Razão e proporção</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="mat-porcentagem"><a href="https://www.youtube.com/results?search_query=porcentagem+enem+aula+completa" target="_blank" rel="noopener noreferrer">Porcentagem</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="mat-funcoes"><a href="https://www.youtube.com/results?search_query=funcoes+enem+aula+completa+matematica" target="_blank" rel="noopener noreferrer">Funções</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="mat-equacoes"><a href="https://www.youtube.com/results?search_query=equacoes+e+sistemas+enem+aula+completa" target="_blank" rel="noopener noreferrer">Equações e sistemas</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="mat-estatistica"><a href="https://www.youtube.com/results?search_query=estatistica+enem+aula+completa" target="_blank" rel="noopener noreferrer">Estatística</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="mat-probabilidade"><a href="https://www.youtube.com/results?search_query=probabilidade+enem+aula+completa" target="_blank" rel="noopener noreferrer">Probabilidade</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="mat-geometria"><a href="https://www.youtube.com/results?search_query=geometria+plana+e+espacial+enem+aula+completa" target="_blank" rel="noopener noreferrer">Geometria plana e espacial</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="mat-financeira"><a href="https://www.youtube.com/results?search_query=matematica+financeira+enem+aula+completa" target="_blank" rel="noopener noreferrer">Matemática financeira</a></li>
             </ul>
           </article>
 
           <article id="redacao" class="link-card">
             <h3>Redação</h3>
             <p>Foco em nota alta com estrutura, repertório e reescrita.</p>
-            <label class="topic-check"><input type="checkbox" data-study-check="redacao"><span>Marcar Redação como estudado hoje</span></label>
             <ul class="lesson-list">
-              <li><a href="https://www.youtube.com/results?search_query=estrutura+da+introducao+redacao+enem+aula" target="_blank" rel="noopener noreferrer">Estrutura da introdução</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=desenvolvimento+1+redacao+enem+argumentacao+aula" target="_blank" rel="noopener noreferrer">Desenvolvimento 1 com argumento claro</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=desenvolvimento+2+repertorio+redacao+enem+aula" target="_blank" rel="noopener noreferrer">Desenvolvimento 2 com repertório útil</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=proposta+de+intervencao+redacao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Proposta de intervenção completa</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=coesao+e+conectivos+redacao+enem+aula" target="_blank" rel="noopener noreferrer">Coesão e conectivos</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=correcao+gramatical+redacao+enem+aula" target="_blank" rel="noopener noreferrer">Correção gramatical</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=redacao+enem+passo+a+passo+aula+completa" target="_blank" rel="noopener noreferrer">Redação completa na semana</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=reescrita+de+redacao+enem+corrigida+aula" target="_blank" rel="noopener noreferrer">Reescrita de redação corrigida</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="red-introducao"><a href="https://www.youtube.com/results?search_query=estrutura+da+introducao+redacao+enem+aula" target="_blank" rel="noopener noreferrer">Estrutura da introdução</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="red-desenvolvimento1"><a href="https://www.youtube.com/results?search_query=desenvolvimento+1+redacao+enem+argumentacao+aula" target="_blank" rel="noopener noreferrer">Desenvolvimento 1 com argumento claro</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="red-desenvolvimento2"><a href="https://www.youtube.com/results?search_query=desenvolvimento+2+repertorio+redacao+enem+aula" target="_blank" rel="noopener noreferrer">Desenvolvimento 2 com repertório útil</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="red-intervencao"><a href="https://www.youtube.com/results?search_query=proposta+de+intervencao+redacao+enem+aula+completa" target="_blank" rel="noopener noreferrer">Proposta de intervenção completa</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="red-coesao"><a href="https://www.youtube.com/results?search_query=coesao+e+conectivos+redacao+enem+aula" target="_blank" rel="noopener noreferrer">Coesão e conectivos</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="red-gramatica"><a href="https://www.youtube.com/results?search_query=correcao+gramatical+redacao+enem+aula" target="_blank" rel="noopener noreferrer">Correção gramatical</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="red-completa"><a href="https://www.youtube.com/results?search_query=redacao+enem+passo+a+passo+aula+completa" target="_blank" rel="noopener noreferrer">Redação completa na semana</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="red-reescrita"><a href="https://www.youtube.com/results?search_query=reescrita+de+redacao+enem+corrigida+aula" target="_blank" rel="noopener noreferrer">Reescrita de redação corrigida</a></li>
             </ul>
           </article>
 
           <article id="uneb" class="link-card">
             <h3>Ajuste para a UNEB</h3>
             <p>Foco em revisão mais direta, prova objetiva e estilo próprio da UNEB.</p>
-            <label class="topic-check"><input type="checkbox" data-study-check="uneb"><span>Marcar bloco UNEB como estudado hoje</span></label>
             <ul class="lesson-list">
-              <li><a href="https://www.youtube.com/results?search_query=provas+anteriores+uneb+vestibular+resolucao" target="_blank" rel="noopener noreferrer">Bloco com prova anterior</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=gramatica+objetiva+vestibular+aula+completa" target="_blank" rel="noopener noreferrer">Gramática objetiva</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=leitura+literal+e+inferencial+vestibular+aula" target="_blank" rel="noopener noreferrer">Leitura literal e inferencial</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=literatura+brasileira+vestibular+uneb+aula" target="_blank" rel="noopener noreferrer">Literatura e artes cobradas de forma direta</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=revisao+factual+historia+geografia+vestibular+aula" target="_blank" rel="noopener noreferrer">Revisão curta de conteúdos factuais</a></li>
-              <li><a href="https://www.youtube.com/results?search_query=correcao+prova+uneb+vestibular" target="_blank" rel="noopener noreferrer">Correção dos erros da prova UNEB</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="uneb-prova"><a href="https://www.youtube.com/results?search_query=provas+anteriores+uneb+vestibular+resolucao" target="_blank" rel="noopener noreferrer">Bloco com prova anterior</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="uneb-gramatica"><a href="https://www.youtube.com/results?search_query=gramatica+objetiva+vestibular+aula+completa" target="_blank" rel="noopener noreferrer">Gramática objetiva</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="uneb-leitura"><a href="https://www.youtube.com/results?search_query=leitura+literal+e+inferencial+vestibular+aula" target="_blank" rel="noopener noreferrer">Leitura literal e inferencial</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="uneb-literatura"><a href="https://www.youtube.com/results?search_query=literatura+brasileira+vestibular+uneb+aula" target="_blank" rel="noopener noreferrer">Literatura e artes cobradas de forma direta</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="uneb-factual"><a href="https://www.youtube.com/results?search_query=revisao+factual+historia+geografia+vestibular+aula" target="_blank" rel="noopener noreferrer">Revisão curta de conteúdos factuais</a></li>
+              <li class="lesson-item"><input type="checkbox" data-study-check="uneb-correcao"><a href="https://www.youtube.com/results?search_query=correcao+prova+uneb+vestibular" target="_blank" rel="noopener noreferrer">Correção dos erros da prova UNEB</a></li>
             </ul>
           </article>
         </div>
@@ -565,6 +636,9 @@
       const resetSessionBtn = document.querySelector("[data-timer-reset-session]");
       const resetTotalBtn = document.querySelector("[data-timer-reset-total]");
       const studyChecks = document.querySelectorAll("[data-study-check]");
+      const linkCards = document.querySelectorAll(".link-card");
+      const topicProgress = document.querySelector("[data-topic-progress]");
+      const topicPercent = document.querySelector("[data-topic-percent]");
 
       const currentKey = "placido-study-current-seconds";
       const runningKey = "placido-study-running";
@@ -579,7 +653,7 @@
       let intervalId = null;
 
       const todayKey = "placido-study-today-" + new Date().toISOString().slice(0, 10);
-      const checkPrefix = todayKey + "-check-";
+      const checkPrefix = "placido-topic-check-";
 
       function formatClock(seconds) {
         const hrs = Math.floor(seconds / 3600);
@@ -696,6 +770,37 @@
         }
       }
 
+      function renderTopicProgress() {
+        let totalTopics = 0;
+        let doneTopics = 0;
+
+        linkCards.forEach((card) => {
+          const inputs = Array.from(card.querySelectorAll("[data-study-check]"));
+          const done = inputs.filter((input) => input.checked).length;
+          totalTopics += inputs.length;
+          doneTopics += done;
+
+          let badge = card.querySelector("[data-card-progress]");
+          if (!badge) {
+            badge = document.createElement("div");
+            badge.className = "progress-mini";
+            badge.setAttribute("data-card-progress", "");
+            const intro = card.querySelector("p");
+            if (intro) {
+              intro.insertAdjacentElement("afterend", badge);
+            } else {
+              card.insertBefore(badge, card.firstChild);
+            }
+          }
+
+          badge.textContent = done + "/" + inputs.length + " assuntos concluídos";
+        });
+
+        const percent = totalTopics ? Math.round((doneTopics / totalTopics) * 100) : 0;
+        topicProgress.textContent = doneTopics + " de " + totalTopics + " assuntos marcados";
+        topicPercent.textContent = percent + "%";
+      }
+
       if (running && startedAt) {
         tick();
       } else {
@@ -710,8 +815,11 @@
         input.checked = localStorage.getItem(key) === "1";
         input.addEventListener("change", () => {
           localStorage.setItem(key, input.checked ? "1" : "0");
+          renderTopicProgress();
         });
       });
+
+      renderTopicProgress();
 
       goalInput.value = localStorage.getItem(goalKey) || "4";
       goalInput.addEventListener("change", () => {
