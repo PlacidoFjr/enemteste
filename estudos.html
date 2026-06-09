@@ -260,6 +260,138 @@
       color: var(--accent-2);
     }
 
+    .week-actions,
+    .week-summary,
+    .plan-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .week-actions {
+      grid-template-columns: repeat(2, minmax(0, max-content));
+      margin: 14px 0 16px;
+    }
+
+    .week-summary {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-bottom: 16px;
+    }
+
+    .plan-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .plan-card {
+      background: #fffdf9;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .plan-card.today {
+      border-color: var(--accent-2);
+      box-shadow: 0 12px 28px rgba(30, 106, 99, 0.10);
+    }
+
+    .plan-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .plan-head h3 {
+      margin: 0;
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-size: 1.15rem;
+    }
+
+    .day-chip,
+    .block-tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    .day-chip {
+      padding: 6px 10px;
+      border: 1px solid #d6c4b1;
+      background: #fff3e6;
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+
+    .day-hours {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-bottom: 10px;
+    }
+
+    .day-hours input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font: inherit;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .plan-meta {
+      margin: 0 0 12px;
+      color: var(--accent-2);
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .plan-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .plan-item {
+      display: grid;
+      gap: 6px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid #ead9c8;
+      background: #fff7ef;
+    }
+
+    .plan-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .block-time {
+      font-family: "IBM Plex Mono", "Consolas", monospace;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .block-tag {
+      padding: 4px 8px;
+      background: #eaf6f3;
+      color: var(--accent-2);
+      font-size: 0.76rem;
+    }
+
+    .plan-text {
+      margin: 0;
+      color: var(--ink);
+      font-size: 0.95rem;
+    }
+
     .section-card {
       padding: 22px;
       margin-bottom: 18px;
@@ -377,7 +509,12 @@
       .timer-actions,
       .stats-grid,
       .goal-grid,
+      .week-summary,
       .links-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .plan-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -409,6 +546,16 @@
         text-align: center;
       }
 
+      .week-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .plan-head,
+      .plan-line {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
       .timer-display {
         font-size: clamp(2.2rem, 16vw, 4rem);
         letter-spacing: 0.02em;
@@ -425,10 +572,11 @@
         <p>Timer grande + links grátis focados por assunto para usar junto com seu cronograma.</p>
       </div>
 
-      <a class="back-link" href="index.html" target="_blank" rel="noopener noreferrer">Abrir plano principal</a>
+      <a class="back-link" href="index.html">Voltar para o plano principal</a>
 
       <nav class="nav">
         <a class="nav-link" href="#dashboard">Dashboard</a>
+        <a class="nav-link" href="#cronograma-semanal">Cronograma</a>
         <a class="nav-link" href="#linguagens">Linguagens</a>
         <a class="nav-link" href="#humanas">Ciências Humanas</a>
         <a class="nav-link" href="#biologia">Biologia</a>
@@ -442,8 +590,7 @@
 
     <main class="content">
       <section class="hero">
-        <h2>Estudo prático em uma aba separada</h2>
-        <p>Esta página foi feita para execução: controlar tempo, abrir aulas grátis e revisar um assunto por vez sem ficar perdido em uma landing page muito longa.</p>
+        <h2>Estudo prático em uma página separada</h2>
       </section>
 
       <section id="dashboard" class="timer-card">
@@ -486,6 +633,35 @@
           </div>
         </div>
         <p class="note">Se você fechar a aba sem salvar, o cronômetro da sessão continua guardado. O total contado entra mesmo quando você clicar em salvar.</p>
+      </section>
+
+      <section id="cronograma-semanal" class="section-card">
+        <div class="section-title">
+          <h2>Cronograma automático da semana</h2>
+          <p>Você escolhe quantas horas consegue estudar em cada dia e a página monta blocos curtos, com pausas e ordem estratégica para ENEM + UNEB. O foco aqui é funcionar mesmo com baixa concentração.</p>
+        </div>
+
+        <div class="week-actions">
+          <button class="timer-btn" type="button" data-week-preset="leve">Preencher 2h por dia</button>
+          <button class="timer-btn" type="button" data-week-preset="equilibrado">Seg a sex 3h + fim de semana 4h</button>
+        </div>
+
+        <div class="week-summary">
+          <div class="stat-box">
+            <strong>Total planejado na semana</strong>
+            <span data-week-total>0h 00min</span>
+          </div>
+          <div class="stat-box">
+            <strong>Blocos previstos</strong>
+            <span data-week-blocks>0</span>
+          </div>
+          <div class="stat-box">
+            <strong>Formato</strong>
+            <span>Blocos curtos + pausas</span>
+          </div>
+        </div>
+
+        <div class="plan-grid" data-week-grid></div>
       </section>
 
       <section class="section-card">
@@ -639,12 +815,17 @@
       const linkCards = document.querySelectorAll(".link-card");
       const topicProgress = document.querySelector("[data-topic-progress]");
       const topicPercent = document.querySelector("[data-topic-percent]");
+      const weekGrid = document.querySelector("[data-week-grid]");
+      const weekTotal = document.querySelector("[data-week-total]");
+      const weekBlocks = document.querySelector("[data-week-blocks]");
+      const weekPresetBtns = document.querySelectorAll("[data-week-preset]");
 
       const currentKey = "placido-study-current-seconds";
       const runningKey = "placido-study-running";
       const startedAtKey = "placido-study-started-at";
       const totalKey = "placido-study-total-seconds";
       const goalKey = "placido-study-goal-hours";
+      const weekHoursKey = "placido-week-hours";
 
       let currentSeconds = Number(localStorage.getItem(currentKey) || 0);
       let totalSeconds = Number(localStorage.getItem(totalKey) || 0);
@@ -654,6 +835,117 @@
 
       const todayKey = "placido-study-today-" + new Date().toISOString().slice(0, 10);
       const checkPrefix = "placido-topic-check-";
+      const weekdayKeys = ["domingo", "segunda", "terca", "quarta", "quinta", "sexta", "sabado"];
+      const todayWeekKey = weekdayKeys[new Date().getDay()];
+      const defaultWeekHours = {
+        segunda: 3,
+        terca: 3,
+        quarta: 3,
+        quinta: 3,
+        sexta: 3,
+        sabado: 4,
+        domingo: 2
+      };
+      const weeklyTemplates = [
+        {
+          key: "segunda",
+          label: "Segunda",
+          chip: "Base forte",
+          blocks: [
+            { tag: "Biologia", text: "Fisiologia humana + bioquímica celular" },
+            { tag: "Matemática", text: "Porcentagem + razão e proporção" },
+            { tag: "Linguagens", text: "Interpretação de texto + leitura de imagem" },
+            { tag: "Química", text: "Soluções + pH e neutralização" },
+            { tag: "Revisão", text: "10 a 15 questões e correção dos erros" }
+          ]
+        },
+        {
+          key: "terca",
+          label: "Terça",
+          chip: "Natureza + humanas",
+          blocks: [
+            { tag: "Química", text: "Estequiometria + concentração de soluções" },
+            { tag: "Humanas", text: "Brasil República + ditadura e redemocratização" },
+            { tag: "Redação", text: "Introdução + repertório pronto" },
+            { tag: "Biologia", text: "Genética + biotecnologia" },
+            { tag: "UNEB", text: "Leitura inferencial e gramática objetiva" }
+          ]
+        },
+        {
+          key: "quarta",
+          label: "Quarta",
+          chip: "Cálculo e leitura",
+          blocks: [
+            { tag: "Matemática", text: "Estatística + probabilidade" },
+            { tag: "Biologia", text: "Citologia + doenças humanas" },
+            { tag: "Física", text: "Trabalho, energia e gráficos" },
+            { tag: "Linguagens", text: "Gêneros textuais + variação linguística" },
+            { tag: "Revisão", text: "Questões erradas acumuladas da semana" }
+          ]
+        },
+        {
+          key: "quinta",
+          label: "Quinta",
+          chip: "Redação forte",
+          blocks: [
+            { tag: "Química", text: "Química orgânica + eletroquímica" },
+            { tag: "Redação", text: "Desenvolvimento 1 e 2 com argumento claro" },
+            { tag: "Humanas", text: "Globalização + meio ambiente e sustentabilidade" },
+            { tag: "Matemática", text: "Funções + equações e sistemas" },
+            { tag: "UNEB", text: "Conteúdo factual de história e geografia" }
+          ]
+        },
+        {
+          key: "sexta",
+          label: "Sexta",
+          chip: "Fechamento da base",
+          blocks: [
+            { tag: "Biologia", text: "Ecologia + evolução" },
+            { tag: "Química", text: "Funções inorgânicas + estrutura atômica" },
+            { tag: "Linguagens", text: "Gramática contextualizada + artes" },
+            { tag: "Física", text: "Termologia + eletricidade" },
+            { tag: "Revisão", text: "Caderno de erros + 1 bloco de questões" }
+          ]
+        },
+        {
+          key: "sabado",
+          label: "Sábado",
+          chip: "Treino pesado",
+          blocks: [
+            { tag: "Questões", text: "Simulado curto ou bloco grande de questões ENEM" },
+            { tag: "Redação", text: "Redação completa e revisão da proposta" },
+            { tag: "Natureza", text: "Biologia + química nos pontos mais fracos" },
+            { tag: "UNEB", text: "Prova anterior com correção comentada" },
+            { tag: "Revisão", text: "Reescrever erros e fórmulas-chave" }
+          ]
+        },
+        {
+          key: "domingo",
+          label: "Domingo",
+          chip: "Leve e inteligente",
+          blocks: [
+            { tag: "Revisão", text: "Revisão leve do que caiu pior na semana" },
+            { tag: "Humanas", text: "Assuntos de leitura mais rápida e contextual" },
+            { tag: "Linguagens", text: "Texto, tirinha, propaganda e repertório" },
+            { tag: "UNEB", text: "Leitura objetiva + literatura e artes" },
+            { tag: "Planejamento", text: "Organizar segunda e separar assuntos fracos" }
+          ]
+        }
+      ];
+      let weekHours = readWeekHours();
+
+      function readWeekHours() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(weekHoursKey) || "{}");
+          return Object.assign({}, defaultWeekHours, saved);
+        } catch (error) {
+          return Object.assign({}, defaultWeekHours);
+        }
+      }
+
+      function saveWeekHours() {
+        localStorage.setItem(weekHoursKey, JSON.stringify(weekHours));
+      }
 
       function formatClock(seconds) {
         const hrs = Math.floor(seconds / 3600);
@@ -801,6 +1093,117 @@
         topicPercent.textContent = percent + "%";
       }
 
+      function getBlockMinutes(hours) {
+        if (hours <= 2) return 30;
+        if (hours <= 3.5) return 35;
+        return 40;
+      }
+
+      function getPauseMinutes(hours) {
+        return hours <= 2 ? 8 : 10;
+      }
+
+      function buildDayPlan(day, hours) {
+        const safeHours = Math.max(0, Number(hours || 0));
+        const totalMinutes = Math.round(safeHours * 60);
+
+        if (!totalMinutes) {
+          return {
+            blockCount: 0,
+            meta: "Dia livre ou descanso planejado.",
+            blocks: [
+              {
+                time: "00 min",
+                tag: "Folga",
+                text: "Se quiser, use 15 min para organizar materiais e revisar erros sem peso."
+              }
+            ]
+          };
+        }
+
+        const blockMinutes = getBlockMinutes(safeHours);
+        const pauseMinutes = getPauseMinutes(safeHours);
+        const rawCount = Math.floor((totalMinutes + pauseMinutes) / (blockMinutes + pauseMinutes));
+        const blockCount = Math.max(1, Math.min(day.blocks.length, rawCount || 1));
+        const usedMinutes = (blockCount * blockMinutes) + ((blockCount - 1) * pauseMinutes);
+        const remainingMinutes = Math.max(0, totalMinutes - usedMinutes);
+        const blocks = day.blocks.slice(0, blockCount).map((item) => ({
+          time: blockMinutes + " min",
+          tag: item.tag,
+          text: item.text
+        }));
+
+        if (remainingMinutes >= 12) {
+          blocks.push({
+            time: remainingMinutes + " min",
+            tag: "Fechamento",
+            text: "Revisar erros, marcar assuntos estudados e separar a próxima sessão."
+          });
+        }
+
+        return {
+          blockCount,
+          meta: blockCount + " blocos de " + blockMinutes + " min + pausas de " + pauseMinutes + " min.",
+          blocks
+        };
+      }
+
+      function renderWeekPlan() {
+        let totalWeekMinutes = 0;
+        let totalBlocks = 0;
+
+        weekGrid.innerHTML = weeklyTemplates.map((day) => {
+          const hours = Math.max(0, Number(weekHours[day.key] || 0));
+          const plan = buildDayPlan(day, hours);
+          totalWeekMinutes += Math.round(hours * 60);
+          totalBlocks += plan.blockCount;
+
+          const badgeLabel = day.key === todayWeekKey ? "Hoje" : day.chip;
+          const items = plan.blocks.map((block) => (
+            '<li class="plan-item">' +
+              '<div class="plan-line">' +
+                '<span class="block-time">' + block.time + '</span>' +
+                '<span class="block-tag">' + block.tag + '</span>' +
+              '</div>' +
+              '<p class="plan-text">' + block.text + '</p>' +
+            '</li>'
+          )).join("");
+
+          return (
+            '<article class="plan-card' + (day.key === todayWeekKey ? ' today' : '') + '">' +
+              '<div class="plan-head">' +
+                '<h3>' + day.label + '</h3>' +
+                '<span class="day-chip">' + badgeLabel + '</span>' +
+              '</div>' +
+              '<label class="day-hours">Horas disponíveis' +
+                '<input type="number" min="0" max="8" step="0.5" value="' + hours + '" data-week-input="' + day.key + '">' +
+              '</label>' +
+              '<p class="plan-meta">' + plan.meta + '</p>' +
+              '<ul class="plan-list">' + items + '</ul>' +
+            '</article>'
+          );
+        }).join("");
+
+        weekTotal.textContent = formatHours(totalWeekMinutes * 60);
+        weekBlocks.textContent = String(totalBlocks);
+
+        weekGrid.querySelectorAll("[data-week-input]").forEach((input) => {
+          input.addEventListener("change", () => {
+            const value = Math.max(0, Math.min(8, Number(input.value || 0)));
+            weekHours[input.dataset.weekInput] = value;
+            saveWeekHours();
+
+            if (input.dataset.weekInput === todayWeekKey) {
+              localStorage.setItem(goalKey, String(value || 1));
+              goalInput.value = String(value || 1);
+              render();
+            }
+
+            renderWeekPlan();
+          });
+        });
+      }
+
       if (running && startedAt) {
         tick();
       } else {
@@ -819,13 +1222,53 @@
         });
       });
 
+      weekPresetBtns.forEach((button) => {
+        button.addEventListener("click", () => {
+          if (button.dataset.weekPreset === "leve") {
+            weekHours = {
+              segunda: 2,
+              terca: 2,
+              quarta: 2,
+              quinta: 2,
+              sexta: 2,
+              sabado: 2,
+              domingo: 2
+            };
+          } else {
+            weekHours = {
+              segunda: 3,
+              terca: 3,
+              quarta: 3,
+              quinta: 3,
+              sexta: 3,
+              sabado: 4,
+              domingo: 4
+            };
+          }
+
+          saveWeekHours();
+          localStorage.setItem(goalKey, String(weekHours[todayWeekKey] || 1));
+          goalInput.value = String(weekHours[todayWeekKey] || 1);
+          render();
+          renderWeekPlan();
+        });
+      });
+
+      if (!localStorage.getItem(goalKey)) {
+        localStorage.setItem(goalKey, String(weekHours[todayWeekKey] || 4));
+      }
+
+      renderWeekPlan();
       renderTopicProgress();
 
-      goalInput.value = localStorage.getItem(goalKey) || "4";
+      goalInput.value = localStorage.getItem(goalKey) || String(weekHours[todayWeekKey] || 4);
       goalInput.addEventListener("change", () => {
         const value = Math.max(1, Math.min(12, Number(goalInput.value || 4)));
         localStorage.setItem(goalKey, String(value));
         goalInput.value = String(value);
+        weekHours[todayWeekKey] = value;
+        saveWeekHours();
+        renderWeekPlan();
         render();
       });
 
