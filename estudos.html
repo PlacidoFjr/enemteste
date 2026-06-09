@@ -1510,6 +1510,43 @@
         return changed
       }
 
+      async function adoptAuthenticatedUser(user) {
+        activeUser = user || null
+        guestMode = false
+        sessionStorage.removeItem(guestSessionKey)
+        cloudEnabled = Boolean(activeUser && isPremiumReady())
+
+        if (!activeUser) {
+          updateAccountCard()
+          return
+        }
+
+        hideAuthGate()
+        authNote.textContent = "Conta conectada com sucesso."
+        syncStatus.textContent = "Sync em nuvem"
+        updateAccountCard()
+
+        if (cloudEnabled) {
+          try {
+            const changed = await hydrateFromCloud(activeUser)
+            if (changed) {
+              window.location.reload()
+              return
+            }
+          } catch (error) {
+            authNote.textContent = "Entrou, mas nao consegui puxar a nuvem agora. Vou manter a versao local nesta sessao."
+          }
+
+          try {
+            await syncCloudState(true)
+          } catch (error) {
+            syncStatus.textContent = "Sync com erro"
+          }
+        }
+
+        updateAccountCard()
+      }
+
       const nativeSetItem = Storage.prototype.setItem
       const nativeRemoveItem = Storage.prototype.removeItem
 
@@ -2150,7 +2187,7 @@
 
       async function startGoogleLogin() {
         if (!isPremiumReady()) {
-          authNote.textContent = "No arquivo local o Firebase login nao abre como deveria. Publique no Vercel e adicione o dominio autorizado no Firebase para ativar o Google."
+          authNote.textContent = "No arquivo local o Firebase login nao abre como deveria. Use a versao publicada no Firebase Hosting para ativar o Google."
           return
         }
 
@@ -2159,9 +2196,13 @@
         authNote.textContent = "Abrindo login do Google..."
 
         try {
-          await signInWithPopup(auth, googleProvider)
+          const result = await signInWithPopup(auth, googleProvider)
+          if (result && result.user) {
+            await adoptAuthenticatedUser(result.user)
+          }
         } catch (error) {
-          authNote.textContent = "Nao consegui entrar com Google agora. Se estiver em producao, confirme o dominio autorizado no Firebase."
+          const code = error && error.code ? " (" + error.code + ")" : ""
+          authNote.textContent = "Nao consegui entrar com Google agora" + code + ". Confira o dominio autorizado e se o provedor Google esta ativo no Firebase."
         } finally {
           authGoogleBtn.disabled = false
           accountLoginBtn.disabled = false
@@ -2198,26 +2239,16 @@
       })
 
       onAuthStateChanged(auth, async (user) => {
-        activeUser = user || null
-        guestMode = !activeUser && sessionStorage.getItem(guestSessionKey) === "1"
-        cloudEnabled = Boolean(activeUser && isPremiumReady())
-
-        if (activeUser && cloudEnabled) {
-          try {
-            const changed = await hydrateFromCloud(activeUser)
-            if (changed) {
-              window.location.reload()
-              return
-            }
-          } catch (error) {
-            authNote.textContent = "Entrou, mas nao consegui puxar a nuvem agora. Vou manter a versao local nesta sessao."
-          }
+        if (user) {
+          await adoptAuthenticatedUser(user)
+        } else {
+          activeUser = null
+          guestMode = sessionStorage.getItem(guestSessionKey) === "1"
+          cloudEnabled = false
         }
 
         if (activeUser) {
           hideAuthGate()
-          authNote.textContent = "Conta conectada com sucesso."
-          syncStatus.textContent = "Sync em nuvem"
         } else if (guestMode) {
           hideAuthGate()
           syncStatus.textContent = "Sync local"
