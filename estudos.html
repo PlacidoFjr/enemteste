@@ -1256,6 +1256,12 @@
       border-color: #dfd4c7;
     }
 
+    .lesson-item.focused {
+      border-color: #83c7bc;
+      background: #eef8f6;
+      box-shadow: 0 0 0 3px rgba(43, 145, 157, 0.12);
+    }
+
     .lesson-body {
       display: grid;
       gap: 10px;
@@ -2480,6 +2486,19 @@
         renderDailyMission();
       }
 
+      function openTopicById(topicId) {
+        const topic = topicModels.find((item) => item.id === topicId);
+        if (!topic) return;
+
+        history.replaceState(null, "", "#" + topic.metaInfo.article);
+        topic.item.scrollIntoView({ behavior: "smooth", block: "center" });
+        topic.item.classList.add("focused");
+
+        window.setTimeout(() => {
+          topic.item.classList.remove("focused");
+        }, 2200);
+      }
+
       function runToolAction(action) {
         if (action === "questoes") {
           setWorkspaceTab("treino-questoes", true);
@@ -2545,11 +2564,17 @@
               '<span class="priority-score">Score ' + entry.score + '</span>' +
             '</div>' +
             '<div class="error-actions">' +
-              '<a class="error-link" href="#' + escapeHtml(entry.topic.metaInfo.article) + '">Abrir assunto</a>' +
+              '<button class="error-link" type="button" data-open-topic="' + escapeHtml(entry.topic.id) + '">Abrir assunto</button>' +
               '<button class="error-btn" type="button" data-error-review="' + escapeHtml(entry.topic.id) + '">Marcar revisado</button>' +
             '</div>' +
           '</article>'
         )).join("");
+
+        errorList.querySelectorAll("[data-open-topic]").forEach((button) => {
+          button.addEventListener("click", () => {
+            openTopicById(button.dataset.openTopic);
+          });
+        });
 
         errorList.querySelectorAll("[data-error-review]").forEach((button) => {
           button.addEventListener("click", () => {
