@@ -508,6 +508,167 @@
       white-space: pre-wrap;
     }
 
+    .smart-grid,
+    .mission-actions,
+    .mission-list,
+    .error-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .smart-grid {
+      grid-template-columns: 1.15fr 0.85fr;
+      margin: 18px 0 12px;
+    }
+
+    .smart-card {
+      background: #fffdf9;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .smart-card h3 {
+      margin-bottom: 6px;
+    }
+
+    .smart-card p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .mini-stat {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .mini-stat strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .mini-stat span {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .mission-actions {
+      grid-template-columns: repeat(2, minmax(0, max-content));
+      margin-bottom: 12px;
+    }
+
+    .mission-progress {
+      height: 10px;
+      border-radius: 999px;
+      background: #ede5db;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .mission-progress span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--accent-2), #52b6aa);
+      border-radius: inherit;
+    }
+
+    .mission-summary {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 12px;
+    }
+
+    .mission-item,
+    .error-item {
+      border: 1px solid #eadcc9;
+      border-radius: 16px;
+      background: #fff8f0;
+      padding: 13px 14px;
+    }
+
+    .mission-item.done {
+      background: #f6fbf9;
+      border-color: #cce2da;
+    }
+
+    .mission-line,
+    .error-head,
+    .error-actions {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mission-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .mission-check input {
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-2);
+    }
+
+    .mission-check strong,
+    .error-item strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .mission-meta,
+    .error-meta {
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .error-actions {
+      margin-top: 10px;
+    }
+
+    .error-link,
+    .error-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 9px 12px;
+      font: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .error-link {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .error-btn {
+      border: 1px solid var(--accent-2);
+      background: var(--accent-2);
+      color: #fff;
+    }
+
     .goal-input {
       width: 100%;
       border: 1px solid var(--line);
@@ -1262,7 +1423,9 @@
       .adaptive-grid,
       .adaptive-summary,
       .module-grid,
+      .mini-stats,
       .resource-grid,
+      .smart-grid,
       .week-summary,
       .links-grid {
         grid-template-columns: 1fr;
@@ -1379,7 +1542,7 @@
         <a class="nav-link" href="#modulos-nutricao">Modulos</a>
         <a class="nav-link" href="#treino-questoes">Treino</a>
         <a class="nav-link" href="#cronograma-semanal">Cronograma</a>
-        <a class="nav-link" href="#web-util">Web util</a>
+        <a class="nav-link" href="#web-util">Ferramentas</a>
         <a class="nav-link" href="#linguagens">Linguagens</a>
         <a class="nav-link" href="#humanas">Ciências Humanas</a>
         <a class="nav-link" href="#biologia">Biologia</a>
@@ -1435,6 +1598,39 @@
             <span data-timer-total>0h 00min</span>
           </div>
         </div>
+        <div class="smart-grid">
+          <article class="smart-card">
+            <h3>Missão do dia</h3>
+            <p>Inspirado no que plataformas de estudo fazem bem: transformar sua meta em poucas tarefas claras, curtas e marcáveis.</p>
+            <div class="mini-stats">
+              <div class="mini-stat">
+                <strong>Sequência</strong>
+                <span data-streak-current>0 dias</span>
+              </div>
+              <div class="mini-stat">
+                <strong>Últimos 7 dias</strong>
+                <span data-streak-week>0/7</span>
+              </div>
+              <div class="mini-stat">
+                <strong>Missão de hoje</strong>
+                <span data-mission-count>0 itens</span>
+              </div>
+            </div>
+            <div class="mission-actions">
+              <button class="timer-btn" type="button" data-mission-refresh>Atualizar missão</button>
+              <button class="timer-btn" type="button" data-mission-reset>Limpar checks de hoje</button>
+            </div>
+            <div class="mission-progress"><span data-mission-progress-bar></span></div>
+            <div class="mission-summary" data-mission-summary>Sem missão gerada ainda.</div>
+            <div class="mission-list" data-mission-list></div>
+          </article>
+
+          <article class="smart-card">
+            <h3>Caderno de erros</h3>
+            <p>Lista automática dos assuntos que mais pedem revisão agora, usando dificuldade alta, revisão atrasada e último treino ruim.</p>
+            <div class="error-list" data-error-list></div>
+          </article>
+        </div>
         <div class="study-log-card">
           <h3>Registro rápido do dia</h3>
           <p>Use este espaço quando fizer revisão geral, lista de questões, redação, simulado ou qualquer bloco que não queira marcar só por assunto.</p>
@@ -1480,7 +1676,7 @@
           <button class="workspace-tab active" type="button" data-workspace-tab="modulos-nutricao" aria-selected="true">Modulos</button>
           <button class="workspace-tab" type="button" data-workspace-tab="treino-questoes" aria-selected="false">Treino</button>
           <button class="workspace-tab" type="button" data-workspace-tab="cronograma-semanal" aria-selected="false">Cronograma</button>
-          <button class="workspace-tab" type="button" data-workspace-tab="web-util" aria-selected="false">Web util</button>
+          <button class="workspace-tab" type="button" data-workspace-tab="web-util" aria-selected="false">Ferramentas</button>
         </nav>
       </section>
 
@@ -1628,109 +1824,103 @@
 
       <section id="web-util" class="section-card workspace-panel" data-workspace-panel="web-util" hidden>
         <div class="section-title">
-          <h2>Ferramentas web que já funcionam</h2>
-          <p>Curadoria feita em <b>10/06/2026</b> com foco no que realmente ajuda no seu fluxo: prova oficial, acompanhamento do ENEM, SISU e ingresso na UFBA.</p>
+          <h2>Ferramentas prontas para estudar</h2>
+          <p>Em vez de jogar mais links, transformei ideias comuns de plataformas de estudo em ações internas que já empurram você para o próximo passo.</p>
         </div>
 
         <div class="resource-grid">
           <article class="resource-card">
             <div class="resource-head">
               <div>
-                <h3>Provas e gabaritos do ENEM</h3>
-                <span class="resource-source">Inep oficial</span>
+                <h3>Sprint de questões</h3>
+                <span class="resource-source">Vai para treino filtrado</span>
               </div>
-              <span class="resource-badge">Questões reais</span>
+              <span class="resource-badge">Ação rápida</span>
             </div>
-            <p>É o melhor banco de questões para treino sério porque traz cadernos e gabaritos oficiais das edições anteriores.</p>
+            <p>Abre a aba de treino já com foco alto para você atacar o que mais pode render nota agora.</p>
             <div class="resource-meta">
-              <span><strong>Use para:</strong> simulado, revisão por prova e correção.</span>
-              <span><strong>Checado em:</strong> 10/06/2026.</span>
+              <span><strong>Bom para:</strong> quando você tiver 30 a 45 minutos e quiser objetividade.</span>
             </div>
-            <a class="resource-link" href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos" target="_blank" rel="noopener noreferrer">Abrir provas oficiais</a>
+            <button class="resource-link" type="button" data-tool-action="questoes">Abrir treino forte</button>
           </article>
 
           <article class="resource-card">
             <div class="resource-head">
               <div>
-                <h3>Página do Participante</h3>
-                <span class="resource-source">Enem Inep</span>
+                <h3>Revisão pelo erro</h3>
+                <span class="resource-source">Vai para caderno de erros</span>
               </div>
-              <span class="resource-badge">Acompanhamento</span>
+              <span class="resource-badge">Ação rápida</span>
             </div>
-            <p>É a porta principal para inscrição, acompanhamento da aplicação, local de prova e dados do participante.</p>
+            <p>Te joga direto para os assuntos que ficaram difíceis, atrasados ou com treino ruim.</p>
             <div class="resource-meta">
-              <span><strong>Use para:</strong> conferir situação, inscrição e informações oficiais do exame.</span>
-              <span><strong>Checado em:</strong> 10/06/2026.</span>
+              <span><strong>Bom para:</strong> quando bate dúvida sobre o que revisar primeiro.</span>
             </div>
-            <a class="resource-link" href="https://enem.inep.gov.br/participante/" target="_blank" rel="noopener noreferrer">Abrir página do participante</a>
+            <button class="resource-link" type="button" data-tool-action="erros">Abrir caderno de erros</button>
           </article>
 
           <article class="resource-card">
             <div class="resource-head">
               <div>
-                <h3>Matriz de referência do ENEM</h3>
-                <span class="resource-source">PDF oficial do Inep</span>
+                <h3>Missão automática</h3>
+                <span class="resource-source">Atualiza blocos do dia</span>
               </div>
-              <span class="resource-badge">Base da prova</span>
+              <span class="resource-badge">Ação rápida</span>
             </div>
-            <p>Mostra competências, habilidades e objetos de conhecimento. É um dos documentos mais úteis para entender o que a banca cobra.</p>
+            <p>Refaz a missão do dia usando sua meta de horas e os assuntos mais urgentes da fila.</p>
             <div class="resource-meta">
-              <span><strong>Use para:</strong> estudar por habilidade, não só por matéria.</span>
-              <span><strong>Checado em:</strong> 10/06/2026.</span>
+              <span><strong>Bom para:</strong> dias em que você quer só seguir o sistema sem pensar muito.</span>
             </div>
-            <a class="resource-link" href="https://download.inep.gov.br/download/enem/matriz_referencia.pdf" target="_blank" rel="noopener noreferrer">Abrir matriz em PDF</a>
+            <button class="resource-link" type="button" data-tool-action="missao">Atualizar missão</button>
           </article>
 
           <article class="resource-card">
             <div class="resource-head">
               <div>
-                <h3>Portal oficial do ENEM</h3>
-                <span class="resource-source">Inep oficial</span>
+                <h3>Cronograma do dia</h3>
+                <span class="resource-source">Vai para semana adaptativa</span>
               </div>
-              <span class="resource-badge">Central do exame</span>
+              <span class="resource-badge">Ação rápida</span>
             </div>
-            <p>Serve como central para notícias, páginas oficiais, serviços e acesso aos ambientes ligados ao exame.</p>
+            <p>Abre o cronograma automático para reorganizar suas horas e redistribuir os blocos.</p>
             <div class="resource-meta">
-              <span><strong>Use para:</strong> acompanhar avisos e achar links institucionais do ENEM.</span>
-              <span><strong>Checado em:</strong> 10/06/2026.</span>
+              <span><strong>Bom para:</strong> quando sua rotina muda e você precisa replanejar rápido.</span>
             </div>
-            <a class="resource-link" href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem" target="_blank" rel="noopener noreferrer">Abrir portal ENEM</a>
+            <button class="resource-link" type="button" data-tool-action="cronograma">Abrir cronograma</button>
           </article>
 
           <article class="resource-card">
             <div class="resource-head">
               <div>
-                <h3>Portal Único de Acesso</h3>
-                <span class="resource-source">MEC oficial</span>
+                <h3>Bloco de redação</h3>
+                <span class="resource-source">Vai para redação</span>
               </div>
-              <span class="resource-badge">SISU</span>
+              <span class="resource-badge">Ação rápida</span>
             </div>
-            <p>É o caminho oficial para acompanhar o ecossistema de ingresso federal, inclusive o SISU.</p>
+            <p>Atalho para cair na área de redação e encaixar um bloco de treino sem ficar procurando.</p>
             <div class="resource-meta">
-              <span><strong>Use para:</strong> monitorar seleção, cronogramas e acesso institucional.</span>
-              <span><strong>Checado em:</strong> 10/06/2026.</span>
+              <span><strong>Bom para:</strong> quando você quer manter a redação viva na semana.</span>
             </div>
-            <a class="resource-link" href="https://acessounico.mec.gov.br/" target="_blank" rel="noopener noreferrer">Abrir portal do MEC</a>
+            <button class="resource-link" type="button" data-tool-action="redacao">Abrir redação</button>
           </article>
 
           <article class="resource-card">
             <div class="resource-head">
               <div>
-                <h3>Ingresso UFBA</h3>
-                <span class="resource-source">UFBA oficial</span>
+                <h3>Revisão geral guiada</h3>
+                <span class="resource-source">Puxa missão + caderno</span>
               </div>
-              <span class="resource-badge">Seu alvo</span>
+              <span class="resource-badge">Ação rápida</span>
             </div>
-            <p>Reúne SISU 2026 e processos seletivos específicos da UFBA. Como você vai usar ENEM para UFBA, esse link precisa ficar sempre por perto.</p>
+            <p>Atualiza a missão do dia e te devolve para o topo com foco em revisão e continuidade.</p>
             <div class="resource-meta">
-              <span><strong>Use para:</strong> edital, chamadas, orientações e acesso rápido ao SISU da UFBA.</span>
-              <span><strong>Checado em:</strong> 10/06/2026.</span>
+              <span><strong>Bom para:</strong> dias de baixa concentração, quando você precisa de direção simples.</span>
             </div>
-            <a class="resource-link" href="https://ingresso.ufba.br/" target="_blank" rel="noopener noreferrer">Abrir ingresso UFBA</a>
+            <button class="resource-link" type="button" data-tool-action="revisao-geral">Começar revisão</button>
           </article>
         </div>
 
-        <p class="resource-note">Critério desta aba: só ficaram aqui links institucionais ou oficiais que consegui verificar na pesquisa web desta rodada.</p>
+        <p class="resource-note" data-tool-status>Essas ações foram pensadas a partir de padrões comuns de plataformas de estudo: missão curta, fila por prioridade, revisão por erro e retomada rápida.</p>
       </section>
 
       <section class="section-card">
@@ -1910,6 +2100,17 @@
       const saveBtn = document.querySelector("[data-timer-save]");
       const resetSessionBtn = document.querySelector("[data-timer-reset-session]");
       const resetTotalBtn = document.querySelector("[data-timer-reset-total]");
+      const streakCurrent = document.querySelector("[data-streak-current]");
+      const streakWeek = document.querySelector("[data-streak-week]");
+      const missionCount = document.querySelector("[data-mission-count]");
+      const missionRefreshBtn = document.querySelector("[data-mission-refresh]");
+      const missionResetBtn = document.querySelector("[data-mission-reset]");
+      const missionProgressBar = document.querySelector("[data-mission-progress-bar]");
+      const missionSummary = document.querySelector("[data-mission-summary]");
+      const missionList = document.querySelector("[data-mission-list]");
+      const errorList = document.querySelector("[data-error-list]");
+      const toolActionButtons = document.querySelectorAll("[data-tool-action]");
+      const toolStatus = document.querySelector("[data-tool-status]");
       const studyLogType = document.querySelector("[data-study-log-type]");
       const studyLogTitle = document.querySelector("[data-study-log-title]");
       const studyLogText = document.querySelector("[data-study-log-text]");
@@ -1958,6 +2159,7 @@
       const startedAtKey = "placido-study-started-at";
       const totalKey = "placido-study-total-seconds";
       const goalKey = "placido-study-goal-hours";
+      const missionStateKey = "placido-mission-state";
       const studyLogKey = "placido-study-log";
       const weekHoursKey = "placido-week-hours";
       const topicStatePrefix = "placido-topic-state-";
@@ -2056,6 +2258,19 @@
         localStorage.setItem(studyLogKey, JSON.stringify(entries));
       }
 
+      function readMissionState() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(missionStateKey) || "{}");
+          return saved && typeof saved === "object" ? saved : {};
+        } catch (error) {
+          return {};
+        }
+      }
+
+      function saveMissionState(state) {
+        localStorage.setItem(missionStateKey, JSON.stringify(state));
+      }
+
       function formatLogDate(isoString) {
         const date = new Date(isoString);
         if (Number.isNaN(date.getTime())) {
@@ -2124,6 +2339,236 @@
         studyLogType.value = "Revisão geral";
         studyLogStatus.textContent = "Registro salvo. Pode usar isso para marcar revisao geral e blocos livres.";
         renderStudyLog();
+        renderDailyMission();
+      }
+
+      function hasStudyActivityOnDate(dateString) {
+        const daySeconds = Number(localStorage.getItem("placido-study-today-" + dateString) || 0);
+        if (daySeconds > 0) {
+          return true;
+        }
+
+        return readStudyLog().some((entry) => getLocalDateString(new Date(entry.createdAt)) === dateString);
+      }
+
+      function getStudyStreakMetrics() {
+        let current = 0;
+        let activeLastWeek = 0;
+        const todayActive = hasStudyActivityOnDate(getLocalDateString());
+        const startOffset = todayActive ? 0 : 1;
+
+        for (let offset = 0; offset < 30; offset += 1) {
+          const date = new Date();
+          date.setDate(date.getDate() - offset);
+          const key = getLocalDateString(date);
+          const active = hasStudyActivityOnDate(key);
+
+          if (offset < 7 && active) {
+            activeLastWeek += 1;
+          }
+
+          if (offset >= startOffset && !active) {
+            break;
+          }
+
+          if (offset >= startOffset && active) {
+            current += 1;
+          }
+        }
+
+        return { current: current, week: activeLastWeek };
+      }
+
+      function buildDailyMissionItems() {
+        const ranked = getRankedTopics().filter((entry) => entry.score > 0);
+        const hours = Math.max(1, Number(localStorage.getItem(goalKey) || goalInput.value || 4));
+        const blocks = Math.max(3, Math.min(7, Math.round(hours * 1.5)));
+        const tasks = [];
+
+        ranked.slice(0, Math.min(4, ranked.length)).forEach((entry, index) => {
+          const topic = entry.topic;
+          const baseId = topic.id + "-" + index;
+
+          if (tasks.length < blocks) {
+            tasks.push({
+              id: baseId + "-teoria",
+              title: "Teoria curta de " + topic.metaInfo.title,
+              meta: topic.metaInfo.area + " • 25 min • " + entry.reason
+            });
+          }
+
+          if (tasks.length < blocks) {
+            tasks.push({
+              id: baseId + "-questoes",
+              title: "8 a 12 questoes de " + topic.metaInfo.title,
+              meta: topic.metaInfo.area + " • 30 min • treino aplicado"
+            });
+          }
+        });
+
+        if (tasks.length < blocks) {
+          tasks.push({
+            id: "redacao-estrutura",
+            title: "Treino de estrutura de redacao",
+            meta: "Redação • 30 min • introducao + argumentos + intervencao"
+          });
+        }
+
+        if (tasks.length < blocks) {
+          tasks.push({
+            id: "revisao-geral",
+            title: "Revisao geral dos erros do dia",
+            meta: "Bloco final • 20 min • corrigir e anotar o que travou"
+          });
+        }
+
+        return tasks.slice(0, blocks);
+      }
+
+      function renderDailyMission() {
+        const metrics = getStudyStreakMetrics();
+        const todayMissionId = getLocalDateString();
+        const stored = readMissionState();
+        const tasks = buildDailyMissionItems();
+        const savedChecks = stored[todayMissionId] && Array.isArray(stored[todayMissionId].checked)
+          ? new Set(stored[todayMissionId].checked)
+          : new Set();
+        const completed = tasks.filter((task) => savedChecks.has(task.id)).length;
+        const percent = tasks.length ? Math.round((completed / tasks.length) * 100) : 0;
+
+        streakCurrent.textContent = metrics.current + (metrics.current === 1 ? " dia" : " dias");
+        streakWeek.textContent = metrics.week + "/7";
+        missionCount.textContent = tasks.length + (tasks.length === 1 ? " item" : " itens");
+        missionProgressBar.style.width = percent + "%";
+        missionSummary.textContent = completed + " de " + tasks.length + " tarefas concluidas hoje.";
+
+        missionList.innerHTML = tasks.map((task) => {
+          const checked = savedChecks.has(task.id);
+          return (
+            '<article class="mission-item' + (checked ? ' done' : '') + '">' +
+              '<label class="mission-check">' +
+                '<input type="checkbox" data-mission-check="' + escapeHtml(task.id) + '"' + (checked ? ' checked' : '') + '>' +
+                '<span>' +
+                  '<strong>' + escapeHtml(task.title) + '</strong>' +
+                  '<span class="mission-meta">' + escapeHtml(task.meta) + '</span>' +
+                '</span>' +
+              '</label>' +
+            '</article>'
+          );
+        }).join("");
+
+        missionList.querySelectorAll("[data-mission-check]").forEach((input) => {
+          input.addEventListener("change", () => {
+            const currentState = readMissionState();
+            const todayState = currentState[todayMissionId] || { checked: [] };
+            const checkedSet = new Set(Array.isArray(todayState.checked) ? todayState.checked : []);
+
+            if (input.checked) checkedSet.add(input.dataset.missionCheck);
+            else checkedSet.delete(input.dataset.missionCheck);
+
+            currentState[todayMissionId] = { checked: Array.from(checkedSet) };
+            saveMissionState(currentState);
+            renderDailyMission();
+          });
+        });
+      }
+
+      function resetDailyMissionChecks() {
+        const state = readMissionState();
+        state[getLocalDateString()] = { checked: [] };
+        saveMissionState(state);
+        renderDailyMission();
+      }
+
+      function runToolAction(action) {
+        if (action === "questoes") {
+          setWorkspaceTab("treino-questoes", true);
+          practicePriority.value = "alta";
+          renderPracticeBuilder();
+          toolStatus.textContent = "Treino forte aberto com foco alto.";
+          return;
+        }
+
+        if (action === "erros") {
+          window.location.hash = "#dashboard";
+          errorList.scrollIntoView({ behavior: "smooth", block: "center" });
+          toolStatus.textContent = "Caderno de erros aberto para revisao.";
+          return;
+        }
+
+        if (action === "missao") {
+          renderDailyMission();
+          toolStatus.textContent = "Missao do dia atualizada com base na sua fila.";
+          return;
+        }
+
+        if (action === "cronograma") {
+          setWorkspaceTab("cronograma-semanal", true);
+          renderWeekPlan();
+          toolStatus.textContent = "Cronograma aberto para reorganizar sua semana.";
+          return;
+        }
+
+        if (action === "redacao") {
+          window.location.hash = "#redacao";
+          toolStatus.textContent = "Area de redacao aberta para voce encaixar um bloco agora.";
+          return;
+        }
+
+        if (action === "revisao-geral") {
+          renderDailyMission();
+          window.location.hash = "#dashboard";
+          toolStatus.textContent = "Revisao geral iniciada: missao atualizada e retorno ao topo.";
+        }
+      }
+
+      function renderErrorNotebook() {
+        const ranked = getRankedTopics().filter((entry) => (
+          entry.topic.state.lastResult === "bad" ||
+          entry.topic.state.lastResult === "ok" ||
+          entry.topic.state.difficulty === "dificil" ||
+          entry.days >= 5
+        )).slice(0, 6);
+
+        if (!ranked.length) {
+          errorList.innerHTML = '<article class="error-item"><strong>Caderno limpo por agora</strong><p class="error-meta">Quando aparecer dificuldade alta, revisao atrasada ou treino ruim, os assuntos entram aqui.</p></article>';
+          return;
+        }
+
+        errorList.innerHTML = ranked.map((entry) => (
+          '<article class="error-item">' +
+            '<div class="error-head">' +
+              '<div>' +
+                '<strong>' + escapeHtml(entry.topic.metaInfo.title) + '</strong>' +
+                '<div class="error-meta">' + escapeHtml(entry.topic.metaInfo.area + " • " + entry.reason) + '</div>' +
+              '</div>' +
+              '<span class="priority-score">Score ' + entry.score + '</span>' +
+            '</div>' +
+            '<div class="error-actions">' +
+              '<a class="error-link" href="#' + escapeHtml(entry.topic.metaInfo.article) + '">Abrir assunto</a>' +
+              '<button class="error-btn" type="button" data-error-review="' + escapeHtml(entry.topic.id) + '">Marcar revisado</button>' +
+            '</div>' +
+          '</article>'
+        )).join("");
+
+        errorList.querySelectorAll("[data-error-review]").forEach((button) => {
+          button.addEventListener("click", () => {
+            const topic = topicModels.find((item) => item.id === button.dataset.errorReview);
+            if (!topic) return;
+
+            topic.state.lastReviewed = getLocalDateString();
+            topic.state.lastResult = "ok";
+            topic.state.status = topic.state.status === "nao_visto" ? "revisando" : topic.state.status;
+            saveTopicState(topic.id, topic.state);
+            renderTopicProgress();
+            renderModuleDashboard();
+            renderAdaptiveDashboard();
+            renderPracticeBuilder();
+            renderWeekPlan();
+            renderDailyMission();
+            renderErrorNotebook();
+          });
+        });
       }
 
       function setWorkspaceTab(tabId, keepHash) {
@@ -2497,6 +2942,7 @@
         currentSeconds = 0;
         persistBase();
         render();
+        renderDailyMission();
       }
 
       function resetSession() {
@@ -2839,6 +3285,8 @@
             renderAdaptiveDashboard();
             renderPracticeBuilder();
             renderWeekPlan();
+            renderDailyMission();
+            renderErrorNotebook();
           });
 
           topic.statusSelect.addEventListener("change", () => {
@@ -2856,6 +3304,8 @@
             renderAdaptiveDashboard();
             renderPracticeBuilder();
             renderWeekPlan();
+            renderDailyMission();
+            renderErrorNotebook();
           });
 
           topic.difficultySelect.addEventListener("change", () => {
@@ -2866,6 +3316,8 @@
             renderAdaptiveDashboard();
             renderPracticeBuilder();
             renderWeekPlan();
+            renderDailyMission();
+            renderErrorNotebook();
           });
 
           topic.reviewButtons.forEach((button) => {
@@ -2890,6 +3342,8 @@
               renderAdaptiveDashboard();
               renderPracticeBuilder();
               renderWeekPlan();
+              renderDailyMission();
+              renderErrorNotebook();
             });
           });
 
@@ -3054,6 +3508,8 @@
       initializePracticeControls();
       syncWorkspaceTabFromHash();
       renderStudyLog();
+      renderDailyMission();
+      renderErrorNotebook();
       updateAccountCard();
 
       async function startGoogleLogin() {
@@ -3182,6 +3638,8 @@
       renderAdaptiveDashboard();
       renderPracticeBuilder();
       renderWeekPlan();
+      renderDailyMission();
+      renderErrorNotebook();
 
       goalInput.value = localStorage.getItem(goalKey) || String(weekHours[todayWeekKey] || 4);
       goalInput.addEventListener("change", () => {
@@ -3194,12 +3652,21 @@
         renderAdaptiveDashboard();
         renderPracticeBuilder();
         renderWeekPlan();
+        renderDailyMission();
+        renderErrorNotebook();
         render();
       });
 
       startBtn.addEventListener("click", startTimer);
       pauseBtn.addEventListener("click", pauseTimer);
       saveBtn.addEventListener("click", saveSession);
+      missionRefreshBtn.addEventListener("click", renderDailyMission);
+      missionResetBtn.addEventListener("click", resetDailyMissionChecks);
+      toolActionButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          runToolAction(button.dataset.toolAction);
+        });
+      });
       studyLogSave.addEventListener("click", handleStudyLogSave);
       resetSessionBtn.addEventListener("click", resetSession);
       resetTotalBtn.addEventListener("click", function () {
