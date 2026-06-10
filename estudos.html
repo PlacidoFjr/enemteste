@@ -397,6 +397,117 @@
       margin-bottom: 8px;
     }
 
+    .study-log-card {
+      margin: 16px 0 10px;
+      padding: 16px;
+      background: #fffdf9;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+    }
+
+    .study-log-card h3 {
+      margin-bottom: 6px;
+    }
+
+    .study-log-card p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .study-log-form,
+    .study-log-top,
+    .study-log-actions,
+    .study-log-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .study-log-top {
+      grid-template-columns: 190px minmax(0, 1fr);
+    }
+
+    .study-log-field label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .study-log-input,
+    .study-log-textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 11px 12px;
+      font: inherit;
+      color: var(--ink);
+    }
+
+    .study-log-textarea {
+      min-height: 88px;
+      resize: vertical;
+    }
+
+    .study-log-actions {
+      grid-template-columns: repeat(2, minmax(0, max-content));
+      align-items: center;
+    }
+
+    .study-log-muted {
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .study-log-list {
+      margin-top: 14px;
+    }
+
+    .study-log-item {
+      border: 1px solid #eadcc9;
+      border-radius: 16px;
+      background: #fff8f0;
+      padding: 13px 14px;
+    }
+
+    .study-log-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .study-log-type {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 5px 10px;
+      background: #eaf6f3;
+      color: var(--accent-2);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .study-log-date {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .study-log-title {
+      margin: 0 0 4px;
+      font-size: 1rem;
+    }
+
+    .study-log-text {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      white-space: pre-wrap;
+    }
+
     .goal-input {
       width: 100%;
       border: 1px solid var(--line);
@@ -1085,7 +1196,9 @@
 
       .practice-layout,
       .practice-row,
-      .practice-actions {
+      .practice-actions,
+      .study-log-top,
+      .study-log-actions {
         grid-template-columns: 1fr;
       }
 
@@ -1242,6 +1355,39 @@
             <strong>Total acumulado</strong>
             <span data-timer-total>0h 00min</span>
           </div>
+        </div>
+        <div class="study-log-card">
+          <h3>Registro rápido do dia</h3>
+          <p>Use este espaço quando fizer revisão geral, lista de questões, redação, simulado ou qualquer bloco que não queira marcar só por assunto.</p>
+          <div class="study-log-form">
+            <div class="study-log-top">
+              <div class="study-log-field">
+                <label for="study-log-type">Tipo</label>
+                <select id="study-log-type" class="study-log-input" data-study-log-type>
+                  <option value="Revisão geral">Revisão geral</option>
+                  <option value="Teoria">Teoria</option>
+                  <option value="Questões">Questões</option>
+                  <option value="Revisão de erros">Revisão de erros</option>
+                  <option value="Redação">Redação</option>
+                  <option value="Simulado">Simulado</option>
+                  <option value="Outro">Outro</option>
+                </select>
+              </div>
+              <div class="study-log-field">
+                <label for="study-log-title">Assunto ou bloco</label>
+                <input id="study-log-title" class="study-log-input" type="text" maxlength="90" placeholder="Ex.: revisão geral de Biologia e Química" data-study-log-title>
+              </div>
+            </div>
+            <div class="study-log-field">
+              <label for="study-log-text">O que você fez</label>
+              <textarea id="study-log-text" class="study-log-textarea" placeholder="Ex.: revisei citologia, pH e corrigi 10 questões de ecologia." data-study-log-text></textarea>
+            </div>
+            <div class="study-log-actions">
+              <button class="timer-btn" type="button" data-study-log-save>Salvar registro</button>
+              <span class="study-log-muted" data-study-log-status>Nada salvo ainda hoje.</span>
+            </div>
+          </div>
+          <div class="study-log-list" data-study-log-list></div>
         </div>
         <p class="note">Se você fechar a aba sem salvar, o cronômetro da sessão continua guardado. O total contado entra mesmo quando você clicar em salvar.</p>
       </section>
@@ -1577,6 +1723,12 @@
       const saveBtn = document.querySelector("[data-timer-save]");
       const resetSessionBtn = document.querySelector("[data-timer-reset-session]");
       const resetTotalBtn = document.querySelector("[data-timer-reset-total]");
+      const studyLogType = document.querySelector("[data-study-log-type]");
+      const studyLogTitle = document.querySelector("[data-study-log-title]");
+      const studyLogText = document.querySelector("[data-study-log-text]");
+      const studyLogSave = document.querySelector("[data-study-log-save]");
+      const studyLogStatus = document.querySelector("[data-study-log-status]");
+      const studyLogList = document.querySelector("[data-study-log-list]");
       const studyChecks = document.querySelectorAll("[data-study-check]");
       const linkCards = document.querySelectorAll(".link-card");
       const topicProgress = document.querySelector("[data-topic-progress]");
@@ -1619,6 +1771,7 @@
       const startedAtKey = "placido-study-started-at";
       const totalKey = "placido-study-total-seconds";
       const goalKey = "placido-study-goal-hours";
+      const studyLogKey = "placido-study-log";
       const weekHoursKey = "placido-week-hours";
       const topicStatePrefix = "placido-topic-state-";
       const guestSessionKey = "study-guest-session";
@@ -1701,6 +1854,89 @@
         } catch (error) {
           return Object.assign({}, defaultWeekHours);
         }
+      }
+
+      function readStudyLog() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(studyLogKey) || "[]");
+          return Array.isArray(saved) ? saved : [];
+        } catch (error) {
+          return [];
+        }
+      }
+
+      function saveStudyLog(entries) {
+        localStorage.setItem(studyLogKey, JSON.stringify(entries));
+      }
+
+      function formatLogDate(isoString) {
+        const date = new Date(isoString);
+        if (Number.isNaN(date.getTime())) {
+          return "Agora";
+        }
+
+        return date.toLocaleString("pt-BR", {
+          day: "2-digit",
+          month: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit"
+        });
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
+      }
+
+      function renderStudyLog() {
+        const entries = readStudyLog();
+
+        if (!entries.length) {
+          studyLogList.innerHTML = '<div class="study-log-item"><p class="study-log-text">Quando voce salvar uma revisao geral ou um bloco livre, ele aparece aqui.</p></div>';
+          return;
+        }
+
+        studyLogList.innerHTML = entries.slice(0, 6).map((entry) => (
+          '<article class="study-log-item">' +
+            '<div class="study-log-head">' +
+              '<span class="study-log-type">' + escapeHtml(entry.type) + '</span>' +
+              '<span class="study-log-date">' + formatLogDate(entry.createdAt) + '</span>' +
+            '</div>' +
+            '<h4 class="study-log-title">' + escapeHtml(entry.title) + '</h4>' +
+            '<p class="study-log-text">' + escapeHtml(entry.text) + '</p>' +
+          '</article>'
+        )).join("");
+      }
+
+      function handleStudyLogSave() {
+        const type = studyLogType.value.trim() || "Revisão geral";
+        const title = studyLogTitle.value.trim();
+        const text = studyLogText.value.trim();
+
+        if (!title && !text) {
+          studyLogStatus.textContent = "Escreva pelo menos o assunto ou a descricao do que voce revisou.";
+          return;
+        }
+
+        const entries = readStudyLog();
+        entries.unshift({
+          id: "log-" + Date.now(),
+          type: type,
+          title: title || type,
+          text: text || "Registro rapido salvo sem observacao adicional.",
+          createdAt: new Date().toISOString()
+        });
+
+        saveStudyLog(entries.slice(0, 20));
+        studyLogTitle.value = "";
+        studyLogText.value = "";
+        studyLogType.value = "Revisão geral";
+        studyLogStatus.textContent = "Registro salvo. Pode usar isso para marcar revisao geral e blocos livres.";
+        renderStudyLog();
       }
 
       function setWorkspaceTab(tabId, keepHash) {
@@ -2630,6 +2866,7 @@
       initializeTopicModels();
       initializePracticeControls();
       syncWorkspaceTabFromHash();
+      renderStudyLog();
       updateAccountCard();
 
       async function startGoogleLogin() {
@@ -2776,6 +3013,7 @@
       startBtn.addEventListener("click", startTimer);
       pauseBtn.addEventListener("click", pauseTimer);
       saveBtn.addEventListener("click", saveSession);
+      studyLogSave.addEventListener("click", handleStudyLogSave);
       resetSessionBtn.addEventListener("click", resetSession);
       resetTotalBtn.addEventListener("click", function () {
         const confirmed = window.confirm("Zerar sessão atual e total salvo?");
