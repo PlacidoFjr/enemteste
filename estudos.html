@@ -410,7 +410,10 @@
     .week-summary,
     .plan-grid,
     .adaptive-grid,
-    .adaptive-summary {
+    .adaptive-summary,
+    .module-grid,
+    .practice-layout,
+    .practice-actions {
       display: grid;
       gap: 12px;
     }
@@ -437,6 +440,156 @@
     .adaptive-summary {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       margin-top: 14px;
+    }
+
+    .module-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .module-card,
+    .practice-panel,
+    .practice-side {
+      background: #fffdf9;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .module-card h3,
+    .practice-panel h3,
+    .practice-side h3 {
+      margin: 0 0 8px;
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-size: 1.12rem;
+    }
+
+    .module-card p,
+    .practice-panel p,
+    .practice-side p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .module-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 12px 0 10px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .module-progress {
+      width: 100%;
+      height: 9px;
+      border-radius: 999px;
+      background: #e3e0ea;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .module-progress span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #2d9c99 0%, #1e6a63 100%);
+    }
+
+    .module-button,
+    .practice-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 44px;
+      border-radius: 12px;
+      background: #1f8a96;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .practice-layout {
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+      align-items: start;
+    }
+
+    .practice-form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .practice-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .practice-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .practice-field label {
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .practice-select {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .practice-actions {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .practice-actions .practice-link.secondary {
+      background: #fff;
+      color: var(--accent);
+      border: 1px solid var(--line);
+    }
+
+    .practice-count {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 8px 0 0;
+    }
+
+    .practice-list {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .practice-item {
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid #ead9c8;
+      background: #fff7ef;
+    }
+
+    .practice-item strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .practice-item span {
+      color: var(--muted);
+      font-size: 0.88rem;
     }
 
     .plan-card {
@@ -874,12 +1027,19 @@
       .goal-grid,
       .adaptive-grid,
       .adaptive-summary,
+      .module-grid,
       .week-summary,
       .links-grid {
         grid-template-columns: 1fr;
       }
 
       .plan-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .practice-layout,
+      .practice-row,
+      .practice-actions {
         grid-template-columns: 1fr;
       }
     }
@@ -968,6 +1128,8 @@
 
       <nav class="nav">
         <a class="nav-link" href="#dashboard">Dashboard</a>
+        <a class="nav-link" href="#modulos-nutricao">Modulos</a>
+        <a class="nav-link" href="#treino-questoes">Treino</a>
         <a class="nav-link" href="#cronograma-semanal">Cronograma</a>
         <a class="nav-link" href="#linguagens">Linguagens</a>
         <a class="nav-link" href="#humanas">Ciências Humanas</a>
@@ -1025,6 +1187,74 @@
           </div>
         </div>
         <p class="note">Se você fechar a aba sem salvar, o cronômetro da sessão continua guardado. O total contado entra mesmo quando você clicar em salvar.</p>
+      </section>
+
+      <section id="modulos-nutricao" class="section-card">
+        <div class="section-title">
+          <h2>Modulos por materia</h2>
+          <p>Organizado para Nutrição: Natureza, Redação e Matemática aparecem com mais peso, mas sem abandonar Linguagens, Humanas e o ajuste para a UNEB.</p>
+        </div>
+        <div class="module-grid" data-module-grid></div>
+      </section>
+
+      <section id="treino-questoes" class="section-card">
+        <div class="section-title">
+          <h2>Monte seu treino</h2>
+          <p>Filtro leve para decidir o que treinar agora. Quando quiser questões reais, use as provas oficiais do ENEM como base.</p>
+        </div>
+        <div class="practice-layout">
+          <article class="practice-panel">
+            <div class="practice-form">
+              <div class="practice-row">
+                <div class="practice-field">
+                  <label for="practice-area">Materia</label>
+                  <select id="practice-area" class="practice-select" data-practice-area>
+                    <option value="all">Todas</option>
+                  </select>
+                </div>
+                <div class="practice-field">
+                  <label for="practice-status">Status</label>
+                  <select id="practice-status" class="practice-select" data-practice-status>
+                    <option value="all">Todos</option>
+                    <option value="nao_visto">Nao visto</option>
+                    <option value="em_progresso">Em progresso</option>
+                    <option value="revisando">Revisando</option>
+                    <option value="dominado">Dominado</option>
+                  </select>
+                </div>
+                <div class="practice-field">
+                  <label for="practice-difficulty">Dificuldade</label>
+                  <select id="practice-difficulty" class="practice-select" data-practice-difficulty>
+                    <option value="all">Todas</option>
+                    <option value="facil">Facil</option>
+                    <option value="medio">Medio</option>
+                    <option value="dificil">Dificil</option>
+                  </select>
+                </div>
+                <div class="practice-field">
+                  <label for="practice-priority">Foco</label>
+                  <select id="practice-priority" class="practice-select" data-practice-priority>
+                    <option value="all">Tudo</option>
+                    <option value="alta">Alta prioridade</option>
+                    <option value="revisao">Revisao atrasada</option>
+                    <option value="nutricao">Mais forte para Nutricao</option>
+                  </select>
+                </div>
+              </div>
+              <div class="practice-actions">
+                <button class="practice-link" type="button" data-practice-open>Estudar primeiro da lista</button>
+                <a class="practice-link secondary" href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos" target="_blank" rel="noopener noreferrer">Abrir provas oficiais do INEP</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="practice-side">
+            <h3>Lista sugerida</h3>
+            <p>Use como gerador de bloco: teoria curta, 8 a 12 questões e correção do erro.</p>
+            <div class="practice-count" data-practice-count>0</div>
+            <ul class="practice-list" data-practice-list></ul>
+          </article>
+        </div>
       </section>
 
       <section id="cronograma-semanal" class="section-card">
@@ -1294,6 +1524,14 @@
       const summaryHard = document.querySelector("[data-summary-hard]");
       const summaryDue = document.querySelector("[data-summary-due]");
       const summaryMastered = document.querySelector("[data-summary-mastered]");
+      const moduleGrid = document.querySelector("[data-module-grid]");
+      const practiceArea = document.querySelector("[data-practice-area]");
+      const practiceStatus = document.querySelector("[data-practice-status]");
+      const practiceDifficulty = document.querySelector("[data-practice-difficulty]");
+      const practicePriority = document.querySelector("[data-practice-priority]");
+      const practiceOpenBtn = document.querySelector("[data-practice-open]");
+      const practiceCount = document.querySelector("[data-practice-count]");
+      const practiceList = document.querySelector("[data-practice-list]");
       const authGate = document.querySelector("[data-auth-gate]");
       const authGoogleBtn = document.querySelector("[data-auth-google]");
       const authGuestBtn = document.querySelector("[data-auth-guest]");
@@ -1370,6 +1608,16 @@
         "hum-globalizacao", "hum-meioambiente", "fis-energia", "fis-graficos", "red-coesao"
       ]);
       let topicModels = [];
+      const moduleCards = [
+        { area: "Química", articleId: "quimica", note: "Química dos alimentos, cálculos e pH." },
+        { area: "Física", articleId: "fisica", note: "Menor peso, mas ajuda na TRI e nos gráficos." },
+        { area: "Biologia", articleId: "biologia", note: "Base mais importante para Nutrição." },
+        { area: "Humanas", articleId: "humanas", note: "Leitura social e contextualização." },
+        { area: "Linguagens", articleId: "linguagens", note: "Interpretação, texto e repertório." },
+        { area: "Matemática", articleId: "matematica", note: "Porcentagem, estatística e problemas." },
+        { area: "Redação", articleId: "redacao", note: "Uma das maiores alavancas de nota." },
+        { area: "UNEB", articleId: "uneb", note: "Ajuste direto para o estilo da UNEB." }
+      ];
       let weekHours = readWeekHours();
 
       function readWeekHours() {
@@ -1848,6 +2096,61 @@
           .sort((a, b) => b.score - a.score);
       }
 
+      function renderModuleDashboard() {
+        moduleGrid.innerHTML = moduleCards.map((module) => {
+          const topics = topicModels.filter((topic) => topic.metaInfo.area === module.area);
+          const total = topics.length;
+          const completed = topics.filter((topic) => topic.state.status === "dominado").length;
+          const percent = total ? Math.round((completed / total) * 100) : 0;
+          return (
+            '<article class="module-card">' +
+              '<h3>' + module.area + '</h3>' +
+              '<p>' + module.note + '</p>' +
+              '<div class="module-meta">' +
+                '<span>' + total + ' modulos</span>' +
+                '<strong>' + percent + '%</strong>' +
+              '</div>' +
+              '<div class="module-progress"><span style="width:' + percent + '%;"></span></div>' +
+              '<a class="module-button" href="#' + module.articleId + '">Estudar agora</a>' +
+            '</article>'
+          );
+        }).join("");
+      }
+
+      function getPracticeMatches() {
+        return getRankedTopics().filter((entry) => {
+          const topic = entry.topic;
+          const areaOk = practiceArea.value === "all" || topic.metaInfo.area === practiceArea.value;
+          const statusOk = practiceStatus.value === "all" || topic.state.status === practiceStatus.value;
+          const difficultyOk = practiceDifficulty.value === "all" || topic.state.difficulty === practiceDifficulty.value;
+          const priorityOk =
+            practicePriority.value === "all" ||
+            (practicePriority.value === "alta" && entry.score >= 80) ||
+            (practicePriority.value === "revisao" && entry.days >= 5) ||
+            (practicePriority.value === "nutricao" && ["Biologia", "Química", "Redação", "Matemática"].includes(topic.metaInfo.area));
+
+          return areaOk && statusOk && difficultyOk && priorityOk;
+        });
+      }
+
+      function renderPracticeBuilder() {
+        const matches = getPracticeMatches();
+        practiceCount.textContent = String(matches.length);
+        practiceList.innerHTML = matches.slice(0, 6).map((entry) => (
+          '<li class="practice-item">' +
+            '<strong>' + entry.topic.metaInfo.title + '</strong>' +
+            '<span>' + entry.topic.metaInfo.area + ' • ' + entry.reason + ' • score ' + entry.score + '</span>' +
+          '</li>'
+        )).join("");
+
+        if (!matches.length) {
+          practiceList.innerHTML = '<li class="practice-item"><strong>Nenhum assunto encontrado</strong><span>Tente abrir mais os filtros ou marcar mais progresso nos modulos.</span></li>';
+        }
+
+        practiceOpenBtn.disabled = !matches.length;
+        practiceOpenBtn.dataset.target = matches.length ? ("#" + matches[0].topic.metaInfo.articleId) : "";
+      }
+
       function renderAdaptiveDashboard() {
         const ranked = getRankedTopics();
         const topItems = ranked.slice(0, 6);
@@ -1886,6 +2189,24 @@
 
         insightFocus.textContent = topItems[0].topic.metaInfo.area + " esta puxando sua semana";
         insightText.textContent = "Hoje a fila esta sendo liderada por " + topItems[0].topic.metaInfo.title.toLowerCase() + ", porque ele combina incidencia alta com " + topItems[0].reason + ".";
+      }
+
+      function initializePracticeControls() {
+        const areas = ["Biologia", "Química", "Física", "Humanas", "Linguagens", "Matemática", "Redação", "UNEB"];
+        practiceArea.innerHTML = '<option value="all">Todas</option>' + areas.map((area) => (
+          '<option value="' + area + '">' + area + '</option>'
+        )).join("");
+
+        [practiceArea, practiceStatus, practiceDifficulty, practicePriority].forEach((field) => {
+          field.addEventListener("change", renderPracticeBuilder);
+        });
+
+        practiceOpenBtn.addEventListener("click", () => {
+          const target = practiceOpenBtn.dataset.target;
+          if (target) {
+            window.location.hash = target;
+          }
+        });
       }
 
       function initializeTopicModels() {
@@ -1975,7 +2296,9 @@
             saveTopicState(topic.id, topic.state);
             localStorage.setItem(checkPrefix + topic.id, input.checked ? "1" : "0");
             renderTopicProgress();
+            renderModuleDashboard();
             renderAdaptiveDashboard();
+            renderPracticeBuilder();
             renderWeekPlan();
           });
 
@@ -1990,7 +2313,9 @@
             }
             saveTopicState(topic.id, topic.state);
             renderTopicProgress();
+            renderModuleDashboard();
             renderAdaptiveDashboard();
+            renderPracticeBuilder();
             renderWeekPlan();
           });
 
@@ -1998,7 +2323,9 @@
             topic.state.difficulty = topic.difficultySelect.value;
             saveTopicState(topic.id, topic.state);
             renderTopicProgress();
+            renderModuleDashboard();
             renderAdaptiveDashboard();
+            renderPracticeBuilder();
             renderWeekPlan();
           });
 
@@ -2020,7 +2347,9 @@
 
               saveTopicState(topic.id, topic.state);
               renderTopicProgress();
+              renderModuleDashboard();
               renderAdaptiveDashboard();
+              renderPracticeBuilder();
               renderWeekPlan();
             });
           });
@@ -2183,6 +2512,7 @@
       });
 
       initializeTopicModels();
+      initializePracticeControls();
       updateAccountCard();
 
       async function startGoogleLogin() {
@@ -2306,7 +2636,9 @@
       }
 
       renderTopicProgress();
+      renderModuleDashboard();
       renderAdaptiveDashboard();
+      renderPracticeBuilder();
       renderWeekPlan();
 
       goalInput.value = localStorage.getItem(goalKey) || String(weekHours[todayWeekKey] || 4);
@@ -2316,7 +2648,9 @@
         goalInput.value = String(value);
         weekHours[todayWeekKey] = value;
         saveWeekHours();
+        renderModuleDashboard();
         renderAdaptiveDashboard();
+        renderPracticeBuilder();
         renderWeekPlan();
         render();
       });
