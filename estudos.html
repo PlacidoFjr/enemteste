@@ -952,6 +952,83 @@
       display: none;
     }
 
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .resource-card {
+      background: #fffdf9;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .resource-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .resource-head h3 {
+      margin-bottom: 4px;
+      font-size: 1.05rem;
+    }
+
+    .resource-source {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .resource-badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: #eaf6f3;
+      color: var(--accent-2);
+      padding: 6px 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .resource-card p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .resource-meta {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 12px;
+      font-size: 0.86rem;
+      color: var(--ink);
+    }
+
+    .resource-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      text-decoration: none;
+      border-radius: 999px;
+      border: 1px solid var(--accent-2);
+      background: var(--accent-2);
+      color: #fff;
+      padding: 11px 14px;
+      font-weight: 700;
+    }
+
+    .resource-note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
     .links-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -1185,6 +1262,7 @@
       .adaptive-grid,
       .adaptive-summary,
       .module-grid,
+      .resource-grid,
       .week-summary,
       .links-grid {
         grid-template-columns: 1fr;
@@ -1301,6 +1379,7 @@
         <a class="nav-link" href="#modulos-nutricao">Modulos</a>
         <a class="nav-link" href="#treino-questoes">Treino</a>
         <a class="nav-link" href="#cronograma-semanal">Cronograma</a>
+        <a class="nav-link" href="#web-util">Web util</a>
         <a class="nav-link" href="#linguagens">Linguagens</a>
         <a class="nav-link" href="#humanas">Ciências Humanas</a>
         <a class="nav-link" href="#biologia">Biologia</a>
@@ -1401,6 +1480,7 @@
           <button class="workspace-tab active" type="button" data-workspace-tab="modulos-nutricao" aria-selected="true">Modulos</button>
           <button class="workspace-tab" type="button" data-workspace-tab="treino-questoes" aria-selected="false">Treino</button>
           <button class="workspace-tab" type="button" data-workspace-tab="cronograma-semanal" aria-selected="false">Cronograma</button>
+          <button class="workspace-tab" type="button" data-workspace-tab="web-util" aria-selected="false">Web util</button>
         </nav>
       </section>
 
@@ -1544,6 +1624,113 @@
         </div>
 
         <div class="plan-grid" data-week-grid></div>
+      </section>
+
+      <section id="web-util" class="section-card workspace-panel" data-workspace-panel="web-util" hidden>
+        <div class="section-title">
+          <h2>Ferramentas web que já funcionam</h2>
+          <p>Curadoria feita em <b>10/06/2026</b> com foco no que realmente ajuda no seu fluxo: prova oficial, acompanhamento do ENEM, SISU e ingresso na UFBA.</p>
+        </div>
+
+        <div class="resource-grid">
+          <article class="resource-card">
+            <div class="resource-head">
+              <div>
+                <h3>Provas e gabaritos do ENEM</h3>
+                <span class="resource-source">Inep oficial</span>
+              </div>
+              <span class="resource-badge">Questões reais</span>
+            </div>
+            <p>É o melhor banco de questões para treino sério porque traz cadernos e gabaritos oficiais das edições anteriores.</p>
+            <div class="resource-meta">
+              <span><strong>Use para:</strong> simulado, revisão por prova e correção.</span>
+              <span><strong>Checado em:</strong> 10/06/2026.</span>
+            </div>
+            <a class="resource-link" href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem/provas-e-gabaritos" target="_blank" rel="noopener noreferrer">Abrir provas oficiais</a>
+          </article>
+
+          <article class="resource-card">
+            <div class="resource-head">
+              <div>
+                <h3>Página do Participante</h3>
+                <span class="resource-source">Enem Inep</span>
+              </div>
+              <span class="resource-badge">Acompanhamento</span>
+            </div>
+            <p>É a porta principal para inscrição, acompanhamento da aplicação, local de prova e dados do participante.</p>
+            <div class="resource-meta">
+              <span><strong>Use para:</strong> conferir situação, inscrição e informações oficiais do exame.</span>
+              <span><strong>Checado em:</strong> 10/06/2026.</span>
+            </div>
+            <a class="resource-link" href="https://enem.inep.gov.br/participante/" target="_blank" rel="noopener noreferrer">Abrir página do participante</a>
+          </article>
+
+          <article class="resource-card">
+            <div class="resource-head">
+              <div>
+                <h3>Matriz de referência do ENEM</h3>
+                <span class="resource-source">PDF oficial do Inep</span>
+              </div>
+              <span class="resource-badge">Base da prova</span>
+            </div>
+            <p>Mostra competências, habilidades e objetos de conhecimento. É um dos documentos mais úteis para entender o que a banca cobra.</p>
+            <div class="resource-meta">
+              <span><strong>Use para:</strong> estudar por habilidade, não só por matéria.</span>
+              <span><strong>Checado em:</strong> 10/06/2026.</span>
+            </div>
+            <a class="resource-link" href="https://download.inep.gov.br/download/enem/matriz_referencia.pdf" target="_blank" rel="noopener noreferrer">Abrir matriz em PDF</a>
+          </article>
+
+          <article class="resource-card">
+            <div class="resource-head">
+              <div>
+                <h3>Portal oficial do ENEM</h3>
+                <span class="resource-source">Inep oficial</span>
+              </div>
+              <span class="resource-badge">Central do exame</span>
+            </div>
+            <p>Serve como central para notícias, páginas oficiais, serviços e acesso aos ambientes ligados ao exame.</p>
+            <div class="resource-meta">
+              <span><strong>Use para:</strong> acompanhar avisos e achar links institucionais do ENEM.</span>
+              <span><strong>Checado em:</strong> 10/06/2026.</span>
+            </div>
+            <a class="resource-link" href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/enem" target="_blank" rel="noopener noreferrer">Abrir portal ENEM</a>
+          </article>
+
+          <article class="resource-card">
+            <div class="resource-head">
+              <div>
+                <h3>Portal Único de Acesso</h3>
+                <span class="resource-source">MEC oficial</span>
+              </div>
+              <span class="resource-badge">SISU</span>
+            </div>
+            <p>É o caminho oficial para acompanhar o ecossistema de ingresso federal, inclusive o SISU.</p>
+            <div class="resource-meta">
+              <span><strong>Use para:</strong> monitorar seleção, cronogramas e acesso institucional.</span>
+              <span><strong>Checado em:</strong> 10/06/2026.</span>
+            </div>
+            <a class="resource-link" href="https://acessounico.mec.gov.br/" target="_blank" rel="noopener noreferrer">Abrir portal do MEC</a>
+          </article>
+
+          <article class="resource-card">
+            <div class="resource-head">
+              <div>
+                <h3>Ingresso UFBA</h3>
+                <span class="resource-source">UFBA oficial</span>
+              </div>
+              <span class="resource-badge">Seu alvo</span>
+            </div>
+            <p>Reúne SISU 2026 e processos seletivos específicos da UFBA. Como você vai usar ENEM para UFBA, esse link precisa ficar sempre por perto.</p>
+            <div class="resource-meta">
+              <span><strong>Use para:</strong> edital, chamadas, orientações e acesso rápido ao SISU da UFBA.</span>
+              <span><strong>Checado em:</strong> 10/06/2026.</span>
+            </div>
+            <a class="resource-link" href="https://ingresso.ufba.br/" target="_blank" rel="noopener noreferrer">Abrir ingresso UFBA</a>
+          </article>
+        </div>
+
+        <p class="resource-note">Critério desta aba: só ficaram aqui links institucionais ou oficiais que consegui verificar na pesquisa web desta rodada.</p>
       </section>
 
       <section class="section-card">
@@ -1777,7 +1964,7 @@
       const guestSessionKey = "study-guest-session";
       const cloudHydratedPrefix = "study-cloud-hydrated-";
       const hostedAppUrl = "https://estudoenem-a6ffc.web.app";
-      const workspacePanelIds = new Set(["modulos-nutricao", "treino-questoes", "cronograma-semanal"]);
+      const workspacePanelIds = new Set(["modulos-nutricao", "treino-questoes", "cronograma-semanal", "web-util"]);
 
       let currentSeconds = Number(localStorage.getItem(currentKey) || 0);
       let totalSeconds = Number(localStorage.getItem(totalKey) || 0);
