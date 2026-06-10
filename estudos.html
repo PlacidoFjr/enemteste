@@ -214,6 +214,12 @@
       color: #fff;
     }
 
+    .auth-btn.hosted {
+      background: var(--accent-2);
+      border-color: var(--accent-2);
+      color: #fff;
+    }
+
     .auth-btn:disabled {
       cursor: not-allowed;
       opacity: 0.6;
@@ -795,6 +801,46 @@
       margin-bottom: 14px;
     }
 
+    .workspace-shell {
+      padding-bottom: 14px;
+    }
+
+    .workspace-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .workspace-tab {
+      border: 1px solid #e3d4c3;
+      background: #fffdf9;
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 11px 15px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .workspace-tab:hover,
+    .workspace-tab:focus-visible {
+      color: var(--accent-2);
+      border-color: var(--accent-2);
+      outline: none;
+    }
+
+    .workspace-tab.active {
+      background: var(--accent-2);
+      color: #fff;
+      border-color: var(--accent-2);
+      box-shadow: 0 12px 28px rgba(43, 145, 157, 0.18);
+    }
+
+    .workspace-panel[hidden] {
+      display: none;
+    }
+
     .links-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -1042,6 +1088,16 @@
       .practice-actions {
         grid-template-columns: 1fr;
       }
+
+      .workspace-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 6px;
+      }
+
+      .workspace-tab {
+        flex: 0 0 auto;
+      }
     }
 
     @media (max-width: 640px) {
@@ -1101,9 +1157,10 @@
       </ul>
       <div class="auth-actions">
         <button class="auth-btn primary" type="button" data-auth-google>Entrar com Google</button>
+        <a class="auth-btn hosted" href="https://estudoenem-a6ffc.web.app" target="_blank" rel="noopener noreferrer" data-auth-hosted hidden>Abrir versao online</a>
         <button class="auth-btn" type="button" data-auth-guest>Continuar como visitante</button>
       </div>
-      <p class="auth-note" data-auth-note>Ao publicar no Vercel e autorizar o domínio no Firebase, o login funciona como em um app completo.</p>
+      <p class="auth-note" data-auth-note>Na versao publicada no Firebase Hosting, o login com Google funciona como em um app completo.</p>
     </div>
   </div>
 
@@ -1189,7 +1246,19 @@
         <p class="note">Se você fechar a aba sem salvar, o cronômetro da sessão continua guardado. O total contado entra mesmo quando você clicar em salvar.</p>
       </section>
 
-      <section id="modulos-nutricao" class="section-card">
+      <section class="section-card workspace-shell">
+        <div class="section-title">
+          <h2>Painel de estudo</h2>
+          <p>Agora essa parte ficou organizada por abas para reduzir a poluição visual e deixar o fluxo mais simples.</p>
+        </div>
+        <nav class="workspace-tabs" aria-label="Abas do painel de estudo">
+          <button class="workspace-tab active" type="button" data-workspace-tab="modulos-nutricao" aria-selected="true">Modulos</button>
+          <button class="workspace-tab" type="button" data-workspace-tab="treino-questoes" aria-selected="false">Treino</button>
+          <button class="workspace-tab" type="button" data-workspace-tab="cronograma-semanal" aria-selected="false">Cronograma</button>
+        </nav>
+      </section>
+
+      <section id="modulos-nutricao" class="section-card workspace-panel" data-workspace-panel="modulos-nutricao">
         <div class="section-title">
           <h2>Modulos por materia</h2>
           <p>Organizado para Nutrição: Natureza, Redação e Matemática aparecem com mais peso, mas sem abandonar Linguagens, Humanas e o ajuste para a UNEB.</p>
@@ -1197,7 +1266,7 @@
         <div class="module-grid" data-module-grid></div>
       </section>
 
-      <section id="treino-questoes" class="section-card">
+      <section id="treino-questoes" class="section-card workspace-panel" data-workspace-panel="treino-questoes" hidden>
         <div class="section-title">
           <h2>Monte seu treino</h2>
           <p>Filtro leve para decidir o que treinar agora. Quando quiser questões reais, use as provas oficiais do ENEM como base.</p>
@@ -1257,7 +1326,7 @@
         </div>
       </section>
 
-      <section id="cronograma-semanal" class="section-card">
+      <section id="cronograma-semanal" class="section-card workspace-panel" data-workspace-panel="cronograma-semanal" hidden>
         <div class="section-title">
           <h2>Cronograma automático da semana</h2>
           <p>Você escolhe quantas horas consegue estudar em cada dia e a página monta blocos curtos, com pausas e ordem estratégica para ENEM + UNEB. O foco aqui é funcionar mesmo com baixa concentração.</p>
@@ -1534,6 +1603,7 @@
       const practiceList = document.querySelector("[data-practice-list]");
       const authGate = document.querySelector("[data-auth-gate]");
       const authGoogleBtn = document.querySelector("[data-auth-google]");
+      const authHostedLink = document.querySelector("[data-auth-hosted]");
       const authGuestBtn = document.querySelector("[data-auth-guest]");
       const authNote = document.querySelector("[data-auth-note]");
       const accountTitle = document.querySelector("[data-account-title]");
@@ -1541,6 +1611,8 @@
       const syncStatus = document.querySelector("[data-sync-status]");
       const accountLoginBtn = document.querySelector("[data-account-login]");
       const accountLogoutBtn = document.querySelector("[data-account-logout]");
+      const workspaceTabs = document.querySelectorAll("[data-workspace-tab]");
+      const workspacePanels = document.querySelectorAll("[data-workspace-panel]");
 
       const currentKey = "placido-study-current-seconds";
       const runningKey = "placido-study-running";
@@ -1551,6 +1623,8 @@
       const topicStatePrefix = "placido-topic-state-";
       const guestSessionKey = "study-guest-session";
       const cloudHydratedPrefix = "study-cloud-hydrated-";
+      const hostedAppUrl = "https://estudoenem-a6ffc.web.app";
+      const workspacePanelIds = new Set(["modulos-nutricao", "treino-questoes", "cronograma-semanal"]);
 
       let currentSeconds = Number(localStorage.getItem(currentKey) || 0);
       let totalSeconds = Number(localStorage.getItem(totalKey) || 0);
@@ -1628,6 +1702,48 @@
           return Object.assign({}, defaultWeekHours);
         }
       }
+
+      function setWorkspaceTab(tabId, keepHash) {
+        const nextTab = workspacePanelIds.has(tabId) ? tabId : "modulos-nutricao";
+
+        workspaceTabs.forEach((button) => {
+          const active = button.dataset.workspaceTab === nextTab;
+          button.classList.toggle("active", active);
+          button.setAttribute("aria-selected", active ? "true" : "false");
+        });
+
+        workspacePanels.forEach((panel) => {
+          panel.hidden = panel.dataset.workspacePanel !== nextTab;
+        });
+
+        if (keepHash) {
+          history.replaceState(null, "", "#" + nextTab);
+        }
+      }
+
+      function syncWorkspaceTabFromHash() {
+        const target = window.location.hash.replace("#", "");
+        if (!workspacePanelIds.has(target)) {
+          return;
+        }
+
+        setWorkspaceTab(target, false);
+
+        const panel = document.getElementById(target);
+        if (panel) {
+          requestAnimationFrame(() => {
+            panel.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        }
+      }
+
+      workspaceTabs.forEach((button) => {
+        button.addEventListener("click", () => {
+          setWorkspaceTab(button.dataset.workspaceTab, true);
+        });
+      });
+
+      window.addEventListener("hashchange", syncWorkspaceTabFromHash);
 
       function saveWeekHours() {
         localStorage.setItem(weekHoursKey, JSON.stringify(weekHours));
@@ -2513,6 +2629,7 @@
 
       initializeTopicModels();
       initializePracticeControls();
+      syncWorkspaceTabFromHash();
       updateAccountCard();
 
       async function startGoogleLogin() {
@@ -2542,7 +2659,8 @@
       if (!isPremiumReady()) {
         authGoogleBtn.disabled = true
         accountLoginBtn.disabled = true
-        authNote.textContent = "Como esta aberto em arquivo local, deixe o modo visitante aqui e use o login Google na versao publicada."
+        authHostedLink.hidden = false
+        authNote.textContent = "Voce esta no arquivo local. Para entrar com Google, abra a versao online publicada no Firebase Hosting."
       }
 
       authGoogleBtn.addEventListener("click", startGoogleLogin)
